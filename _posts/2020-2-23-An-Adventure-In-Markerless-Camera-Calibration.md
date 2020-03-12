@@ -1,3 +1,10 @@
+---
+toc: true
+layout: post
+description: An adventure in markerless camera calibration
+categories: [Computer Vision]
+---
+
 # An adventure in markerless camera calibration
 > It's Febrary 1972, the A300 airliner is being unvailed in Toulouse, France.
 
