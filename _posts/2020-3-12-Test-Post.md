@@ -4,7 +4,6 @@ layout: post
 description: Visualizing Digital Elevation Maps
 categories: [Remote Sensing]
 ---
-# Example Markdown Post
 
 ## Basic setup
 
