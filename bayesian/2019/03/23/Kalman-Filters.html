@@ -1,13 +1,140 @@
-<ul>
-  <li>categories: [Bayesian]
-Kalman Filters are magic. While they take 5 minutes to explain at a basic level, you can work with them for a career and always be learning more. I think there is something philosophically satisfying about the way that they innately combine what we already believe and what we perceive in order to come to a new belief about the world.</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Kalman Filters | Adventures in Computer Vision with Cameron Cooke</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Kalman Filters" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Kalman Filters" />
+<meta property="og:description" content="Kalman Filters" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html" />
+<meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Kalman Filters","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html"},"url":"https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html","headline":"Kalman Filters","dateModified":"2019-03-23T00:00:00-05:00","datePublished":"2019-03-23T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Kalman Filters | Adventures in Computer Vision with Cameron Cooke</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Kalman Filters" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Kalman Filters" />
+<meta property="og:description" content="Kalman Filters" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html" />
+<meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Kalman Filters","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html"},"url":"https://cgcooke.github.io/Blog/bayesian/2019/03/23/Kalman-Filters.html","headline":"Kalman Filters","dateModified":"2019-03-23T00:00:00-05:00","datePublished":"2019-03-23T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Adventures in Computer Vision with Cameron Cooke</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Kalman Filters</h1><p class="page-description">Kalman Filters</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-03-23T00:00:00-05:00" itemprop="datePublished">
+        Mar 23, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Bayesian">Bayesian</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#creating-a-kalman-filter-in-7-easy-steps">Creating a Kalman Filter in 7 easy steps:</a></li>
+<li class="toc-entry toc-h1"><a href="#a-real-world-example">A real world example:</a></li>
+<li class="toc-entry toc-h1"><a href="#further-reading">Further reading</a></li>
+</ul><p>Kalman Filters are magic. While they take 5 minutes to explain at a basic level, you can work with them for a career and always be learning more. I think there is something philosophically satisfying about the way that they innately combine what we already believe and what we perceive in order to come to a new belief about the world.</p>
 
 <p>While this sounds somewhat abstract, Kalman Filters provide a concrete mathematical formulation for fusing data from different sources, as well as physical models to provide (potentially) optimum estimates of the state of a system.</p>
 
 <p>For less philosophy, and more maths, I strongly recommend stopping at this point and giving <a href="https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/">this</a> incredible post a read. Afterwards, let’s talk about Kalman filters in a concrete way,</p>
 
-<h1 id="creating-a-kalman-filter-in-7-easy-steps">Creating a Kalman Filter in 7 easy steps:</h1>
+<h1 id="creating-a-kalman-filter-in-7-easy-steps">
+<a class="anchor" href="#creating-a-kalman-filter-in-7-easy-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Kalman Filter in 7 easy steps:</h1>
 <p>One of the challenges with Kalman filters is that it’s easy to be initially overwhelmed by the mathematical background, and loose sight of what their implementation looks like in practice. In reality, it’s possible to break the implementation down into a series of discrete steps, which come together to fully describe the filter.</p>
 
 <p><a href="https://filterpy.readthedocs.io/en/latest/">FilterPy</a> is a fantastic Python library for creating Kalman filters, and has an accompanying book, which takes a deep dive into the mathematical theory of Kalman filters. Lets initially discuss the general process for defining a Kalman filter, before applying it to practical application.</p>
@@ -40,7 +167,7 @@ Kalman Filters are magic. While they take 5 minutes to explain at a basic level,
 <p>At this point, I think it’s worthwhile considering how all of these matrices are related to each other.
 <em>Tim Babb</em> of Bzarg, has a fantastic diagram, which sets out how information flows through all of the filters mentioned above. 
 If you haven’t already, I strongly recommend you read his <a href="https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/">post</a>  on how Kalman filters work 
-<img src="/Blog/images/Kalman-Filters/kalflow.png" alt="_config.yml" /></p>
+<img src="/Blog/images/Kalman-Filters/kalflow.png" alt="_config.yml"></p>
 
 <p>Looking at the relationships between all of the matrices,</p>
 
@@ -59,7 +186,8 @@ If you haven’t already, I strongly recommend you read his <a href="https://www
   </li>
 </ol>
 
-<h1 id="a-real-world-example">A real world example:</h1>
+<h1 id="a-real-world-example">
+<a class="anchor" href="#a-real-world-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>A real world example:</h1>
 
 <p>Let’s look at a real world example. In computer vision, object tracking is the process of associating different detections of an object from different images/frames into a single “track”. Many algorithms have been developed for this task (Simple Online and Realtime Tracking)[https://arxiv.org/abs/1602.00763] is particularly elegant.
 In summary, SORT creates a Kalman filter for each object it wants to track, and then predicts the location and size of each object, in each frame using the filter.</p>
@@ -155,5 +283,39 @@ In summary, SORT creates a Kalman filter for each object it wants to track, and 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filterpy</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">Q_discrete_white_noise</span>
 </code></pre></div></div>
 
-<h1 id="further-reading">Further reading</h1>
+<h1 id="further-reading">
+<a class="anchor" href="#further-reading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further reading</h1>
 <p>Control theory is a broad an intellectually stimulating area, with broad applications.  <a href="https://www.youtube.com/user/ControlLectures">Brian Douglas</a> has an incredible YouTube channel which I strongly recommend.</p>
+
+  </div><a class="u-url" href="/Blog/bayesian/2019/03/23/Kalman-Filters.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Assorted adventures in computer vision</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
