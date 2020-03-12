@@ -28,87 +28,59 @@ In order, we need to:
 7. Combine the 3 images into a final composite
 
 
-## Basic formatting
+## DEM
+===============
 
-You can use *italics*, **bold**, `code font text`, and create [links](https://www.markdownguide.org/cheat-sheet/). Here's a footnote [^1]. Here's a horizontal rule:
+Several different DEM's have been created from the data collected on the SRTM mission, in this post I will use the CGIAR [SRTM 90m Digital Elevation Database](http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1). Data is provided in 5x5 degree tiles, with each degree of latitude equal to approximately 111Km. 
 
----
+Our first task is to acquire a tile. Tiles can be downloaded from http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/ using wget. 
 
-## Lists
 
-Here's a list:
 
-- item 1
-- item 2
-
-And a numbered list:
-
-1. item 1
-1. item 2
-
-## Boxes and stuff
-
-> This is a quotation
-
-{% include alert.html text="You can include alert boxes" %}
-
-...and...
-
-{% include info.html text="You can include info boxes" %}
-
-## Images
-
-![]({{ site.baseurl }}/images/logo.png "fast.ai's logo")
-
-## Code
-
-You can format text and code per usual 
-
-General preformatted text:
-
-    # Do a thing
-    do_thing()
-
-Python code and output:
 
 ```python
-# Prints '2'
-print(1+1)
-```
-
-    2
-
-Formatting text as shell commands:
-
-```shell
-echo "hello world"
-./some_script.sh --option "value"
-wget https://example.com/cat_photo1.png
-```
-
-Formatting text as YAML:
-
-```yaml
-key: value
-- another_key: "another value"
+import os
+import math
+from PIL import Image, ImageChops, ImageEnhance
+from matplotlib import cm
 ```
 
 
-## Tables
+```python
+def downloadDEMFromCGIAR(lat,lon):
+    ''' Download a DEM from CGIAR FTP repository '''
+    fileName = lonLatToFileName(lon,lat)+'.zip'
 
-| Column 1 | Column 2 |
-|-|-|
-| A thing | Another thing |
+    ''' Check to see if we have already downloaded the file '''
+    if fileName not in os.listdir('.'):
+        os.system('''wget --user=data_public --password='GDdci' http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/'''+fileName)
+    os.system('unzip '+fileName)
+```
 
 
-## Tweetcards
+```python
+def lonLatToFileName(lon,lat):
+    ''' Compute the input file name '''
+    tileX = int(math.ceil((lon+180)/5.0))
+    tileY = -1*int(math.ceil((lat-65)/5.0))
+    inputFileName = 'srtm_'+str(tileX).zfill(2)+'_'+str(tileY).zfill(2)
+    return(inputFileName)
 
-{% twitter https://twitter.com/jakevdp/status/1204765621767901185?s=20 %}
+```
+
+
+```python
+lon,lat = -123,49
+inputFileName = lonLatToFileName(lon,lat)
+downloadDEMFromCGIAR(lat,lon)
+```
 
 
 ## Footnotes
+I found the following sources to be invaluable in compiling this post:
 
-
-
-[^1]: This is the footnote.
+* [Creating color relief and slope shading](http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html)
+* [A workflow for creating beautiful relief shaded DEMs using gdal](http://linfiniti.com/2010/12/a-workflow-for-creating-beautiful-relief-shaded-dems-using-gdal/)
+* [Shaded relief map in python](http://www.geophysique.be/2014/02/25/shaded-relief-map-in-python/)
+* [Stamen Design](http://openterrain.tumblr.com/)
 
