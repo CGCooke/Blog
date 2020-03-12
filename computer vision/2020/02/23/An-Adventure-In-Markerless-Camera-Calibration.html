@@ -1,11 +1,139 @@
-<h1 id="an-adventure-in-markerless-camera-calibration">An adventure in markerless camera calibration</h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>An Adventure In Markerless Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="An Adventure In Markerless Camera Calibration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An adventure in markerless camera calibration" />
+<meta property="og:description" content="An adventure in markerless camera calibration" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"An adventure in markerless camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html","headline":"An Adventure In Markerless Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>An Adventure In Markerless Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="An Adventure In Markerless Camera Calibration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An adventure in markerless camera calibration" />
+<meta property="og:description" content="An adventure in markerless camera calibration" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"An adventure in markerless camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html","headline":"An Adventure In Markerless Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Adventures in Computer Vision with Cameron Cooke</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">An Adventure In Markerless Camera Calibration</h1><p class="page-description">An adventure in markerless camera calibration</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-02-23T00:00:00-06:00" itemprop="datePublished">
+        Feb 23, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Computer Vision">Computer Vision</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#an-adventure-in-markerless-camera-calibration">An adventure in markerless camera calibration</a></li>
+</ul><h1 id="an-adventure-in-markerless-camera-calibration">
+<a class="anchor" href="#an-adventure-in-markerless-camera-calibration" aria-hidden="true"><span class="octicon octicon-link"></span></a>An adventure in markerless camera calibration</h1>
 <blockquote>
   <p>It’s Febrary 1972, the A300 airliner is being unvailed in Toulouse, France.</p>
 </blockquote>
 
 <p>It’s Febrary 1972, the <a href="https://en.wikipedia.org/wiki/Airbus_A300">A300</a> airliner is being unviled in Toulouse, France. Let’s go on an adventure (In markerless camera calibration!).</p>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/A300.jpg" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/A300.jpg" alt="_config.yml"></p>
 
 <p>Let’s keep things interesting, and pretend that we work for an aircraft manufacturer, Norton Aircraft, headquartered in Burbank, California. Let’s say we have seen this photo published in a magazine, and we want to try and learn as much about the dimensions of Airbus’s new aircraft as possible. In order to do so, we will need to mathematically reconstruct the camera used to take the photo, as well as the scene itself.</p>
 
@@ -15,7 +143,7 @@
 
 <p>Let’s spend ±5 minutes annotating the image, using an annotation tool like label me. I’ve generated a file, which you can find attached here:</p>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/Hexagons.jpg" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/Hexagons.jpg" alt="_config.yml"></p>
 
 <p>Firstly, lets load in all of the x and y points:</p>
 
@@ -183,7 +311,7 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 
 <p>There are lots of things going on here,</p>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/pinholeCamera.png" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/pinholeCamera.png" alt="_config.yml"></p>
 
 <p>Firstly, let’s talk about the camera’s intrinsic matrix.</p>
 
@@ -426,7 +554,7 @@ In particular, the principal point lies outside the image, which is curious to s
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_29_0.jpg" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_29_0.jpg" alt="_config.yml"></p>
 
 <p>Ok, so the histogram looks pretty good, apart from the one point with a high residual, which is probably due to sloppy labeling/annotation.</p>
 
@@ -442,7 +570,7 @@ In particular, the principal point lies outside the image, which is curious to s
 
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_31_0.jpg" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_31_0.jpg" alt="_config.yml"></p>
 
 <p>Again, this looks great.
 Finally, let’s overlay the hexagons on the floor, to visually build confidence in our solution.</p>
@@ -481,7 +609,7 @@ Finally, let’s overlay the hexagons on the floor, to visually build confidence
 
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_33_1.jpg" alt="_config.yml" /></p>
+<p><img src="/Blog/images/2020-2-23-An-Adventure-In-Markerless-Camera-Calibration_files/output_33_1.jpg" alt="_config.yml"></p>
 
 <p>Thanks for reading all the way to the end!</p>
 
@@ -496,3 +624,36 @@ Finally, let’s overlay the hexagons on the floor, to visually build confidence
 </ul>
 
 <p>Photos by André Cros, preserved by the city archives of Toulouse and released under CC BY-SA 4.0 license.</p>
+
+  </div><a class="u-url" href="/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Assorted adventures in computer vision</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
