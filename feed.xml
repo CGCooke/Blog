@@ -1,14 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://cgcooke.github.io/Blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cgcooke.github.io/Blog/" rel="alternate" type="text/html" /><updated>2020-03-12T16:01:05-05:00</updated><id>https://cgcooke.github.io/Blog/feed.xml</id><title type="html">Adventures in Computer Vision with Cameron Cooke</title><subtitle>Assorted adventures in computer vision</subtitle><entry><title type="html">Test Post</title><link href="https://cgcooke.github.io/Blog/markdown/2020/03/12/Test-Post.html" rel="alternate" type="text/html" title="Test Post" /><published>2020-03-12T00:00:00-05:00</published><updated>2020-03-12T00:00:00-05:00</updated><id>https://cgcooke.github.io/Blog/markdown/2020/03/12/Test-Post</id><content type="html" xml:base="https://cgcooke.github.io/Blog/markdown/2020/03/12/Test-Post.html">&lt;h1 id=&quot;example-markdown-post&quot;&gt;Example Markdown Post&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://cgcooke.github.io/Blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cgcooke.github.io/Blog/" rel="alternate" type="text/html" /><updated>2020-03-12T16:05:52-05:00</updated><id>https://cgcooke.github.io/Blog/feed.xml</id><title type="html">Adventures in Computer Vision with Cameron Cooke</title><subtitle>Assorted adventures in computer vision</subtitle><entry><title type="html">Test Post</title><link href="https://cgcooke.github.io/Blog/remote%20sensing/2020/03/12/Test-Post.html" rel="alternate" type="text/html" title="Test Post" /><published>2020-03-12T00:00:00-05:00</published><updated>2020-03-12T00:00:00-05:00</updated><id>https://cgcooke.github.io/Blog/remote%20sensing/2020/03/12/Test-Post</id><content type="html" xml:base="https://cgcooke.github.io/Blog/remote%20sensing/2020/03/12/Test-Post.html">&lt;h1 id=&quot;example-markdown-post&quot;&gt;Example Markdown Post&lt;/h1&gt;
 
 &lt;h2 id=&quot;basic-setup&quot;&gt;Basic setup&lt;/h2&gt;
 
-&lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
+&lt;p&gt;On February 22, 2000, after 11 days of measurements, the most comprehensive map ever created of the earth’s topography was complete. The space shuttle &lt;em&gt;Endeavor&lt;/em&gt; had just completed the Shuttle Radar Topography Mission, using a specialised radar to image the earths surface.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR-MONTH-DAY-filename.md&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The Digital Elevation Map (DEM) produced by this mission is in the public domain and provides the measured terrain high at ~90 meter resolution. The mission mapped 99.98% of the area between 60 degrees North and 56 degrees South.&lt;/p&gt;
 
-&lt;p&gt;Where &lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; is a four-digit number, &lt;code class=&quot;highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;DAY&lt;/code&gt; are both two-digit numbers, and &lt;code class=&quot;highlighter-rouge&quot;&gt;filename&lt;/code&gt; is whatever file name you choose, to remind yourself what this post is about. &lt;code class=&quot;highlighter-rouge&quot;&gt;.md&lt;/code&gt; is the file extension for markdown files.&lt;/p&gt;
+&lt;p&gt;In this post, I will examine how to process the raw DEM so it is more intuitively interpreted, through the use of &lt;em&gt;hillshading&lt;/em&gt;,&lt;em&gt;slopeshading&lt;/em&gt; &amp;amp; &lt;em&gt;hypsometric tinting&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;The first line of the file should start with a single hash character, then a space, then your title. This is how you create a “&lt;em&gt;level 1 heading&lt;/em&gt;” in markdown. Then you can create level 2, 3, etc headings as you wish but repeating the hash character, such as you see in the line &lt;code class=&quot;highlighter-rouge&quot;&gt;## File names&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;The process of transforming the raw GeoTIFF into the final imagery product is simple. Much of the grunt work being carried out by GDAL, the Geospatial Data Abstraction Library.&lt;/p&gt;
+
+&lt;p&gt;In order, we need to:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Download a DEM as a GeoTIFF&lt;/li&gt;
+  &lt;li&gt;Extract a subsection of the GeoTIFF&lt;/li&gt;
+  &lt;li&gt;Reproject the subsection&lt;/li&gt;
+  &lt;li&gt;Make an image by hillshading&lt;/li&gt;
+  &lt;li&gt;Make an image by coloring the subsection according to altitude&lt;/li&gt;
+  &lt;li&gt;Make an image by coloring the subsection according to slope&lt;/li&gt;
+  &lt;li&gt;Combine the 3 images into a final composite&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2 id=&quot;basic-formatting&quot;&gt;Basic formatting&lt;/h2&gt;
 
