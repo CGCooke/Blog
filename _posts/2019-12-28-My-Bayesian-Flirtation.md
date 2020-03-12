@@ -1,4 +1,10 @@
-- categories: [Bayesian]
+---
+toc: true
+layout: post
+description: My Bayesian Flirtation
+categories: [Bayesian]
+---
+
 I've had this on and off flirtation with Bayesian analysis. It's an interesting area, philosophically compelling, and some new and exciting tools are coming out.
 
 I'm going to go back a few years, to when I was working on the launch of inflight WiFi at Qantas. For context, Qantas is an Australian airline, which has a proud history of technical innovations, including the world's longest flight (33 hours), and the escape slide raft. It's also an airline with a strong brand, where customers have an expectation of quality. 

@@ -1,4 +1,10 @@
-- categories: [Deep Learning,Computer Vision]
+---
+toc: true
+layout: post
+description: Three Interesting Papers
+categories: [Deep Learning,Computer Vision]
+---
+
 
 Over the past couple of months, 3 incredibly exciting papers have come out, and I want to take the opportunity to share them with you.
 

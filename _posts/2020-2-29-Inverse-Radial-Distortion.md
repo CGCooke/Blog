@@ -1,4 +1,11 @@
-# Finding the inverse of a radial distortion function
+---
+toc: true
+layout: post
+description: Finding the inverse of a radial distortion function
+categories: [Computer vision]
+---
+
+
 > summary
 
 

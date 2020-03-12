@@ -1,4 +1,9 @@
-- categories: [Aerospace]
+---
+toc: true
+layout: post
+description: The Differentiable Airliner
+categories: [Aerospace]
+---
 
 It's hard to conceive of something more carefully designed than an aircraft. Millions of parts, Hundreds of kilometers of wiring, all designed with by thousands of engineers. 
 

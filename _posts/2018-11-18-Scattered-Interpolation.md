@@ -1,3 +1,10 @@
+---
+toc: true
+layout: post
+description: Scattered Data
+categories: [Remote Sensing]
+---
+
 Geospatial data often comes in the forms of samples taken at different points, when this occours a common next step is interpolation. 
 An example of this is Airbourne LiDAR, where a laser range finder is scanned over the ground underneath the aircraft. The produces a cloud of scattered points, and often the next step is build a Digital Elevation Model (DEM) from these scattered points.  There are a number of different options for interpolation in python, the correct choice of method is often task specific, so its good to have some options at your disposal.
 

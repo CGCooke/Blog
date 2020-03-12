@@ -1,4 +1,11 @@
-- categories: [Bayesian]
+---
+toc: true
+layout: post
+description: Kalman Filters
+categories: [Bayesian]
+---
+
+
 Kalman Filters are magic. While they take 5 minutes to explain at a basic level, you can work with them for a career and always be learning more. I think there is something philosophically satisfying about the way that they innately combine what we already believe and what we perceive in order to come to a new belief about the world.
 
 While this sounds somewhat abstract, Kalman Filters provide a concrete mathematical formulation for fusing data from different sources, as well as physical models to provide (potentially) optimum estimates of the state of a system.
