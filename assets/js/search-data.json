@@ -117,7 +117,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "This is where you put the contents of your About page. Like all your pages, it’s in Markdown format. . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
+          "content": "Hi, I’m Cameron, . I’m passionate about AI (Computer Vision in particular), Robotics and the future of Aerospace. . I’m writing a blog because the first step to truly understanding something is being able to explain it to someone else. . Plus I get excited about the incredible world around us, and can’t wait to tell everyone about it! . Until next time. . Cameron . .",
           "url": "https://cgcooke.github.io/Blog/about/",
           "relUrl": "/about/",
           "date": ""
