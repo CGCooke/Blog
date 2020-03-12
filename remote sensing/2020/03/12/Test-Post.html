@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -127,13 +127,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#example-markdown-post">Example Markdown Post</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#basic-setup">Basic setup</a></li>
-<li class="toc-entry toc-h2"><a href="#basic-formatting">Basic formatting</a></li>
-<li class="toc-entry toc-h2"><a href="#lists">Lists</a></li>
-<li class="toc-entry toc-h2"><a href="#boxes-and-stuff">Boxes and stuff</a></li>
-<li class="toc-entry toc-h2"><a href="#images">Images</a></li>
-<li class="toc-entry toc-h2"><a href="#code">Code</a></li>
-<li class="toc-entry toc-h2"><a href="#tables">Tables</a></li>
-<li class="toc-entry toc-h2"><a href="#tweetcards">Tweetcards</a></li>
+<li class="toc-entry toc-h2"><a href="#dem">DEM</a></li>
 <li class="toc-entry toc-h2"><a href="#footnotes">Footnotes</a></li>
 </ul>
 </li>
@@ -163,125 +157,55 @@ window.onload = wrap_img;
   <li>Combine the 3 images into a final composite</li>
 </ol>
 
-<h2 id="basic-formatting">
-<a class="anchor" href="#basic-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic formatting</h2>
+<h2 id="dem">
+<a class="anchor" href="#dem" aria-hidden="true"><span class="octicon octicon-link"></span></a>DEM</h2>
+<p>===============</p>
 
-<p>You can use <em>italics</em>, <strong>bold</strong>, <code class="highlighter-rouge">code font text</code>, and create <a href="https://www.markdownguide.org/cheat-sheet/">links</a>. Here’s a footnote <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. Here’s a horizontal rule:</p>
+<p>Several different DEM’s have been created from the data collected on the SRTM mission, in this post I will use the CGIAR <a href="http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1">SRTM 90m Digital Elevation Database</a>. Data is provided in 5x5 degree tiles, with each degree of latitude equal to approximately 111Km.</p>
 
-<hr>
+<p>Our first task is to acquire a tile. Tiles can be downloaded from http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/ using wget.</p>
 
-<h2 id="lists">
-<a class="anchor" href="#lists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lists</h2>
-
-<p>Here’s a list:</p>
-
-<ul>
-  <li>item 1</li>
-  <li>item 2</li>
-</ul>
-
-<p>And a numbered list:</p>
-
-<ol>
-  <li>item 1</li>
-  <li>item 2</li>
-</ol>
-
-<h2 id="boxes-and-stuff">
-<a class="anchor" href="#boxes-and-stuff" aria-hidden="true"><span class="octicon octicon-link"></span></a>Boxes and stuff</h2>
-
-<blockquote>
-  <p>This is a quotation</p>
-</blockquote>
-
-<div class="Toast Toast--warning googoo">
-   <span class="Toast-icon"><svg class="octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>
-   <span class="Toast-content">You can include alert boxes</span>
-</div>
-
-<p>…and…</p>
-
-<div class="Toast">
-   <span class="Toast-icon"><svg class="octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>
-   <span class="Toast-content">You can include info boxes</span>
-</div>
-
-<h2 id="images">
-<a class="anchor" href="#images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Images</h2>
-
-<p><img src="/Blog/images/logo.png" alt="" title="fast.ai's logo"></p>
-
-<h2 id="code">
-<a class="anchor" href="#code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code</h2>
-
-<p>You can format text and code per usual</p>
-
-<p>General preformatted text:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Do a thing
-do_thing()
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageChops</span><span class="p">,</span> <span class="n">ImageEnhance</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
 </code></pre></div></div>
 
-<p>Python code and output:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">downloadDEMFromCGIAR</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">):</span>
+    <span class="s">''' Download a DEM from CGIAR FTP repository '''</span>
+    <span class="n">fileName</span> <span class="o">=</span> <span class="n">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">)</span><span class="o">+</span><span class="s">'.zip'</span>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Prints '2'
-</span><span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="s">''' Check to see if we have already downloaded the file '''</span>
+    <span class="k">if</span> <span class="n">fileName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">'.'</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'''wget --user=data_public --password='GDdci' http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/'''</span><span class="o">+</span><span class="n">fileName</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'unzip '</span><span class="o">+</span><span class="n">fileName</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">):</span>
+    <span class="s">''' Compute the input file name '''</span>
+    <span class="n">tileX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">lon</span><span class="o">+</span><span class="mi">180</span><span class="p">)</span><span class="o">/</span><span class="mf">5.0</span><span class="p">))</span>
+    <span class="n">tileY</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">lat</span><span class="o">-</span><span class="mi">65</span><span class="p">)</span><span class="o">/</span><span class="mf">5.0</span><span class="p">))</span>
+    <span class="n">inputFileName</span> <span class="o">=</span> <span class="s">'srtm_'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tileX</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="s">'_'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tileY</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">inputFileName</span><span class="p">)</span>
+
 </code></pre></div></div>
 
-<p>Formatting text as shell commands:</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"hello world"</span>
-./some_script.sh <span class="nt">--option</span> <span class="s2">"value"</span>
-wget https://example.com/cat_photo1.png
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lon</span><span class="p">,</span><span class="n">lat</span> <span class="o">=</span> <span class="o">-</span><span class="mi">123</span><span class="p">,</span><span class="mi">49</span>
+<span class="n">inputFileName</span> <span class="o">=</span> <span class="n">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">)</span>
+<span class="n">downloadDEMFromCGIAR</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">)</span>
 </code></pre></div></div>
-
-<p>Formatting text as YAML:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">key</span><span class="pi">:</span> <span class="s">value</span>
-<span class="pi">-</span> <span class="na">another_key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">another</span><span class="nv"> </span><span class="s">value"</span>
-</code></pre></div></div>
-
-<h2 id="tables">
-<a class="anchor" href="#tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tables</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Column 1</th>
-      <th>Column 2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>A thing</td>
-      <td>Another thing</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="tweetcards">
-<a class="anchor" href="#tweetcards" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tweetcards</h2>
-
-<div class="jekyll-twitter-plugin">
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">Altair 4.0 is released! <a href="https://t.co/PCyrIOTcvv">https://t.co/PCyrIOTcvv</a><br>Try it with:<br><br>  pip install -U altair<br><br>The full list of changes is at <a href="https://t.co/roXmzcsT58">https://t.co/roXmzcsT58</a> ...read on for some highlights. <a href="https://t.co/vWJ0ZveKbZ">pic.twitter.com/vWJ0ZveKbZ</a></p>— Jake VanderPlas (@jakevdp) <a href="https://twitter.com/jakevdp/status/1204765621767901185?ref_src=twsrc%5Etfw">December 11, 2019</a>
-</blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
 
 <h2 id="footnotes">
 <a class="anchor" href="#footnotes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Footnotes</h2>
+<p>I found the following sources to be invaluable in compiling this post:</p>
 
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>This is the footnote. <a href="#fnref:1" class="reversefootnote">↩</a></p>
-    </li>
-  </ol>
-</div>
+<ul>
+  <li><a href="http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html">Creating color relief and slope shading</a></li>
+  <li><a href="http://linfiniti.com/2010/12/a-workflow-for-creating-beautiful-relief-shaded-dems-using-gdal/">A workflow for creating beautiful relief shaded DEMs using gdal</a></li>
+  <li><a href="http://www.geophysique.be/2014/02/25/shaded-relief-map-in-python/">Shaded relief map in python</a></li>
+  <li><a href="http://openterrain.tumblr.com/">Stamen Design</a></li>
+</ul>
+
 
   </div><a class="u-url" href="/Blog/remote%20sensing/2020/03/12/Test-Post.html" hidden></a>
 </article>
