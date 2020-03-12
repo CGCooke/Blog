@@ -1,0 +1,192 @@
+<ul>
+  <li>categories: [Remote Sensing]</li>
+</ul>
+
+<p>On February 22, 2000, after 11 days of measurements, the most comprehensive map ever created of the earth’s topography was complete. The space shuttle <em>Endeavor</em> had just completed the Shuttle Radar Topography Mission, using a specialised radar to image the earths surface.</p>
+
+<p>The Digital Elevation Map (DEM) produced by this mission is in the public domain and provides the measured terrain high at ~90 meter resolution. The mission mapped 99.98% of the area between 60 degrees North and 56 degrees South.</p>
+
+<p>In this post, I will examine how to process the raw DEM so it is more intuitively interpreted, through the use of <em>hillshading</em>,<em>slopeshading</em> &amp; <em>hypsometric tinting</em>.</p>
+
+<p>The process of transforming the raw GeoTIFF into the final imagery product is simple. Much of the grunt work being carried out by GDAL, the Geospatial Data Abstraction Library.</p>
+
+<p>In order, we need to:</p>
+
+<ol>
+  <li>Download a DEM as a GeoTIFF</li>
+  <li>Extract a subsection of the GeoTIFF</li>
+  <li>Reproject the subsection</li>
+  <li>Make an image by hillshading</li>
+  <li>Make an image by coloring the subsection according to altitude</li>
+  <li>Make an image by coloring the subsection according to slope</li>
+  <li>Combine the 3 images into a final composite</li>
+</ol>
+
+<h1 id="dem">DEM</h1>
+
+<p>Several different DEM’s have been created from the data collected on the SRTM mission, in this post I will use the CGIAR <a href="http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1">SRTM 90m Digital Elevation Database</a>. Data is provided in 5x5 degree tiles, with each degree of latitude equal to approximately 111Km.</p>
+
+<p>Our first task is to acquire a tile. Tiles can be downloaded from http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/ using wget.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageChops</span><span class="p">,</span> <span class="n">ImageEnhance</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">downloadDEMFromCGIAR</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">):</span>
+    <span class="s">''' Download a DEM from CGIAR FTP repository '''</span>
+    <span class="n">fileName</span> <span class="o">=</span> <span class="n">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">)</span><span class="o">+</span><span class="s">'.zip'</span>
+
+    <span class="s">''' Check to see if we have already downloaded the file '''</span>
+    <span class="k">if</span> <span class="n">fileName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">'.'</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'''wget --user=data_public --password='GDdci' http://data.cgiar-csi.org/srtm/tiles/GeoTIFF/'''</span><span class="o">+</span><span class="n">fileName</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'unzip '</span><span class="o">+</span><span class="n">fileName</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">):</span>
+    <span class="s">''' Compute the input file name '''</span>
+    <span class="n">tileX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">lon</span><span class="o">+</span><span class="mi">180</span><span class="p">)</span><span class="o">/</span><span class="mf">5.0</span><span class="p">))</span>
+    <span class="n">tileY</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">lat</span><span class="o">-</span><span class="mi">65</span><span class="p">)</span><span class="o">/</span><span class="mf">5.0</span><span class="p">))</span>
+    <span class="n">inputFileName</span> <span class="o">=</span> <span class="s">'srtm_'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tileX</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="s">'_'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tileY</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">inputFileName</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lon</span><span class="p">,</span><span class="n">lat</span> <span class="o">=</span> <span class="o">-</span><span class="mi">123</span><span class="p">,</span><span class="mi">49</span>
+<span class="n">inputFileName</span> <span class="o">=</span> <span class="n">lonLatToFileName</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">)</span>
+<span class="n">downloadDEMFromCGIAR</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="slicing">Slicing</h1>
+
+<p>The area I have selected covers Washington State and British Columbia, with file name <em>srtm_12_03.tif</em>.</p>
+
+<p>Let’s use <a href="http://www.gdal.org/">GDAL</a> to extract a subsection of the tile.The subsection covers Vancouver Island and the Pacific Ranges stretching from 125ºW - 122ºW &amp; 48ºN - 50ºN. Using gdalwarp:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!!</span> <span class="n">gdalwarp</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">te</span> <span class="o">-</span><span class="mi">125</span> <span class="mi">48</span> <span class="o">-</span><span class="mi">122</span> <span class="mi">50</span> <span class="o">-</span><span class="n">srcnodata</span> <span class="o">-</span><span class="mi">32768</span> <span class="o">-</span><span class="n">dstnodata</span> <span class="mi">0</span> <span class="n">srtm_12_03</span><span class="o">.</span><span class="n">tif</span> <span class="n">subset</span><span class="o">.</span><span class="n">tif</span>
+</code></pre></div></div>
+
+<p>Our next step is to transform the subsection of the tile to a different projection. The of the points in the subsection are located on a grid 1/1200th of a degree apart. While degrees of latitude are always ~110Km in size, resulting in ~92.5M resolution, degrees of longitude decrease in size, from ~111Km at the equator to 0Km at the poles. A different scale exists between the latitude &amp; longitude axis and a longitude scale that depends on the latitude.</p>
+
+<p>A solution is to project that points so that there is a consistent and equal scale in the X/Y plane. One choice is to use a family of projections called <a href="http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a>. Each UTM projection can map points from longitude &amp; latitude to X &amp; Y coordinates in meters. The UTM projection is useful because it locally preserves both shapes and distances, over a distances of up to several hundred kilometres.</p>
+
+<p>The tradeoff is that several different UTM projections are required for different points on earth, 120 to be precise. 
+Fortunately it is relatively trivial to work out the required projection based on the longitude and latitude. Almost every conceivable projection has been assigned a code by the European Petroleum Survey Group (EPSG). This EPSG code can be used to unambiguously specify the projection being used. With UTM, each code starts with either 327 or 326, depending on the hemisphere of the projection.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">utmZone</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">lon</span> <span class="o">+</span> <span class="mi">180</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="s">''' Check to see if file is in northern or southern hemisphere '''</span>
+<span class="k">if</span> <span class="n">lat</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+    <span class="n">EPSGCode</span> <span class="o">=</span> <span class="s">'EPSG:327'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">utmZone</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">EPSGCode</span> <span class="o">=</span> <span class="s">'EPSG:326'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">utmZone</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Once we have identified the correct EPSG code to use, the process of warping the subset to a new projection is relatively straightforward.</p>
+
+<p>In the following system call to gdalwarp, <em>t_srs</em> denotes the target projection, and <em>tr</em> specifies the resolution in the X and Y plane. The Y resolution is negative because the in the GDAL file uses a row, column based coordinate system.</p>
+
+<p>In this coordinate system, the origin is in the top left hand corner of the file. The row value increases as you move down the file, like an excel spreadsheet, however the UTM Y coordinate decreases. This results in the negative sign in the resolution.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'gdalwarp -q -t_srs '</span><span class="o">+</span><span class="n">EPSGCode</span><span class="o">+</span><span class="s">' -tr 100 -100 -r cubic subset.tif warped.tif'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="hillshading">Hillshading</h1>
+
+<p>At this point we can begin to visualise the DEM. One highly effective method is <em>hillshading</em>, which models the way the surface of the DEM would be illuminated by light projected onto it.  Shading of the slopes allows the DEM to be more intuitively interpreted than just coloring by height alone.</p>
+
+<p><img src="/Blog/images/256_Shades_of_Grey/hillshade.png" alt="_config.yml" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!!</span> <span class="n">gdaldem</span> <span class="n">hillshade</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">az</span> <span class="mi">45</span> <span class="o">-</span><span class="n">alt</span> <span class="mi">45</span> <span class="n">warped</span><span class="o">.</span><span class="n">tif</span> <span class="n">hillshade</span><span class="o">.</span><span class="n">tif</span>
+</code></pre></div></div>
+
+<h1 id="hypsometric-tinting">Hypsometric Tinting</h1>
+
+<p>Hillshading can also be combined with height information to aid interpretation of the topography. The technical name for the process of coloring a DEM based on  height is <em>hypsometric tinting</em>. The process is simple, with GDAL mapping colors to cell heights, using a provided color scheme.</p>
+
+<p><img src="/Blog/images/256_Shades_of_Grey/color_relief.png" alt="_config.yml" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">createColorMapLUT</span><span class="p">(</span><span class="n">minHeight</span><span class="p">,</span><span class="n">maxHeight</span><span class="p">,</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">YlGn_r</span><span class="p">,</span><span class="n">numSteps</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="s">'''
+    Create a colormap for visualisation
+    '''</span>
+    <span class="n">f</span> <span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">'color_relief.txt'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'-0.1,135,206,250 </span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'0.1,135,206,250 </span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">numSteps</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">numSteps</span><span class="p">))</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">minHeight</span> <span class="o">+</span> <span class="p">(</span><span class="n">maxHeight</span><span class="o">-</span><span class="n">minHeight</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="n">numSteps</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">r</span><span class="p">))</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">g</span><span class="p">))</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">b</span><span class="p">))</span><span class="o">+</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">r</span><span class="p">))</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">g</span><span class="p">))</span><span class="o">+</span><span class="s">','</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">b</span><span class="p">))</span><span class="o">+</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    
+
+<span class="n">createColorMapLUT</span><span class="p">(</span><span class="n">minHeight</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">maxHeight</span><span class="o">=</span><span class="mi">2658</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!!</span> <span class="n">gdaldem</span> <span class="n">color</span><span class="o">-</span><span class="n">relief</span> <span class="o">-</span><span class="n">q</span> <span class="n">warped</span><span class="o">.</span><span class="n">tif</span> <span class="n">color_relief</span><span class="o">.</span><span class="n">txt</span> <span class="n">color_relief</span><span class="o">.</span><span class="n">tif</span>
+</code></pre></div></div>
+
+<h1 id="slope-shading">Slope Shading</h1>
+
+<p>Another technique for visualizing terrain is slopeshading. While hypsometric tinting assigns colors to cells based on elevation, slope shading assigns colors to pixels based on the slope (0º to 90º). In this case, white (255,255,255) is assigned to slopes of 0º and black (0,0,0) is assigned to slopes of 90º, with varying shades of grey for slopes in-between.</p>
+
+<p><img src="/Blog/images/256_Shades_of_Grey/slopeshade.png" alt="_config.yml" /></p>
+
+<p>This color scheme is encoded in a txt file for gdaldem as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'color_slope.txt'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'0 255 255 255</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'90 0 0 0</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The computation of the slope shaded dem takes place over two steps.</p>
+
+<ol>
+  <li>The slope of each cell is computed</li>
+  <li>A shade of grey is assigned to each cell depending on the slope.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!!</span> <span class="n">gdaldem</span> <span class="n">slope</span> <span class="o">-</span><span class="n">q</span> <span class="n">warped</span><span class="o">.</span><span class="n">tif</span> <span class="n">slope</span><span class="o">.</span><span class="n">tif</span>
+<span class="err">!!</span> <span class="n">gdaldem</span> <span class="n">color</span><span class="o">-</span><span class="n">relief</span> <span class="o">-</span><span class="n">q</span> <span class="n">slope</span><span class="o">.</span><span class="n">tif</span> <span class="n">color_slope</span><span class="o">.</span><span class="n">txt</span> <span class="n">slopeshade</span><span class="o">.</span><span class="n">tif</span>
+</code></pre></div></div>
+
+<h1 id="layer-merging">Layer Merging</h1>
+
+<p>The final step in producing the final product is to merge the 3 different created images. The python Image Library (PIL) is a quick and dirty way to accomplish this task, with the 3 layers are merged using pixel by pixel multiplication.</p>
+
+<p>One important detail to note is that the pixel by pixel multiplication occurs in the RGB space. From a theoretical perspective, it’s probably better that each pixel is first transformed to the Hue, Saturation, Value (HSV) color space, and the value is then multiplied by the hillshade and slope shade value, before being transformed back into the RGB color space. In practical terms however, the RGB space multiplication is a very reasonable approximation.</p>
+
+<p>In one final tweak, the brightness of the output image is increased by 40%, to offset the average reduction in brightness caused by multiplying the layers together.</p>
+
+<p><img src="/Blog/images/256_Shades_of_Grey/blended.png" alt="_config.yml" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">''' Merge components using Python Image Lib '''</span>
+<span class="n">slopeshade</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"slopeshade.tif"</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">'L'</span><span class="p">)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"hillshade.tif"</span><span class="p">)</span>
+<span class="n">colorRelief</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"color_relief.tif"</span><span class="p">)</span>
+
+<span class="c1">#Lets just fill in any gaps in the hillshading
+</span><span class="n">ref</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">'L'</span><span class="p">,</span> <span class="n">slopeshade</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">ImageChops</span><span class="o">.</span><span class="n">lighter</span><span class="p">(</span><span class="n">hillshade</span><span class="p">,</span><span class="n">ref</span><span class="p">)</span>
+
+<span class="n">shading</span> <span class="o">=</span> <span class="n">ImageChops</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">slopeshade</span><span class="p">,</span> <span class="n">hillshade</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">'RGB'</span><span class="p">)</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">ImageChops</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">shading</span><span class="p">,</span><span class="n">colorRelief</span><span class="p">)</span>
+
+<span class="s">''' Adjust the brightness to take into account the reduction caused by hillshading'''</span>
+<span class="n">enhancer</span> <span class="o">=</span> <span class="n">ImageEnhance</span><span class="o">.</span><span class="n">Brightness</span><span class="p">(</span><span class="n">merged</span><span class="p">)</span>
+<span class="n">img_enhanced</span> <span class="o">=</span> <span class="n">enhancer</span><span class="o">.</span><span class="n">enhance</span><span class="p">(</span><span class="mf">1.4</span><span class="p">)</span>
+<span class="n">img_enhanced</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">'Merged.png'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="further-reading">Further reading</h1>
+<p>I found the following sources to be invaluable in compiling this post:</p>
+
+<ul>
+  <li><a href="http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html">Creating color relief and slope shading</a></li>
+  <li><a href="http://linfiniti.com/2010/12/a-workflow-for-creating-beautiful-relief-shaded-dems-using-gdal/">A workflow for creating beautiful relief shaded DEMs using gdal</a></li>
+  <li><a href="http://www.geophysique.be/2014/02/25/shaded-relief-map-in-python/">Shaded relief map in python</a></li>
+  <li><a href="http://openterrain.tumblr.com/">Stamen Design</a></li>
+</ul>
