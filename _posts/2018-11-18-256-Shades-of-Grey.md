@@ -1,4 +1,10 @@
-- categories: [Remote Sensing]
+
+---
+toc: true
+layout: post
+description: Visualizing Digital Elevation Maps
+categories: [Remote Sensing]
+---
 
 On February 22, 2000, after 11 days of measurements, the most comprehensive map ever created of the earth's topography was complete. The space shuttle *Endeavor* had just completed the Shuttle Radar Topography Mission, using a specialised radar to image the earths surface.
 
