@@ -3,34 +3,34 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>An Adventure In Markerless Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
+<title>An Adventure In Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="An Adventure In Markerless Camera Calibration" />
+<meta property="og:title" content="An Adventure In Camera Calibration" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="An adventure in markerless camera calibration" />
-<meta property="og:description" content="An adventure in markerless camera calibration" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta name="description" content="An adventure in camera calibration" />
+<meta property="og:description" content="An adventure in camera calibration" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"An adventure in markerless camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html","headline":"An Adventure In Markerless Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+{"description":"An adventure in camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure In Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>An Adventure In Markerless Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
+<title>An Adventure In Camera Calibration | Adventures in Computer Vision with Cameron Cooke</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="An Adventure In Markerless Camera Calibration" />
+<meta property="og:title" content="An Adventure In Camera Calibration" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="An adventure in markerless camera calibration" />
-<meta property="og:description" content="An adventure in markerless camera calibration" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" />
+<meta name="description" content="An adventure in camera calibration" />
+<meta property="og:description" content="An adventure in camera calibration" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"An adventure in markerless camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html","headline":"An Adventure In Markerless Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+{"description":"An adventure in camera calibration","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure In Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,7 +101,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">An Adventure In Markerless Camera Calibration</h1><p class="page-description">An adventure in markerless camera calibration</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-02-23T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">An Adventure In Camera Calibration</h1><p class="page-description">An adventure in camera calibration</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-02-23T00:00:00-06:00" itemprop="datePublished">
         Feb 23, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -115,6 +115,9 @@ window.onload = wrap_img;
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
         <a class="category-tags-link" href="/Blog/categories/#Computer Vision">Computer Vision</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#Optimisation">Optimisation</a>
         
       
       </p>
@@ -627,7 +630,7 @@ Finally, let’s overlay the hexagons on the floor, to visually build confidence
 
 <p>Photos by André Cros, preserved by the city archives of Toulouse and released under CC BY-SA 4.0 license.</p>
 
-  </div><a class="u-url" href="/Blog/computer%20vision/2020/02/23/An-Adventure-In-Markerless-Camera-Calibration.html" hidden></a>
+  </div><a class="u-url" href="/Blog/computer%20vision/optimisation/2020/02/23/An-Adventure-In-Camera-Calibration.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
