@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://cgcooke.github.io/Blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cgcooke.github.io/Blog/" rel="alternate" type="text/html" /><updated>2020-03-12T16:33:06-05:00</updated><id>https://cgcooke.github.io/Blog/feed.xml</id><title type="html">Adventures in Computer Vision with Cameron Cooke</title><subtitle>Assorted adventures in computer vision</subtitle><entry><title type="html">Inverse Radial Distortion</title><link href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion.html" rel="alternate" type="text/html" title="Inverse Radial Distortion" /><published>2020-02-29T00:00:00-06:00</published><updated>2020-02-29T00:00:00-06:00</updated><id>https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion</id><content type="html" xml:base="https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://cgcooke.github.io/Blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cgcooke.github.io/Blog/" rel="alternate" type="text/html" /><updated>2020-03-13T01:49:38-05:00</updated><id>https://cgcooke.github.io/Blog/feed.xml</id><title type="html">Adventures in Computer Vision with Cameron Cooke</title><subtitle>Assorted adventures in computer vision</subtitle><entry><title type="html">Inverse Radial Distortion</title><link href="https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion.html" rel="alternate" type="text/html" title="Inverse Radial Distortion" /><published>2020-02-29T00:00:00-06:00</published><updated>2020-02-29T00:00:00-06:00</updated><id>https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion</id><content type="html" xml:base="https://cgcooke.github.io/Blog/computer%20vision/2020/02/29/Inverse-Radial-Distortion.html">&lt;blockquote&gt;
   &lt;p&gt;summary&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -563,7 +563,9 @@ Finally, let’s overlay the hexagons on the floor, to visually build confidence
 
 &lt;p&gt;In the future, Let’s look more about how we can extract useful information from this image, and understand how confident we can be in our solution.&lt;/p&gt;
 
-&lt;p&gt;Thanks to &lt;em&gt;Nikolay Mayorov&lt;/em&gt; who created the awesome demo of optimization in Scipy that I built upon, please find the original code &lt;a href=&quot;https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Note: Thanks to &lt;em&gt;Nikolay Mayorov&lt;/em&gt; who created the awesome demo of optimization in Scipy that I built upon, please find the original code &lt;a href=&quot;https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;Multiple View Geometry in Computer Vision is an incredible book, that I learn more from, each time I read it. in particular, for further information see:&lt;/p&gt;
 &lt;ul&gt;
