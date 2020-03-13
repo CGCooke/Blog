@@ -511,7 +511,7 @@ Thanks for reading all the way to the end!
 
 In the future, Let's look more about how we can extract useful information from this image, and understand how confident we can be in our solution.
 
-Thanks to *Nikolay Mayorov* who created the awesome demo of optimization in Scipy that I built upon, please find the original code [here](https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html).
+> Note: Thanks to *Nikolay Mayorov* who created the awesome demo of optimization in Scipy that I built upon, please find the original code [here](https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html).
 
 
 Multiple View Geometry in Computer Vision is an incredible book, that I learn more from, each time I read it. in particular, for further information see: 
