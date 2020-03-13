@@ -100,7 +100,7 @@ for i in range(0,points.shape[0]):
         mean_points = np.mean(points[indicies_to_merge,:],axis=0)
         unique_points.append(mean_points)
         
-
+np.savetxt("points.csv",unique_points,header='i,j,X,Y,Z',delimiter=",")
 unique_points = np.asarray(unique_points)
 ```
 
@@ -129,13 +129,10 @@ from __future__ import print_function
 ```
 
 ```python
-import time
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
 from scipy.optimize import least_squares
-from scipy.sparse import lil_matrix
 from scipy.spatial.transform import Rotation as Rot
 
 %matplotlib inline
