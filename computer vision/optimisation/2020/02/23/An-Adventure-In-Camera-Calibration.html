@@ -219,7 +219,7 @@ window.onload = wrap_img;
         <span class="n">mean_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">indicies_to_merge</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">unique_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_points</span><span class="p">)</span>
         
-
+<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">"points.csv"</span><span class="p">,</span><span class="n">unique_points</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="s">'i,j,X,Y,Z'</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s">","</span><span class="p">)</span>
 <span class="n">unique_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">unique_points</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -245,13 +245,10 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">least_squares</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_matrix</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">Rot</span>
 
 <span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
