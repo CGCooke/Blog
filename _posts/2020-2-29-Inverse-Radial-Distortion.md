@@ -2,7 +2,7 @@
 toc: true
 layout: post
 description: Finding the inverse of a radial distortion function
-categories: [Computer vision]
+categories: [Computer Vision, Optimisation]
 ---
 
 

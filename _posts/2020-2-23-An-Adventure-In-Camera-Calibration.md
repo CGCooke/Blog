@@ -1,8 +1,8 @@
 ---
 toc: true
 layout: post
-description: An adventure in markerless camera calibration
-categories: [Computer Vision]
+description: An adventure in camera calibration
+categories: [Computer Vision, Optimisation]
 ---
 
 # An adventure in markerless camera calibration
