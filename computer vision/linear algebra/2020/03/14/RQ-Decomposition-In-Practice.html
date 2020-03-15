@@ -3,34 +3,34 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | Adventures in Computer Vision with Cameron Cooke</title>
+<title>RQ-Decomposition-In-Practice | Adventures in Computer Vision with Cameron Cooke</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="RQ-Decomposition-In-Practice" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="summary" />
-<meta property="og:description" content="summary" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html" />
+<meta name="description" content="RQ-Decomposition-In-Practice" />
+<meta property="og:description" content="RQ-Decomposition-In-Practice" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-14T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"summary","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html","headline":"Title","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"RQ-Decomposition-In-Practice","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html","headline":"RQ-Decomposition-In-Practice","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | Adventures in Computer Vision with Cameron Cooke</title>
+<title>RQ-Decomposition-In-Practice | Adventures in Computer Vision with Cameron Cooke</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="RQ-Decomposition-In-Practice" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="summary" />
-<meta property="og:description" content="summary" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html" />
+<meta name="description" content="RQ-Decomposition-In-Practice" />
+<meta property="og:description" content="RQ-Decomposition-In-Practice" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-14T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"summary","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/2020/03/14/RQ-Decomposition-In-Practice.html","headline":"Title","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"RQ-Decomposition-In-Practice","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html","headline":"RQ-Decomposition-In-Practice","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,7 +101,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="page-description">summary</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-14T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">RQ-Decomposition-In-Practice</h1><p class="page-description">RQ-Decomposition-In-Practice</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-14T00:00:00-05:00" itemprop="datePublished">
         Mar 14, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -111,6 +111,16 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Computer Vision">Computer Vision</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#Linear Algebra">Linear Algebra</a>
+        
+      
+      </p>
     
 
     
@@ -130,7 +140,8 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -146,29 +157,8 @@ window.onload = wrap_img;
 </div>
     
 
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
+<div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">---</span>
-<span class="n">toc</span><span class="p">:</span> <span class="n">true</span>
-<span class="n">layout</span><span class="p">:</span> <span class="n">post</span>
-<span class="n">description</span><span class="p">:</span> <span class="n">RQ</span><span class="o">-</span><span class="n">Decomposition</span><span class="o">-</span><span class="n">In</span><span class="o">-</span><span class="n">Practice</span>
-<span class="n">categories</span><span class="p">:</span> <span class="p">[</span><span class="n">Computer</span> <span class="n">Vision</span><span class="p">,</span><span class="n">Linear</span> <span class="n">Algebra</span><span class="p">]</span>
-<span class="o">---</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's keep things short and sweet.</p>
 <p>Given a camera projection matrix, $P$, we can decompose it into a $K$ (Camera Matrix), $R$ (Rotation Matrix) and $C$ (Camera Centroid) matrix.</p>
@@ -217,7 +207,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So, we have: $P = [M | −MC]$</p>
 <p>M can be decomposed as $M=KR$ using the RQ decomposition.</p>
@@ -244,7 +235,8 @@ Finally, we can find the Camera Center ($C$).</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>def factorize(P):
     M = P[0:3,0:3]</p>
@@ -276,14 +268,16 @@ print(C)</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Voila!</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="https://www.uio.no/studier/emner/matnat/its/nedlagte-emner/UNIK4690/v17/forelesninger/lecture_5_2_pose_from_known_3d_points.pdf">This</a> presentation is a great read, and provides a good overview of the RQ and QR decompositions.</p>
 
@@ -294,7 +288,15 @@ print(C)</p>
 
 
 
-  </div><a class="u-url" href="/Blog/2020/03/14/RQ-Decomposition-In-Practice.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="CGCooke/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Blog/computer%20vision/linear%20algebra/2020/03/14/RQ-Decomposition-In-Practice.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
