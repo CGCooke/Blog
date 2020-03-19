@@ -9,13 +9,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How to use RQ Decomposition to recover your camera’s K, R and C matricies." />
 <meta property="og:description" content="How to use RQ Decomposition to recover your camera’s K, R and C matricies." />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-16T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-03-18T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html","headline":"RQ Decomposition In Practice","dateModified":"2020-03-16T00:00:00-05:00","datePublished":"2020-03-16T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html","headline":"RQ Decomposition In Practice","dateModified":"2020-03-18T00:00:00-05:00","datePublished":"2020-03-18T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures in Computer Vision with Cameron Cooke" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>RQ Decomposition In Practice | Adventures in Computer Vision with Cameron Cooke</title>
@@ -24,13 +24,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How to use RQ Decomposition to recover your camera’s K, R and C matricies." />
 <meta property="og:description" content="How to use RQ Decomposition to recover your camera’s K, R and C matricies." />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html" />
 <meta property="og:site_name" content="Adventures in Computer Vision with Cameron Cooke" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-16T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-03-18T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html","headline":"RQ Decomposition In Practice","dateModified":"2020-03-16T00:00:00-05:00","datePublished":"2020-03-16T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html","headline":"RQ Decomposition In Practice","dateModified":"2020-03-18T00:00:00-05:00","datePublished":"2020-03-18T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,8 +101,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">RQ Decomposition In Practice</h1><p class="page-description">How to use RQ Decomposition to recover your camera&#39;s K, R and C matricies.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-16T00:00:00-05:00" itemprop="datePublished">
-        Mar 16, 2020
+    <h1 class="post-title p-name" itemprop="name headline">RQ Decomposition In Practice</h1><p class="page-description">How to use RQ Decomposition to recover your camera&#39;s K, R and C matricies.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-18T00:00:00-05:00" itemprop="datePublished">
+        Mar 18, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -330,7 +330,7 @@ C
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/Blog/computer%20vision/linear%20algebra/2020/03/16/RQ-Decomposition-In-Practice.html" hidden></a>
+</script><a class="u-url" href="/Blog/computer%20vision/linear%20algebra/2020/03/18/RQ-Decomposition-In-Practice.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
