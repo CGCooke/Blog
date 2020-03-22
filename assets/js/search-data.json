@@ -2,10 +2,10 @@
   
     
         "post0": {
-            "title": "Fastpages Notebook Blog Post",
-            "content": "Images . Local Images . You can reference local images and they will be copied and rendered on your blog automatically. You can include these with the following markdown syntax: . ![](my_icons/fastai_logo.png) . . Remote Images . Remote images can be included with the following markdown syntax: . ![](https://image.flaticon.com/icons/svg/36/36686.svg) . . Animated Gifs . Animated Gifs work, too! . ![](https://upload.wikimedia.org/wikipedia/commons/7/71/ChessPawnSpecialMoves.gif) . . Captions . You can include captions with markdown images like this: . ![](https://www.fast.ai/images/fastai_paper/show_batch.png &quot;Credit: https://www.fast.ai/2020/02/13/fastai-A-Layered-API-for-Deep-Learning/&quot;) . .",
-            "url": "https://cgcooke.github.io/Blog/jupyter/2020/03/21/test.html",
-            "relUrl": "/jupyter/2020/03/21/test.html",
+            "title": "Super Fun with Bayesian Magic",
+            "content": "In Australia, there have been a number of radical fiscal proposals to fight the economic impacts of COV19. One of these is to allow &quot;Casual&quot; workers (Those without paid leave entitlements) to withdraw money from their &quot;Superannuation&quot; (Pension) savings account. It&#39;s a radical proposal, and one of my friends wanted to uderstand more about the impacts that this would have. . Let&#39;s do some analysis, to try and understand what the impact of this policy could be. .",
+            "url": "https://cgcooke.github.io/Blog/bayesian/finance/2020/03/21/Super-Fun-With-Bayesian-Magic.html",
+            "relUrl": "/bayesian/finance/2020/03/21/Super-Fun-With-Bayesian-Magic.html",
             "date": " • Mar 21, 2020"
         }
         
