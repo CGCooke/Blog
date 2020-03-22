@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -458,6 +458,49 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="/Blog/images/copied_from_nb/images/2020-2-23-An-Adventure-In-Camera-Calibration/pinholeCamera.png" alt="Diagram of a pinhole camera"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Firstly, let's talk about the camera's intrinsic matrix.</p>
+<p>Basically, it converts points from 3D space to 2D space.</p>
+\begin{equation*}
+K = 
+\begin{bmatrix}
+f &amp; 0 &amp; c_{x} \\
+0 &amp; f &amp; c_{y} \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+\end{equation*}<p>We have the focal length, $f$, and the camera optical center $c_x$ and $c_y$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's talk about the camera's extrinsic matrix.</p>
+<p>These are the 6 degrees of freedom that describe it's position and orientation within the world. 
+That's 3 degrees for the position, and 3 for the orientation. At its heart, what we are doing is simple, but confusing.</p>
+<p>There are so many ways to represent our setup:</p>
+<ol>
+<li>Coordinate systems: 2D and 3D.
+  * Left Handed or Right Handed?
+   </li>
+<li>Rotations:
+  <em> Quaternions?
+  </em> Proper Euler angles (6 different ways)?
+  <em> Tait–Bryan angles (6 different ways)?
+  </em> Rodrigues rotation formula?
+  * A rotation matrix? </li>
+<li>The location of the camera in to the world. (2 Different ways).</li>
+</ol>
+<p>Today we are going to use two different ways to represent the rotations, Firstly a <a href="https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula">Rodrigues rotation vector</a> representation, and a rotation matrix. The reason why we use two different representations is because it's easier to optimise when we have 3 degrees of freedom, rather than a naive rotation matrix which uses 9 numbers to represent 3 degrees of freedom.</p>
+<p>R represents the orientation of the camera in the World Coordinate Frame (The frame which we use to describe our 3D points).</p>
+<p>In python, we can use convert from the Rodrigues rotation vector to the Rotation matrix as follows:</p>
 
 </div>
 </div>
