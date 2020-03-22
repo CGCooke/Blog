@@ -836,6 +836,10 @@ One subtle point to call out, is that the age brackets are not uniform.</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">members_f_average_account_balance</span> <span class="o">=</span> <span class="n">members_f_total_account_balance</span><span class="o">/</span><span class="n">members_f_numbers</span>
 <span class="n">members_m_average_account_balance</span> <span class="o">=</span> <span class="n">members_m_total_account_balance</span><span class="o">/</span><span class="n">members_m_numbers</span>
 
+
+<span class="nb">print</span><span class="p">(</span><span class="n">members_m_average_account_balance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">members_f_average_account_balance</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">age_brackets</span><span class="p">,</span><span class="n">members_f_average_account_balance</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Female'</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'#A60628'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">age_brackets</span><span class="p">,</span><span class="n">members_m_average_account_balance</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Male'</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'#348ABD'</span><span class="p">)</span>
 
@@ -855,6 +859,19 @@ One subtle point to call out, is that the age brackets are not uniform.</p>
 
 <div class="output_wrapper">
 <div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[  3766.51717258  22381.06381793  59321.49302569  85494.89988666
+ 101093.80628561 117269.43541932 128401.37902215 133610.30873195
+ 130176.95735201 142751.08038029             nan]
+[  3979.76456217  20333.99939392  43660.97051091  56223.28455285
+  64531.66002812  76961.55346693  88071.80594217 107323.93657186
+ 115123.1292517  144849.14841849             nan]
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -1070,7 +1087,9 @@ One subtle point to call out, is that the age brackets are not uniform.</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is incredible. For context, the average fulltime salary for Australian men is approximately <code>$</code>85,000 and <code>$</code>75,000 for women.</p>
+<p>This is incredible. For context, the average fulltime salary for Australian men is approximately $\$\$\$\$$85,000 and $\$\$\$\$$75,000 for women. It's also why I feel it's so important to try something simple and dumb, before trying something elegant and clever.</p>
+<p>So, what are we missing here?</p>
+<p>Well,</p>
 
 </div>
 </div>
