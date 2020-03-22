@@ -2,11 +2,11 @@
   
     
         "post0": {
-            "title": "The Grounding",
-            "content": "This wasn&#39;t the centenary anyone had hoped for Qantas. It&#39;s fair to say that this one of the most challenging periods in the companys history. . The decision to ground the international fleet, and the majority of the domestic fleet is not a light one, with clear and immediate impacts on the livelyhoods of 20,000 employees. Many of my former collegues and close friends have been deeply affected. . The airline business is complex and challenging, with airlines exhibiting both significant financial and operational leverage. . To help rationalize the situation faced by Qantas, I want to spend some time modelling the financial situation of the company, using publicly avalible information. I&#39;m an engineer, not a financial anlyist or accountant, so use your own judgement. . I&#39;m going to two main sources for referance, the Qantas 2019 Databook and this update here. . At the headline level, Qantas and Jetstar are suspending international flights from late/end of March. There is also a 60% reduction in flying domestically. . Division Revenue Underlying EBIT . Qantas DOM | $6,106M | $740M | . Qantas INT | $7,425M | $285M | . Jetstar (DOM + INT) | $3,961M | $370M | .",
-            "url": "https://cgcooke.github.io/Blog/qantas/aviation/finance/2020/03/19/The-Grounding.html",
-            "relUrl": "/qantas/aviation/finance/2020/03/19/The-Grounding.html",
-            "date": " • Mar 19, 2020"
+            "title": "Fastpages Notebook Blog Post",
+            "content": "Images . Local Images . You can reference local images and they will be copied and rendered on your blog automatically. You can include these with the following markdown syntax: . ![](my_icons/fastai_logo.png) . . Remote Images . Remote images can be included with the following markdown syntax: . ![](https://image.flaticon.com/icons/svg/36/36686.svg) . . Animated Gifs . Animated Gifs work, too! . ![](https://upload.wikimedia.org/wikipedia/commons/7/71/ChessPawnSpecialMoves.gif) . . Captions . You can include captions with markdown images like this: . ![](https://www.fast.ai/images/fastai_paper/show_batch.png &quot;Credit: https://www.fast.ai/2020/02/13/fastai-A-Layered-API-for-Deep-Learning/&quot;) . .",
+            "url": "https://cgcooke.github.io/Blog/jupyter/2020/03/21/test.html",
+            "relUrl": "/jupyter/2020/03/21/test.html",
+            "date": " • Mar 21, 2020"
         }
         
     
@@ -15,9 +15,9 @@
         ,"post1": {
             "title": "RQ Decomposition In Practice",
             "content": "Let&#39;s keep things short and sweet. . Given a camera projection matrix, $P$, we can decompose it into a $K$ (Camera Matrix), $R$ (Rotation Matrix) and $C$ (Camera Centroid) matrix. . IE, given we have $P = K[R|-RC]$, We want to find $K$, $R$ and $C$. . The method is simply described in Multiple View Geometry in Computer Vision (Second Edition), on page 163, however let&#39;s turn it into a practical Python implementation. . Let&#39;s follow along with an example from the book. . import numpy as np import scipy.linalg np.set_printoptions(precision=2) . P = np.array([[3.53553e+2, 3.39645e+2, 2.77744e+2, -1.44946e+6], [-1.03528e+2, 2.33212e+1, 4.59607e+2, -6.3252e+5], [7.07107e-1, -3.53553e-1, 6.12372e-1, -9.18559e+2]]) . So, we have: $P = [M | −MC]$ . M can be decomposed as $M=KR$ using the RQ decomposition. . M = P[0:3,0:3] K, R = linalg.rq(M) . So far, so good. . Now things get a little more complex. . We want to find a Camera matrix with a positive diagonal, giving positive focal lengths. . However, in case this doesn&#39;t happen, we can adjust the sign of the column of each column of both the $K$ and $R$ matrix, to &quot;Make it so&quot;. . T = np.diag(np.sign(np.diag(K))) if linalg.det(T) &lt; 0:     T[1,1] *= -1 K = np.dot(K,T) R = np.dot(T,R) .     Finally, we can find the Camera Center ($C$). . We have $P_4$, the 4th column of $P$. . $P_4 = −MC$ . From this, we can find $C = {-M}^{-1} P_4$ . def factorize(P): M = P[:,0:3] K,R = scipy.linalg.rq(M) T = np.diag(np.sign(np.diag(K))) if scipy.linalg.det(T) &lt; 0: T[1,1] *= -1 K = np.dot(K,T) R = np.dot(T,R) C = np.dot(scipy.linalg.inv(-M),P[:,3]) return(K,R,C) K,R,C = factorize(P) print(&#39;K&#39;) print(K) print(&#39;R&#39;) print(R) print(&#39;C&#39;) print(C) . K [[468.16 91.23 300. ] [ 0. 427.2 200. ] [ 0. 0. 1. ]] R [[ 0.41 0.91 0.05] [-0.57 0.22 0.79] [ 0.71 -0.35 0.61]] C [1000.01 2000. 1499.99] . Voila! . This presentation is a great read, and provides a good overview of the RQ and QR decompositions. .",
-            "url": "https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/19/RQ-Decomposition-In-Practice.html",
-            "relUrl": "/computer%20vision/linear%20algebra/2020/03/19/RQ-Decomposition-In-Practice.html",
-            "date": " • Mar 19, 2020"
+            "url": "https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/21/RQ-Decomposition-In-Practice.html",
+            "relUrl": "/computer%20vision/linear%20algebra/2020/03/21/RQ-Decomposition-In-Practice.html",
+            "date": " • Mar 21, 2020"
         }
         
     
@@ -26,9 +26,9 @@
         ,"post2": {
             "title": "An Adventure in Camera Calibration",
             "content": "It&#39;s Febrary 1972, the A300 airliner is being unviled in Toulouse, let&#39;s go on an adventure (In camera calibration!). . . Let&#39;s keep things interesting, and pretend that we work for an aircraft manufacturer, Norton Aircraft, headquartered in Burbank, California. Let&#39;s say we have seen this photo published in a magazine, and we want to try and learn as much about the dimensions of Airbus&#39;s new aircraft as possible. In order to do so, we will need to mathematically reconstruct the camera used to take the photo, as well as the scene itself. . Now, In this case, we are lucky, because we notice the hexagonal pattern on the floor. In particular, we notice that it&#39;s a tessellating hexagonal pattern, which can only happen if all the hexagons have identical dimensions. . While we don&#39;t know the dimensions of the hexagon, we guess that each side is approximately 1.6m long, based on the high of the people in the photo. If we assume some point on the ground, say the center of a polygon is the point 0,0, we can work out the X &amp; Y location of each other polygon vertex we can see. Furthermore, we could also assume that the factory floor is flat and level. Hence the Z coordinate of each point is 0. . Let&#39;s spend ±5 minutes annotating the image, using an annotation tool like label me. I&#39;ve generated a file, which you can find attached here: . . Firstly, lets load in all of the x and y points: .",
-            "url": "https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/19/An-Adventure-In-Camera-Calibration.html",
-            "relUrl": "/computer%20vision/optimization/linear%20algebra/2020/03/19/An-Adventure-In-Camera-Calibration.html",
-            "date": " • Mar 19, 2020"
+            "url": "https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/21/An-Adventure-In-Camera-Calibration.html",
+            "relUrl": "/computer%20vision/optimization/linear%20algebra/2020/03/21/An-Adventure-In-Camera-Calibration.html",
+            "date": " • Mar 21, 2020"
         }
         
     
