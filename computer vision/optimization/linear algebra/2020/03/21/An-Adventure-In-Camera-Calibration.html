@@ -772,6 +772,59 @@ It's clear that we have found a decent solution, However there are some interest
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">optimization_results</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Histogram of Residuals'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Absolute Residual (Pixels)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So the histogram looks pretty good, apart from the one point with a high residual, which is probably due to sloppy labeling/annotation.</p>
+<p>Now let's compare the points we annotated, with where they would be projected, using the camera parameters we found:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">points_2d_proj</span> <span class="o">=</span> <span class="n">project</span><span class="p">(</span><span class="n">points_3d</span><span class="p">,</span> <span class="n">optimization_results</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">'Data/2020-2-23-An-Adventure-In-Camera-Calibration/A300.jpg'</span><span class="p">)</span>      
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points_2d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">points_2d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">'Actual'</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points_2d_proj</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">points_2d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">'Optimised'</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 
