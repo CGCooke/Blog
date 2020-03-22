@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -360,6 +360,82 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.figsize"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">points_2d</span> <span class="o">=</span> <span class="n">unique_points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">points_3d</span> <span class="o">=</span> <span class="n">unique_points</span><span class="p">[:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'We have </span><span class="si">{}</span><span class="s1"> unique points'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">points_2d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's start by providing some hints to the optimiser about what the solution could be like, by putting in some reasonable starting conditions.</p>
+<p>We know both the image width and height, and we can assume that the principal point is in the center of the image.</p>
+<p>I think the cameras is about 10 meters off the ground.</p>
+<p>To make the task of optimization easier, lets rotate the camera so that it's facing directly down. This means that the points should be in front of/below it.</p>
+<p>Let's also start off by assuming that the camera is centered above the points. It's obviously not correct, based on what we can see in the image, but it's not horrifically wrong.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image_width</span> <span class="o">=</span>  <span class="mi">2251</span>
+<span class="n">image_height</span> <span class="o">=</span> <span class="mi">1508</span>
+
+<span class="n">estimated_focal_length_px</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">camera_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">as_rotvec</span><span class="p">()</span>
+<span class="c1">#Rotation matrix</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1">#C</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">points_3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">points_3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1">#f,k1,k2,</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimated_focal_length_px</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="c1">#c_x,c_y</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_width</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="n">camera_params</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_height</span><span class="o">/</span><span class="mf">2.0</span>
 </pre></div>
 
     </div>
