@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -502,6 +502,73 @@ That's 3 degrees for the position, and 3 for the orientation. At its heart, what
 <p>R represents the orientation of the camera in the World Coordinate Frame (The frame which we use to describe our 3D points).</p>
 <p>In python, we can use convert from the Rodrigues rotation vector to the Rotation matrix as follows:</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">Rot</span>
+<span class="n">rotation_vector</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_rotvec</span><span class="p">(</span><span class="n">rotation_vector</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+\begin{equation*}
+R = 
+\begin{bmatrix}
+R_1 &amp; R_2 &amp; R_3 \\
+R_4 &amp; R_5 &amp; R_6 \\
+R_7 &amp; R_8 &amp; R_9 
+\end{bmatrix}
+\end{equation*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, let's talk about the Project Matrix $P$ of the camera. This takes the points all the way from their location in 3D world coordinates, to pixel coordinates, assuming we have a camera without radial distortion. There are two main ways this could be formulated.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Firstly:
+\begin{equation*}
+P = KR[I|−C]
+\end{equation*}</p>
+<p>Secondly:
+\begin{equation*}
+P = K[R | t]
+\end{equation*}</p>
+<p>Where $t$ is:
+\begin{equation*}
+t = −RC
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's go with the first method, where C is :</p>
+\begin{equation*}
+C = 
+\begin{bmatrix}
+-C_X\\
+-C_Y\\
+-C_Z 
+\end{bmatrix}
+\end{equation*}
 </div>
 </div>
 </div>
