@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      4 min read
     
 </span></p>
 
@@ -293,6 +293,484 @@ One of these is to allow "Casual" workers (Those without paid leave entitlements
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/22-3-2020-Super-Fun-With-Bayesian-Magic/superannuation_demographic_data.csv'</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">';'</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">na_values</span><span class="o">=</span><span class="s1">'*'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fund name</th>
+      <th>RSE Regulatory classification</th>
+      <th>Fund type</th>
+      <th>RSE Membership base</th>
+      <th>Fund's RSE licensee</th>
+      <th>RSE licensee ownership type</th>
+      <th>RSE licensee profit status</th>
+      <th>Total number of member accounts at the end of period</th>
+      <th>Total members' benefits at end of period</th>
+      <th>Number of members accounts : female</th>
+      <th>...</th>
+      <th>35 to 44.3</th>
+      <th>45 to 49.3</th>
+      <th>50 to 54.3</th>
+      <th>55 to 59.3</th>
+      <th>60 to 64.3</th>
+      <th>65 to 69.3</th>
+      <th>70 to 74.3</th>
+      <th>75 to 84.3</th>
+      <th>85+.3</th>
+      <th>Age not available.3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Advance Retirement Suite</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>BT Funds Management Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>4 257</td>
+      <td>242 016</td>
+      <td>2 022</td>
+      <td>...</td>
+      <td>5 067</td>
+      <td>16 385</td>
+      <td>25 337</td>
+      <td>33 835</td>
+      <td>24 265</td>
+      <td>14 105</td>
+      <td>8 389</td>
+      <td>8 522</td>
+      <td>2 115</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Alcoa of Australia Retirement Plan</td>
+      <td>Non public offer</td>
+      <td>Corporate</td>
+      <td>Corporate base</td>
+      <td>Alcoa of Australia Retirement Plan Pty Ltd</td>
+      <td>Employer sponsor (non-public sector) ownership</td>
+      <td>Not for profit status</td>
+      <td>5 575</td>
+      <td>2 110 399</td>
+      <td>943</td>
+      <td>...</td>
+      <td>144 855</td>
+      <td>199 498</td>
+      <td>316 700</td>
+      <td>496 428</td>
+      <td>368 924</td>
+      <td>180 194</td>
+      <td>90 768</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AMG Super</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>Equity Trustees Superannuation Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>26 631</td>
+      <td>1 207 910</td>
+      <td>16 401</td>
+      <td>...</td>
+      <td>133 919</td>
+      <td>73 901</td>
+      <td>77 101</td>
+      <td>74 967</td>
+      <td>80 670</td>
+      <td>80 669</td>
+      <td>46 792</td>
+      <td>38 600</td>
+      <td>6 737</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AMP Eligible Rollover Fund</td>
+      <td>Public offer</td>
+      <td>Retail - ERF</td>
+      <td>General base</td>
+      <td>AMP Superannuation Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>344 498</td>
+      <td>1 314 606</td>
+      <td>144 799</td>
+      <td>...</td>
+      <td>123 236</td>
+      <td>146 850</td>
+      <td>144 130</td>
+      <td>157 326</td>
+      <td>120 133</td>
+      <td>80 376</td>
+      <td>21 719</td>
+      <td>6 162</td>
+      <td>1 443</td>
+      <td>2 805</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AMP Retirement Trust</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>AMP Superannuation Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>290 026</td>
+      <td>16 657 866</td>
+      <td>122 790</td>
+      <td>...</td>
+      <td>1 250 362</td>
+      <td>892 699</td>
+      <td>958 048</td>
+      <td>1 239 739</td>
+      <td>1 869 105</td>
+      <td>1 726 314</td>
+      <td>1 272 513</td>
+      <td>553 326</td>
+      <td>29 868</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>WA Local Government Superannuation Plan</td>
+      <td>Public offer</td>
+      <td>Public Sector</td>
+      <td>Government base</td>
+      <td>WA Local Government Superannuation Plan Pty Ltd</td>
+      <td>Nominating organisation ownership</td>
+      <td>Not for profit status</td>
+      <td>56 398</td>
+      <td>3 916 275</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>329 344</td>
+      <td>286 557</td>
+      <td>355 739</td>
+      <td>411 157</td>
+      <td>384 366</td>
+      <td>252 799</td>
+      <td>134 972</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Wealth Personal Superannuation and Pension Fund</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>N. M. Superannuation Proprietary Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>307 147</td>
+      <td>45 164 907</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1 962 911</td>
+      <td>1 799 016</td>
+      <td>2 251 413</td>
+      <td>3 384 014</td>
+      <td>5 086 797</td>
+      <td>5 072 506</td>
+      <td>3 528 669</td>
+      <td>2 495 078</td>
+      <td>218 762</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Westpac Mastertrust - Superannuation Division</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>Westpac Securities Administration Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>193 312</td>
+      <td>6 293 890</td>
+      <td>78 447</td>
+      <td>...</td>
+      <td>1 042 664</td>
+      <td>632 065</td>
+      <td>575 985</td>
+      <td>527 562</td>
+      <td>366 485</td>
+      <td>162 305</td>
+      <td>85 684</td>
+      <td>96 966</td>
+      <td>19 493</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Westpac Personal Superannuation Fund</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>Westpac Securities Administration Limited</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>41 166</td>
+      <td>367 925</td>
+      <td>16 487</td>
+      <td>...</td>
+      <td>4 435</td>
+      <td>24 258</td>
+      <td>46 543</td>
+      <td>68 753</td>
+      <td>60 941</td>
+      <td>32 357</td>
+      <td>15 916</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Zurich Master Superannuation Fund</td>
+      <td>Public offer</td>
+      <td>Retail</td>
+      <td>General base</td>
+      <td>Zurich Australian Superannuation Pty Ltd</td>
+      <td>Financial services corporation ownership</td>
+      <td>For profit status</td>
+      <td>15 694</td>
+      <td>1 075 407</td>
+      <td>5 123</td>
+      <td>...</td>
+      <td>44 589</td>
+      <td>75 568</td>
+      <td>123 446</td>
+      <td>198 098</td>
+      <td>154 718</td>
+      <td>72 766</td>
+      <td>34 889</td>
+      <td>37 626</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>171 rows × 65 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hostplus_row</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Fund name'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'HOSTPLUS Superannuation Fund'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hostplus_row</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fund name</th>
+      <th>RSE Regulatory classification</th>
+      <th>Fund type</th>
+      <th>RSE Membership base</th>
+      <th>Fund's RSE licensee</th>
+      <th>RSE licensee ownership type</th>
+      <th>RSE licensee profit status</th>
+      <th>Total number of member accounts at the end of period</th>
+      <th>Total members' benefits at end of period</th>
+      <th>Number of members accounts : female</th>
+      <th>...</th>
+      <th>35 to 44.3</th>
+      <th>45 to 49.3</th>
+      <th>50 to 54.3</th>
+      <th>55 to 59.3</th>
+      <th>60 to 64.3</th>
+      <th>65 to 69.3</th>
+      <th>70 to 74.3</th>
+      <th>75 to 84.3</th>
+      <th>85+.3</th>
+      <th>Age not available.3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>65</th>
+      <td>HOSTPLUS Superannuation Fund</td>
+      <td>Public offer</td>
+      <td>Industry</td>
+      <td>Industry base</td>
+      <td>Host-Plus Pty. Limited</td>
+      <td>Nominating organisation ownership</td>
+      <td>Not for profit status</td>
+      <td>1 193 243</td>
+      <td>44 680 088</td>
+      <td>612 812</td>
+      <td>...</td>
+      <td>7 034 224</td>
+      <td>3 394 575</td>
+      <td>2 750 257</td>
+      <td>2 490 451</td>
+      <td>1 843 587</td>
+      <td>1 008 357</td>
+      <td>409 016</td>
+      <td>165 163</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 65 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 
