@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      10 min read
     
 </span></p>
 
@@ -572,6 +572,217 @@ C =
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>However, there is one subtlety alluded to before, which is the impact of radial distortion. Simply, the camera's lens distorts the rays of light coming in, in a non-linear way.</p>
+<p>We can model it using a <a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series</a>:</p>
+\begin{equation*}
+x_c = x(1 + k_1  r^2 + k_2  r^4 + k_3 r^6)
+\end{equation*}\begin{equation*}
+y_c = y(1 + k_1  r^2 + k_2 r^4 + k_3 r^6)
+\end{equation*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In python, we end up with:</p>
+<div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">points_proj</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> \<span class="n">times</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">6</span>
+<span class="n">points_proj</span> <span class="o">*=</span> <span class="n">r</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">project</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">camera_params</span><span class="p">):</span>
+    <span class="sd">"""Convert 3-D points to 2-D by projecting onto images."""</span>
+    <span class="c1">#Rotation</span>
+    <span class="n">rotation_vector</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_rotvec</span><span class="p">(</span><span class="n">rotation_vector</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+    
+    <span class="c1">#Camera Center</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">IC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="o">-</span><span class="n">C</span><span class="p">])</span>
+    <span class="n">RIC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">IC</span><span class="p">)</span>
+    
+    <span class="c1">#Make points Homogeneous</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">points</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))])</span>
+    
+    <span class="c1">#Perform Rotation and Translation</span>
+    <span class="c1">#(n,k), (k,m) -&gt; (n,m)</span>
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">RIC</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1">#perspective divide </span>
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">points_proj</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">points_proj</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    
+    <span class="n">f</span>  <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+    <span class="n">k3</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+    <span class="n">c_x</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+    <span class="n">c_y</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+    
+    <span class="c1">#Radial distortion</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">points_proj</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">points_proj</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">points_proj</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">points_proj</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="n">x</span>
+    <span class="n">points_proj</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="n">y</span>
+    
+    <span class="c1">#Make points Homogeneous</span>
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">points_proj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">points_proj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))])</span>
+    
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c_x</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">c_y</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">]])</span>
+    
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">points_proj</span><span class="p">,</span><span class="n">K</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">points_proj</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">points_proj</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This section below is really well explained by <a href="https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html">here</a>. Basically, we are optimizing to minimise a geometric error. It's the distance between the 2D points we see, and the projection of their 3D counterparts.</p>
+<p>Through a process of optimization, we aim to find parameters which result in low error, which means in turn they should represent the real parameters of the camera.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">camera_params</span><span class="p">,</span> <span class="n">points_2d</span><span class="p">,</span> <span class="n">points_3d</span><span class="p">):</span>
+    <span class="c1">#Compute residuals.</span>
+    <span class="n">points_proj</span> <span class="o">=</span> <span class="n">project</span><span class="p">(</span><span class="n">points_3d</span><span class="p">,</span> <span class="n">camera_params</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">points_proj</span> <span class="o">-</span> <span class="n">points_2d</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="n">camera_params</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">optimization_results</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span>  <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_scale</span><span class="o">=</span><span class="s1">'jac'</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'lm'</span><span class="p">,</span>
+                                     <span class="n">loss</span><span class="o">=</span><span class="s1">'linear'</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">points_2d</span><span class="p">,</span> <span class="n">points_3d</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's go and check out the results of our optimization process.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">camera_params</span> <span class="o">=</span> <span class="n">optimization_results</span><span class="o">.</span><span class="n">x</span>
+
+<span class="n">R_Rodrigues</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_rotvec</span><span class="p">(</span><span class="n">R_Rodrigues</span><span class="p">)</span>
+<span class="n">R_matrix</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">R_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">R_Quaternion</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Quaternions: X: </span><span class="si">{:.3f}</span><span class="s1"> Y: </span><span class="si">{:.3f}</span><span class="s1"> Z: </span><span class="si">{:.3f}</span><span class="s1"> W: </span><span class="si">{:.3f}</span><span class="s1"> '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R_Quaternion</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">R_Quaternion</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">R_Quaternion</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">R_Quaternion</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Camera position relative to the origin in (M): X: </span><span class="si">{:.2f}</span><span class="s1">, Y: </span><span class="si">{:.2f}</span><span class="s1">, Z: </span><span class="si">{:.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+<span class="n">focal_length_px</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">k3</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+
+<span class="n">c_x</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">c_y</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Focal length (Pixels): </span><span class="si">{:.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">focal_length_px</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'CX, CY: </span><span class="si">{:.2f}</span><span class="s1"> </span><span class="si">{:.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c_x</span><span class="p">,</span><span class="n">c_y</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'K_1, K_2, K_3 : </span><span class="si">{:.6f}</span><span class="s1">, </span><span class="si">{:.6f}</span><span class="s1">, </span><span class="si">{:.6f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span><span class="n">k2</span><span class="p">,</span><span class="n">k3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Mean error per point: </span><span class="si">{:.2f}</span><span class="s1"> pixels '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">optimization_results</span><span class="o">.</span><span class="n">cost</span><span class="o">/</span><span class="n">points_2d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Ok</span><span class="p">,</span> <span class="n">first</span> <span class="n">things</span> <span class="n">first</span><span class="p">,</span> <span class="n">the</span> <span class="n">mean</span> <span class="n">error</span> <span class="n">per</span> <span class="n">point</span> <span class="ow">is</span> <span class="n">approximately</span> <span class="mf">3.6</span> <span class="n">pixels</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">great</span><span class="p">,</span> <span class="ow">not</span> <span class="n">terrible</span><span class="o">.</span> 
+<span class="n">It</span><span class="s1">'s clear that we have found a decent solution, However there are some interesting things going on. </span>
+
+<span class="n">In</span> <span class="n">particular</span><span class="p">,</span> <span class="n">the</span> <span class="n">principal</span> <span class="n">point</span> <span class="n">lies</span> <span class="n">outside</span> <span class="n">the</span> <span class="n">image</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">curious</span> <span class="n">to</span> <span class="n">say</span> <span class="n">the</span> <span class="n">least</span><span class="o">.</span> <span class="n">One</span> <span class="n">possibility</span> <span class="ow">is</span> <span class="n">that</span> <span class="n">the</span> <span class="n">image</span> <span class="n">was</span> <span class="n">cropped</span><span class="o">.</span>
+
+<span class="n">Now</span> <span class="n">let</span><span class="s1">'s have a quick look at the errors for each point.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 
