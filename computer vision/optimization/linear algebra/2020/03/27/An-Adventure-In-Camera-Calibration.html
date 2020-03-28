@@ -9,13 +9,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
 <meta property="og:description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-26T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure in Camera Calibration","dateModified":"2020-03-26T00:00:00-05:00","datePublished":"2020-03-26T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure in Camera Calibration","dateModified":"2020-03-27T00:00:00-05:00","datePublished":"2020-03-27T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>An Adventure in Camera Calibration | Adventures with Numbers</title>
@@ -24,13 +24,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
 <meta property="og:description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-26T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure in Camera Calibration","dateModified":"2020-03-26T00:00:00-05:00","datePublished":"2020-03-26T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html","headline":"An Adventure in Camera Calibration","dateModified":"2020-03-27T00:00:00-05:00","datePublished":"2020-03-27T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,8 +101,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">An Adventure in Camera Calibration</h1><p class="page-description">Let&#39;s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-26T00:00:00-05:00" itemprop="datePublished">
-        Mar 26, 2020
+    <h1 class="post-title p-name" itemprop="name headline">An Adventure in Camera Calibration</h1><p class="page-description">Let&#39;s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-27T00:00:00-05:00" itemprop="datePublished">
+        Mar 27, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -487,18 +487,33 @@ f &amp; 0 &amp; c_{x} \\
 That's 3 degrees for the position, and 3 for the orientation. At its heart, what we are doing is simple, but confusing.</p>
 <p>There are so many ways to represent our setup:</p>
 <ol>
-<li>Coordinate systems: 2D and 3D.
-  * Left Handed or Right Handed?
+<li>Coordinate systems: 2D and 3D.<ul>
+<li>Left Handed or Right Handed?
    </li>
-<li>Rotations:<ol>
-<li>Quaternions?
-  2. Proper Euler angles (6 different ways)?
-  3. Tait–Bryan angles (6 different ways)?
-  4. Rodrigues rotation formula?
-  5. A rotation matrix? </li>
-</ol>
+</ul>
 </li>
-<li>The location of the camera in to the world. (2 Different ways).</li>
+<li>
+<p>Rotations:</p>
+<ul>
+<li>Quaternions?</li>
+<li>Proper Euler angles (6 different ways)?</li>
+<li>Tait–Bryan angles (6 different ways)?</li>
+<li>Rodrigues rotation formula?</li>
+<li>A rotation matrix?</li>
+</ul>
+</li>
+<li>
+<p>The location of the camera in to the world. (2 Different ways).</p>
+</li>
+<li>
+<p>Item</p>
+</li>
+<li>Item<ul>
+<li>Mixed</li>
+<li>Mixed  </li>
+</ul>
+</li>
+<li>Item</li>
 </ol>
 <p>Today we are going to use two different ways to represent the rotations, Firstly a <a href="https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula">Rodrigues rotation vector</a> representation, and a rotation matrix. The reason why we use two different representations is because it's easier to optimise when we have 3 degrees of freedom, rather than a naive rotation matrix which uses 9 numbers to represent 3 degrees of freedom.</p>
 <p>R represents the orientation of the camera in the World Coordinate Frame (The frame which we use to describe our 3D points).</p>
@@ -910,7 +925,7 @@ Finally, let's overlay the hexagons on the floor, to visually build confidence i
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/Blog/computer%20vision/optimization/linear%20algebra/2020/03/26/An-Adventure-In-Camera-Calibration.html" hidden></a>
+</script><a class="u-url" href="/Blog/computer%20vision/optimization/linear%20algebra/2020/03/27/An-Adventure-In-Camera-Calibration.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
