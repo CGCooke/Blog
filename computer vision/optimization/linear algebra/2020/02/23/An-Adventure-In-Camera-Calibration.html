@@ -12,11 +12,11 @@
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-2-23-An-Adventure-In-Camera-Calibration/header.jpg" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-02-23T00:00:00-06:00","headline":"An Adventure in Camera Calibration","image":"https://cgcooke.github.io/Blog/images/2020-2-23-An-Adventure-In-Camera-Calibration/header.jpg","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","dateModified":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-02-23T00:00:00-06:00","headline":"An Adventure in Camera Calibration","image":"https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","dateModified":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>An Adventure in Camera Calibration | Adventures with Numbers</title>
@@ -28,11 +28,11 @@
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-2-23-An-Adventure-In-Camera-Calibration/header.jpg" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-02-23T00:00:00-06:00","headline":"An Adventure in Camera Calibration","image":"https://cgcooke.github.io/Blog/images/2020-2-23-An-Adventure-In-Camera-Calibration/header.jpg","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","dateModified":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-02-23T00:00:00-06:00","headline":"An Adventure in Camera Calibration","image":"https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimization/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","dateModified":"2020-02-23T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -159,12 +159,12 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It's Febrary 1972, the <a href="https://en.wikipedia.org/wiki/Airbus_A300">A300</a> airliner is being unviled in Toulouse, let's go on an adventure (In camera calibration!).</p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-2-23-An-Adventure-In-Camera-Calibration/A300.jpg" alt="An image of the Airbus A300 Final Assembly line in Toulouse"></p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/A300.jpg" alt="An image of the Airbus A300 Final Assembly line in Toulouse"></p>
 <p>Let's keep things interesting, and pretend that we work for an aircraft manufacturer, Norton Aircraft, headquartered in Burbank, California. Let's say we have seen this photo published in a magazine, and we want to try and learn as much about the dimensions of Airbus's new aircraft as possible. In order to do so, we will need to mathematically reconstruct the camera used to take the photo, as well as the scene itself.</p>
 <p>Now, In this case, we are lucky, because we notice the hexagonal pattern on the floor. In particular, we notice that it's a tessellating hexagonal pattern, which can only happen if all the hexagons have identical dimensions.</p>
 <p>While we don't know the dimensions of the hexagon, we guess that each side is approximately 1.6m long, based on the high of the people in the photo. If we assume some point on the ground, say the center of a polygon is the point 0,0, we can work out the X &amp; Y location of each other polygon vertex we can see. Furthermore, we could also assume that the factory floor is flat and level. Hence the Z coordinate of each point is 0.</p>
 <p>Let's spend ±5 minutes annotating the image, using an annotation tool like label me. I've generated a file, which you can find attached here:</p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-2-23-An-Adventure-In-Camera-Calibration/Hexagons.jpg" alt="An annotated image of the Airbus A300 Final Assembly line in Toulouse"></p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/Hexagons.jpg" alt="An annotated image of the Airbus A300 Final Assembly line in Toulouse"></p>
 <p>Firstly, lets load in all of the x and y points:</p>
 
 </div>
@@ -180,7 +180,7 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">JSON</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">'Data/2020-2-23-An-Adventure-In-Camera-Calibration/A300.json'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">JSON</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">'Data/2020-02-23-An-Adventure-In-Camera-Calibration/A300.json'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 <span class="n">polygons</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">JSON</span><span class="p">[</span><span class="s1">'shapes'</span><span class="p">]:</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
@@ -466,7 +466,7 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="/Blog/images/copied_from_nb/../images/2020-2-23-An-Adventure-In-Camera-Calibration/pinholeCamera.png" alt="Diagram of a pinhole camera"></p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/pinholeCamera.png" alt="Diagram of a pinhole camera"></p>
 
 </div>
 </div>
