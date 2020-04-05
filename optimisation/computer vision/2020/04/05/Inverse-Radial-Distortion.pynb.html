@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -136,6 +136,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#What-is-radial-distortion?">What is radial distortion? </a></li>
 <li class="toc-entry toc-h2"><a href="#Defining-a-forward-function">Defining a forward function </a></li>
 <li class="toc-entry toc-h2"><a href="#Finding-an-Inverse-Function">Finding an Inverse Function </a></li>
 </ul><!--
@@ -157,10 +158,23 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Real cameras, with real optics suffer from radial distortion.</p>
+<h2 id="What-is-radial-distortion?">
+<a class="anchor" href="#What-is-radial-distortion?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is radial distortion?<a class="anchor-link" href="#What-is-radial-distortion?"> </a>
+</h2>
+<p>Real cameras, with real optics suffer from radial distortion. 
+Radial distortion is a common type of <a href="https://en.wikipedia.org/wiki/Distortion_(optics">lens distortion</a>). It's a deviation away from a perfect pinhole camera, where straight lines in 3D space are mapped to straight lines in 2D space. Let's define this distortion mathematically.</p>
 <h2 id="Defining-a-forward-function">
 <a class="anchor" href="#Defining-a-forward-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining a forward function<a class="anchor-link" href="#Defining-a-forward-function"> </a>
 </h2>
+<p>Radial distortion functions map points according to their distance (r) from the optical center of the lens.</p>
+<p>We can model the function using a <a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series</a>:</p>
+\begin{equation*}
+x_d = x(1 + k_1  r + k_2  r^2 + k_3 r^3)
+\end{equation*}\begin{equation*}
+y_d = y(1 + k_1  r + k_2 r^2 + k_3 r^3)
+\end{equation*}<p>IE, the function is described using 3 numbers, k_1, k_2 and k_3.</p>
+<p>Firstly, let's import some things we need.</p>
+
 </div>
 </div>
 </div>
@@ -171,17 +185,11 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">least_squares</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_matrix</span>
-<span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">Rot</span>
 
 <span class="o">%</span><span class="k">matplotlib</span> inline
-
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.figsize"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -192,6 +200,14 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next let's use some distortion coefficients from a real lens, and plot how it maps points based on their radius from the optical center of the lens.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -199,18 +215,16 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">k1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.0443637091577041</span>
-<span class="n">k2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.35894053523797786</span>
-<span class="n">k3</span> <span class="o">=</span> <span class="mf">0.14944647701164057</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">k_1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.04436</span>
+<span class="n">k_2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.35894</span>
+<span class="n">k_3</span> <span class="o">=</span>  <span class="mf">0.14944</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">r_distorted</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-
+<span class="n">r_distorted</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k_1</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">k_2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k_3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Initial R'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Distorted R'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">r_distorted</span><span class="p">)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -237,6 +251,14 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To help understand this mapping, we can visualise the impact on a grid of straight lines. Note how lines are mapped to curves.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -294,6 +316,8 @@ window.onload = wrap_img;
 <h2 id="Finding-an-Inverse-Function">
 <a class="anchor" href="#Finding-an-Inverse-Function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding an Inverse Function<a class="anchor-link" href="#Finding-an-Inverse-Function"> </a>
 </h2>
+<p>Now it's time to find an inverse function, a function that will allow us to take points that have been distorted, and map them back to where they would have been, had the lens been free from distortion.</p>
+
 </div>
 </div>
 </div>
@@ -304,17 +328,17 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">distort_point</span><span class="p">(</span><span class="n">distortion_params</span><span class="p">,</span><span class="n">r_distorted</span><span class="p">):</span>
-    <span class="n">undistorted</span> <span class="o">=</span> <span class="n">r_distorted</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">distortion_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span>
-                               <span class="o">+</span> <span class="n">distortion_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">2</span>
-                               <span class="o">+</span> <span class="n">distortion_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">3</span>
-                               <span class="o">+</span> <span class="n">distortion_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">4</span>
-                               <span class="o">+</span> <span class="n">distortion_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">undistort_point</span><span class="p">(</span><span class="n">undistortion_params</span><span class="p">,</span><span class="n">r_distorted</span><span class="p">):</span>
+    <span class="n">undistorted</span> <span class="o">=</span> <span class="n">r_distorted</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">undistortion_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span>
+                               <span class="o">+</span> <span class="n">undistortion_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">2</span>
+                               <span class="o">+</span> <span class="n">undistortion_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">3</span>
+                               <span class="o">+</span> <span class="n">undistortion_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">4</span>
+                               <span class="o">+</span> <span class="n">undistortion_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">r_distorted</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span><span class="p">(</span><span class="n">undistorted</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">distortion_params</span><span class="p">,</span><span class="n">r_distorted</span><span class="p">):</span>
     <span class="c1">#Compute residuals.</span>
-    <span class="n">undistorted</span> <span class="o">=</span> <span class="n">distort_point</span><span class="p">(</span><span class="n">distortion_params</span><span class="p">,</span><span class="n">r_distorted</span><span class="p">)</span>
+    <span class="n">undistorted</span> <span class="o">=</span> <span class="n">undistort_point</span><span class="p">(</span><span class="n">undistortion_params</span><span class="p">,</span> <span class="n">r_distorted</span><span class="p">)</span>
     <span class="k">return</span><span class="p">((</span><span class="n">undistorted</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 </pre></div>
 
