@@ -270,7 +270,7 @@ k
 1\\
 0
 \end{bmatrix}$</p>
-<p>From my <a href="http://localhost:8888/notebooks/_notebooks/2020-02-23-An-Adventure-In-Camera-Calibration.ipynb">other post</a>, we can see that we can map from the points in 3D space ($X$) to points in 2D space ($x$) using the matrix $P$.</p>
+<p>From my <a href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html">other post</a>, we can see that we can map from the points in 3D space ($X$) to points in 2D space ($x$) using the matrix $P$.</p>
 \begin{equation*}
 x = PX
 \end{equation*}<p>The matrix $P$ in turn, consists of 3 parts.</p>
@@ -292,7 +292,7 @@ R_1 &amp; R_2 &amp; R_3 &amp; | &amp; t
 \end{bmatrix}
 $</p>
 <p>Looking carefully, we realise that the we can knock out everything but the column $R_3$ of the rotation matrix $R$.</p>
-<p>In the <a href="http://localhost:8888/notebooks/_notebooks/2020-04-11-K-From-Vanishing-Points.ipynb">previous post</a>, we already found the matrix $K$.</p>
+<p>In the <a href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/11/K-From-Vanishing-Points.html">previous post</a>, we already found the matrix $K$.</p>
 <p>$K  = \begin{bmatrix}
 728 &amp; 0 &amp; 1327\\
 0 &amp; 728 &amp; 706\\
@@ -350,8 +350,7 @@ $</p>
 <span class="n">v_y_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP3'</span><span class="p">])</span>
 <span class="n">v_z_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP1'</span><span class="p">])</span>
 
-<span class="n">R</span> <span class="o">=</span> <span class="n">compute_R</span><span class="p">(</span><span class="n">K</span>
-              <span class="p">,</span><span class="n">v_x_h</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">compute_R</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">v_x_h</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
 </pre></div>
 
