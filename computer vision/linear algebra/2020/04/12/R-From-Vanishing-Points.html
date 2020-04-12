@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -308,6 +308,13 @@ $</p>
 <p>Now, we can find $R_3$ as follows:</p>
 <p>$R_3 = \frac{K^{-1} v_z}{|K^{-1} v_z|} $</p>
 <p>Let's put this into practice.</p>
+<p>Now, let's make some assumptions.</p>
+<ol>
+<li>Vanishing point #1 is in the Z direction.</li>
+<li>Vanishing point #2 is in the -X direction.</li>
+<li>Vanishing point #3 is in the Y direction.</li>
+</ol>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/pinholeCamera.png" alt="Diagram of a pinhole camera"></p>
 
 </div>
 </div>
@@ -343,7 +350,8 @@ $</p>
 <span class="n">v_y_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP3'</span><span class="p">])</span>
 <span class="n">v_z_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP1'</span><span class="p">])</span>
 
-<span class="n">R</span> <span class="o">=</span> <span class="n">compute_R</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">v_x_h</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">compute_R</span><span class="p">(</span><span class="n">K</span>
+              <span class="p">,</span><span class="n">v_x_h</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
 </pre></div>
 
@@ -370,6 +378,14 @@ $</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This correlates well with what we were expecting.</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
