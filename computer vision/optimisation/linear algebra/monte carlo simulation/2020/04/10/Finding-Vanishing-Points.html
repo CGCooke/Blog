@@ -3,36 +3,36 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Vanishing point | Adventures with Numbers</title>
+<title>Finding | Adventures with Numbers</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Vanishing point" />
+<meta property="og:title" content="Finding" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s look at two different ways to mathematically find a vanishing point" />
 <meta property="og:description" content="Let’s look at two different ways to mathematically find a vanishing point" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-04-11T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-04-10T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-11T00:00:00-05:00","headline":"Vanishing point","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg","description":"Let’s look at two different ways to mathematically find a vanishing point","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html","dateModified":"2020-04-11T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-04-10T00:00:00-05:00","headline":"Finding","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg","description":"Let’s look at two different ways to mathematically find a vanishing point","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html","dateModified":"2020-04-10T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Vanishing point | Adventures with Numbers</title>
+<title>Finding | Adventures with Numbers</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Vanishing point" />
+<meta property="og:title" content="Finding" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s look at two different ways to mathematically find a vanishing point" />
 <meta property="og:description" content="Let’s look at two different ways to mathematically find a vanishing point" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-04-11T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-04-10T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-11T00:00:00-05:00","headline":"Vanishing point","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg","description":"Let’s look at two different ways to mathematically find a vanishing point","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html","dateModified":"2020-04-11T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-04-10T00:00:00-05:00","headline":"Finding","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Vanishing-Point/header.jpg","description":"Let’s look at two different ways to mathematically find a vanishing point","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html","dateModified":"2020-04-10T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -103,8 +103,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Vanishing point</h1><p class="page-description">Let&#39;s look at two different ways to mathematically find a vanishing point</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-11T00:00:00-05:00" itemprop="datePublished">
-        Apr 11, 2020
+    <h1 class="post-title p-name" itemprop="name headline">Finding</h1><p class="page-description">Let&#39;s look at two different ways to mathematically find a vanishing point</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-10T00:00:00-05:00" itemprop="datePublished">
+        Apr 10, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -148,7 +148,7 @@ window.onload = wrap_img;
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/10-04-2020-Vanishing-Point.ipynb
+# file to edit: _notebooks/2020-04-10-Finding-Vanishing-Points.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -631,7 +631,7 @@ VP3 [ 19.87350056 215.36315012]
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/11/Vanishing-Point.html" hidden></a>
+</script><a class="u-url" href="/Blog/computer%20vision/optimisation/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
