@@ -342,7 +342,8 @@ window.onload = wrap_img;
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">find_vanishing_point</span><span class="p">(</span><span class="n">point_name</span><span class="o">=</span><span class="s1">'VP1'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Vanishing point'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Vanishing point #1'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2560</span><span class="p">)</span>   
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1600</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
