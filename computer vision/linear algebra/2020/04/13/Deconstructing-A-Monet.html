@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Deconstructing a Monet" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s use our vanishing points to estimate a camera rotation matrix (R)." />
-<meta property="og:description" content="Let’s use our vanishing points to estimate a camera rotation matrix (R)." />
+<meta name="description" content="While Normandy is only 800km away, the past is a foreign country." />
+<meta property="og:description" content="While Normandy is only 800km away, the past is a foreign country." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -16,15 +16,15 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-13T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-13T00:00:00-05:00","headline":"Deconstructing a Monet","image":"https://cgcooke.github.io/Blog/images/2020-04-13-Deconstructing-A-Monet/header.jpg","description":"Let’s use our vanishing points to estimate a camera rotation matrix (R).","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html","dateModified":"2020-04-13T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-04-13T00:00:00-05:00","headline":"Deconstructing a Monet","image":"https://cgcooke.github.io/Blog/images/2020-04-13-Deconstructing-A-Monet/header.jpg","description":"While Normandy is only 800km away, the past is a foreign country.","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html","dateModified":"2020-04-13T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Deconstructing a Monet | Adventures with Numbers</title>
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Deconstructing a Monet" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s use our vanishing points to estimate a camera rotation matrix (R)." />
-<meta property="og:description" content="Let’s use our vanishing points to estimate a camera rotation matrix (R)." />
+<meta name="description" content="While Normandy is only 800km away, the past is a foreign country." />
+<meta property="og:description" content="While Normandy is only 800km away, the past is a foreign country." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -32,7 +32,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-13T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-13T00:00:00-05:00","headline":"Deconstructing a Monet","image":"https://cgcooke.github.io/Blog/images/2020-04-13-Deconstructing-A-Monet/header.jpg","description":"Let’s use our vanishing points to estimate a camera rotation matrix (R).","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html","dateModified":"2020-04-13T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"datePublished":"2020-04-13T00:00:00-05:00","headline":"Deconstructing a Monet","image":"https://cgcooke.github.io/Blog/images/2020-04-13-Deconstructing-A-Monet/header.jpg","description":"While Normandy is only 800km away, the past is a foreign country.","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/13/Deconstructing-A-Monet.html","dateModified":"2020-04-13T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -103,13 +103,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Deconstructing a Monet</h1><p class="page-description">Let&#39;s use our vanishing points to estimate a camera rotation matrix (R).</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-13T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Deconstructing a Monet</h1><p class="page-description">While Normandy is only 800km away, the past is a foreign country.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-13T00:00:00-05:00" itemprop="datePublished">
         Apr 13, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      2 min read
     
 </span></p>
 
@@ -136,6 +136,10 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#An-introduction">An introduction </a></li>
+<li class="toc-entry toc-h2"><a href="#Gathering-what-we-know">Gathering what we know </a></li>
+<li class="toc-entry toc-h2"><a href="#Broad-Brushstrokes">Broad Brushstrokes </a></li>
+<li class="toc-entry toc-h2"><a href="#Putting-it-all-together">Putting it all together </a></li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
@@ -155,15 +159,64 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Monet_-_Sonnenaufgang_bei_Etretat.jpg" alt="Diagram of a pinhole camera"></p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Monet_-_Sonnenaufgang_bei_Etretat.jpg" alt=""></p>
+<h2 id="An-introduction">
+<a class="anchor" href="#An-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>An introduction<a class="anchor-link" href="#An-introduction"> </a>
+</h2>
+<p>Let's go on an adventure, and try and answer some questions from an incredible painting by Claude Monet.</p>
+<p>In particular, I'm interested if we can work out:</p>
+<ol>
+<li>Where it was painted.</li>
+<li>When it was painted.</li>
+</ol>
+<p>These questions are by no means new, they were addressed by</p>
+<p>What do we truly know? After all, we are trying to mathematically analyze a painting by possibly the most famous impressionlist artist in history.</p>
+<h2 id="Gathering-what-we-know">
+<a class="anchor" href="#Gathering-what-we-know" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gathering what we know<a class="anchor-link" href="#Gathering-what-we-know"> </a>
+</h2>
+<p><a href="https://learn.ncartmuseum.org/artwork/the-cliff-etretat-sunset/">The Cliff, Étretat, Sunset</a></p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Measurements.jpg" alt=""></p>
+<p>Let's start by collecting some pieces of infomrmation that we know.</p>
+<p>Looking at the painting, I notice a few useful features.</p>
+<ol>
+<li>The horizon</li>
+<li>The sun</li>
+<li>A distinctive rock pinicle.</li>
+</ol>
+<p>Hight of the pinicle:</p>
+<ul>
+<li>Low tide = 54.5</li>
+<li>High tide = 46.0m </li>
+</ul>
+<p>Looking floser at the</p>
+<p>Now we know the sun has a radius of 696,340 km, and is 150.07 million km from earth.</p>
+<p>$\frac{0.696340}{150.07} = \frac{1063}{r_{pixels}}$</p>
+<p>or</p>
+<p>$r_{pixels} = \frac{1063 \times 150.07}{0.696340}$</p>
+<p>So making an argument of simularity,</p>
+<p>1063</p>
+<p>needle peak = 1423
+needle base = 2486</p>
+<p>"Several early guidebooks gave the Needle a height of 225 feet (69 meters) or 230 feet (70 meters), exaggerated values adopted by the majority of recent authors.</p>
+<p>Our results showed that even near low tide the top of the Needle stands only about 179 feet (54.5 meters) above the exposed base.</p>
+<p>When the highest possible tides occur, 151 feet (46 meters) of the Needle remain visible above the waves.</p>
+<p>This photograph shows a view from the Jambourg beach near low tide, with the high-water mark clearly visible on the Needle about 28 feet (8.5 meters) above the exposed base."</p>
 <p><a href="https://www.txstate.edu/news/news_releases/news_archive/2014/January-2014/Olson012114.html">Link 1</a>
 </p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Hartley &amp; Zisserman put it best, "Vanishing points are images of points at infinity, and provide orientation (attitude) in- formation in a similar manner to that provided by the fixed stars."
 </div>
-<p>Several early guidebooks gave the Needle a height of 225 feet (69 meters) or 230 feet (70 meters), exaggerated values adopted by the majority of recent authors. Our results showed that even near low tide the top of the Needle stands only about 179 feet (54.5 meters) above the exposed base. When the highest possible tides occur, 151 feet (46 meters) of the Needle remain visible above the waves. This photograph shows a view from the Jambourg beach near low tide, with the high-water mark clearly visible on the Needle about 28 feet (8.5 meters) above the exposed base.</p>
-
+<p>Sun 
+x1,y1 = 4180, 1973
+x2,y2 = 4330, 2115</p>
+<p>horizon = 2350</p>
+<h2 id="Broad-Brushstrokes">
+<a class="anchor" href="#Broad-Brushstrokes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Broad Brushstrokes<a class="anchor-link" href="#Broad-Brushstrokes"> </a>
+</h2>
+<h2 id="Putting-it-all-together">
+<a class="anchor" href="#Putting-it-all-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>Putting it all together<a class="anchor-link" href="#Putting-it-all-together"> </a>
+</h2>
 </div>
 </div>
 </div>
@@ -227,60 +280,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now is a good time to pause for a second, and talk about homogeneous coordinates.</p>
-<p>Let's assume we are comfortable with the Euclidean coordinate system (X,Y,Z). Let's pretend that we have a point, $p$ at:</p>
-<ul>
-<li>$X = 5$</li>
-<li>$Y = 7$</li>
-<li>$Z = 4$</li>
-</ul>
-<p>I.e.</p>
-<p>$p = \begin{bmatrix}
-5\\
-7\\
-4
-\end{bmatrix}$</p>
-<p>Let's just go out on a limb. Let's take $p$, and multiply each component by some amount ($k$). In addition, let's append $k$ as an extra dimension.</p>
-<p>$p = \begin{bmatrix}
-5k\\
-7k\\
-4k\\
-k
-\end{bmatrix}$</p>
-<p>This is the homogeneous representation of $p$.</p>
-<p>Let's now take a point on the $Z$ axis, perhaps $Z=1$ for example:</p>
-<p>$p = \begin{bmatrix}
-0\\
-0\\
-1
-\end{bmatrix}$</p>
-<p>or</p>
-<p>$p = \begin{bmatrix}
-0k\\
-0k\\
-1k\\
-k
-\end{bmatrix}$</p>
-<p>or</p>
-<p>If k is 0, then if $Z$ is any other positive value (apart from 0), then it will be a point infinitely far away on the Z axis. This is also the Z vanishing point.</p>
-<p>$p = \begin{bmatrix}
-0\\
-0\\
-1\\
-0
-\end{bmatrix}$</p>
 <p>From my <a href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html">other post</a>, we can see that we can map from the points in 3D space ($X$) to points in 2D space ($x$) using the matrix $P$.</p>
-\begin{equation*}
-x = PX
-\end{equation*}<p>The matrix $P$ in turn, consists of 3 parts.</p>
-<ol>
-<li>A intrinsic camera matrix $K$</li>
-<li>A Rotation matrix $R$</li>
-<li>A translation matrix $t$</li>
-</ol>
-\begin{equation*}
-P = K[R | t]
-\end{equation*}<p>Assuming that the camera is free from radial distortion, then the Z vanishing point can be found as follows.</p>
 <p>$v_z = K\begin{bmatrix}
 R_1 &amp; R_2 &amp; R_3 &amp; | &amp; t 
 \end{bmatrix}\begin{bmatrix}
@@ -290,32 +290,6 @@ R_1 &amp; R_2 &amp; R_3 &amp; | &amp; t
 0
 \end{bmatrix}
 $</p>
-<p>Looking carefully, we realise that the we can knock out everything but the column $R_3$ of the rotation matrix $R$.</p>
-<p>In the <a href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/04/11/K-From-Vanishing-Points.html">previous post</a>, we already found the matrix $K$.</p>
-<p>$K  = \begin{bmatrix}
-728 &amp; 0 &amp; 1327\\
-0 &amp; 728 &amp; 706\\
-0 &amp; 0 &amp; 1
-\end{bmatrix}$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we can find $R_3$ as follows:</p>
-<p>$R_3 = \frac{K^{-1} v_z}{|K^{-1} v_z|} $</p>
-<p>Let's put this into practice.</p>
-<p>Now, let's make some assumptions.</p>
-<ol>
-<li>World X axis pointing right (Red arrow)</li>
-<li>World Y axis pointing into the scene (Green arrow)</li>
-<li>World Z axis pointing up (Blue arrow)</li>
-</ol>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-04-12-R-From-Vanishing-Points/Axis.jpg" alt="Diagram of a pinhole camera"></p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-04-12-R-From-Vanishing-Points/ImageCoordinateSystem.jpg" alt="Diagram of a pinhole camera"></p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/pinholeCamera.png" alt="Diagram of a pinhole camera"></p>
 
 </div>
 </div>
@@ -327,33 +301,7 @@ $</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vanishing_points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'VP1'</span><span class="p">:</span> <span class="p">[</span><span class="mf">1371.892</span><span class="p">,</span>  <span class="mf">630.421</span><span class="p">],</span>
-                    <span class="s1">'VP2'</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">10651.54</span> <span class="p">,</span>    <span class="mf">536.681</span><span class="p">],</span>
-                    <span class="s1">'VP3'</span><span class="p">:</span> <span class="p">[</span><span class="mf">1272.225</span><span class="p">,</span> <span class="mf">7683.02</span> <span class="p">]}</span>
-
-<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">7.276e+02</span><span class="p">,</span><span class="mf">0.000e+00</span><span class="p">,</span><span class="mf">1.327e+03</span><span class="p">],</span>
-              <span class="p">[</span><span class="mf">6.236e-14</span><span class="p">,</span><span class="mf">7.276e+02</span><span class="p">,</span><span class="mf">7.060e+02</span><span class="p">],</span>
-              <span class="p">[</span><span class="mf">1.218e-16</span><span class="p">,</span><span class="mf">0.000e+00</span><span class="p">,</span><span class="mf">1.000e+00</span><span class="p">]])</span>
-
-<span class="k">def</span> <span class="nf">make_homogeneous</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="n">x_homogeneous</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">x_homogeneous</span><span class="p">)</span>
-
-<span class="n">v_x_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP2'</span><span class="p">])</span> 
-<span class="n">v_y_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP1'</span><span class="p">])</span>
-<span class="n">v_z_h</span> <span class="o">=</span> <span class="n">make_homogeneous</span><span class="p">(</span><span class="n">vanishing_points</span><span class="p">[</span><span class="s1">'VP3'</span><span class="p">])</span>
-
-
-
-<span class="n">K_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
-
-<span class="n">R_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_inv</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_inv</span><span class="p">,</span><span class="n">v_y_h</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-<span class="n">R_3</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_inv</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_inv</span><span class="p">,</span><span class="n">v_z_h</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-<span class="n">R_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">R_2</span><span class="p">,</span><span class="n">R_3</span><span class="p">)</span> 
-
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">R_1</span><span class="p">,</span><span class="n">R_2</span><span class="p">,</span><span class="n">R_3</span><span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">2486</span><span class="o">-</span><span class="mi">1423</span>
 </pre></div>
 
     </div>
@@ -365,12 +313,12 @@ $</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[ 0.998  0.014 -0.06 ]
- [ 0.061 -0.103  0.993]
- [ 0.008 -0.995 -0.104]]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1063</pre>
 </div>
+
 </div>
 
 </div>
@@ -379,19 +327,6 @@ $</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This correlates well with what we were expecting. The rotation matrix takes us from the world coordinate system to the camera's coordinate system. In particular, we can see that the matrix $R$ maps (approximately):</p>
-<ol>
-<li>World X axis to Camera X axis</li>
-<li>World Y axis to Camera Negative Z axis</li>
-<li>World Z axis to Camera Negative Y axis</li>
-</ol>
-
-</div>
-</div>
-</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -402,14 +337,6 @@ $</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'X World'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">'g'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Y World'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">'b'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Z World'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span> <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'X Camera'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span> <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="n">color</span><span class="o">=</span><span class="s1">'g'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Y Camera'</span><span class="p">)</span>
