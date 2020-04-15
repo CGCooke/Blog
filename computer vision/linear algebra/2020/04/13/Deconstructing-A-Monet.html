@@ -140,6 +140,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Gathering-what-we-know">Gathering what we know </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#The-Sun">The Sun </a></li>
+<li class="toc-entry toc-h3"><a href="#A-distinctive-rock-pinicle.">A distinctive rock pinicle. </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Broad-Brushstrokes">Broad Brushstrokes </a></li>
@@ -247,11 +248,6 @@ window.onload = wrap_img;
 <p>Let's pause for a moment, and make a critical assumption, that it was painted with perspecrtive.</p>
 <p>Other works by Monet clearly have perspective, which we can directly measure, for example <em>The Railway Bridge at Argenteuil</em> which we can see below.</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/The_Railway_Bridge_at_Argenteuil.jpg" alt="The Railway Bridge at Argenteuil"></p>
-<p>If we work with this assumption, we can proceed to work out the "focal length" of the painting in pixels.</p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Triangle.jpg" alt="Image Triangle"></p>
-<p>This provides us an initial rough mapping between pixels and meters. 1 pixel = $\frac{9.68 \times 10^8}{73}</p>
-<p>Using similar triangles, we can work out how how many meters a pixel apporximnately is.</p>
-<p>$\frac{0.696340}{150.07} = \frac{73}{d_{pixels}}$</p>
 
 </div>
 </div>
@@ -259,16 +255,34 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\frac{0.696340}{150.07} = \frac{1063}{r_{pixels}}$</p>
+<p>If we work with this assumption, we can proceed to work out the "focal length" of the painting in pixels.</p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Triangle.jpg" alt="Image Triangle"></p>
+<p>From this, we can see that</p>
+<p>$\frac{R_{sun}}{D_{sun}} = \frac{r_{pixels}} {f_{pixels}}$</p>
+<p>or</p>
+<p>$ f_{pixels} = \frac{r_{pixels}}{(\frac{R_{sun}}{D_{sun}})}$</p>
+<p>$ f_{pixels} = 15.7 \times 10^3$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="A-distinctive-rock-pinicle.">
+<a class="anchor" href="#A-distinctive-rock-pinicle." aria-hidden="true"><span class="octicon octicon-link"></span></a>A distinctive rock pinicle.<a class="anchor-link" href="#A-distinctive-rock-pinicle."> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Hight of the pinicle:</p>
 <ul>
 <li>Low tide = 54.5</li>
 <li>High tide = 46.0m </li>
 </ul>
-<p>Looking floser at the</p>
-<p>or</p>
-<p>$r_{pixels} = \frac{1063 \times 150.07}{0.696340}$</p>
-<p>So making an argument of simularity,</p>
 <p>1063</p>
 <p>needle peak = 1423
 needle base = 2486</p>
