@@ -238,7 +238,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_sun</span> <span class="o">=</span> <span class="mf">6.96</span><span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">8</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_sun</span> <span class="o">=</span> <span class="mf">6.96</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span> 
 <span class="n">D_sun</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">11</span>
 <span class="n">r_pixels</span> <span class="o">=</span> <span class="mi">73</span>
 <span class="n">f_pixels</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_pixels</span><span class="o">/</span><span class="p">(</span><span class="n">R_sun</span><span class="o">/</span><span class="n">D_sun</span><span class="p">))</span>
@@ -246,6 +246,20 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>15732
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -303,6 +317,20 @@ window.onload = wrap_img;
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>743
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -329,6 +357,7 @@ ${\displaystyle d\approx {\sqrt {2\,h\,r}}\,}$</p>
 <li>$h$ is the height of the observer</li>
 </ul>
 <p>Assuming that $h$ is at least 2m, then the distance to the horizon is at least 5km.</p>
+<p>Using similar arguments as before, we can find the height of Monet above the waterline.</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Horizon.jpg" alt="Horizon Triangle"></p>
 
 </div>
@@ -337,16 +366,62 @@ ${\displaystyle d\approx {\sqrt {2\,h\,r}}\,}$</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>horizon = 2350</p>
-<p>r_intersection = 136</p>
+<p>$\frac{H_{Monet}}{D_{horizon}} = \frac{H_{intersection}}{D_{horizon}-D_{pinicle}}$</p>
+<p>$H_{Monet} =H_{intersection} \times  \frac{D_{horizon}}{D_{horizon}-D_{pinicle}}$</p>
+<p>Where:</p>
+<p>$H_{intersection}= 50.25 \times \frac{H_{intersection}}{H_{pinicle}}$</p>
+<p>We can now find an upper and lower bound for the height of Monet's view point above sea level.</p>
+<p>If we look at the fraction, $\frac{D_{horizon}}{D_{horizon}-D_{pinicle}}$, we can see that it approaches 1, as the horizon gets further and further away.</p>
 
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_pinicle</span> <span class="o">=</span> <span class="mf">50.25</span>
+<span class="n">Horizon_Height_Above_pinicle_base_pixels</span> <span class="o">=</span> <span class="mi">136</span>
+<span class="n">Pinicle_Height_pixels</span> <span class="o">=</span> <span class="mi">1063</span>
+<span class="n">D_horizon</span> <span class="o">=</span> <span class="mi">5_000</span>
+
+<span class="n">H_monet_lower</span> <span class="o">=</span> <span class="n">R_pinicle</span> <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinicle_base_pixels</span><span class="o">/</span><span class="n">Pinicle_Height_pixels</span><span class="p">)</span>  <span class="o">*</span>  <span class="n">D_horizon</span><span class="o">/</span><span class="p">(</span><span class="n">D_horizon</span><span class="o">-</span><span class="n">D_pinicle</span><span class="p">)</span>
+<span class="n">H_monet_upper</span> <span class="o">=</span> <span class="n">R_pinicle</span> <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinicle_base_pixels</span><span class="o">/</span><span class="n">Pinicle_Height_pixels</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">H_monet_lower</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H_monet_upper</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>7.551062485539284
+6.4289746001881465
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>2486 - 2350</p>
+<p>We find that high of Monet's view point is between 7.5m and 6.5m away, depending on the distance to the horizon.</p>
+<p>We could continue to iteritvely optimize to find a precise solution, but we won't.</p>
 <h2 id="Broad-Brushstrokes">
 <a class="anchor" href="#Broad-Brushstrokes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Broad Brushstrokes<a class="anchor-link" href="#Broad-Brushstrokes"> </a>
 </h2>
