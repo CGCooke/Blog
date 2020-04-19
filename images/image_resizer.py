@@ -1,7 +1,7 @@
 from PIL import Image
 import glob
 
-path = '2020-4-3-The-Exodus/*'
+path = 'resize/*'
 f_list = glob.glob(path)
 
 for f in f_list:
