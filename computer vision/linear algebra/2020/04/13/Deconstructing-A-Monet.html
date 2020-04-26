@@ -140,7 +140,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Gathering-what-we-know">Gathering what we know </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#The-Sun">The Sun </a></li>
-<li class="toc-entry toc-h3"><a href="#A-distinctive-rock-pinicle.">A distinctive rock pinicle. </a></li>
+<li class="toc-entry toc-h3"><a href="#A-distinctive-rock-pinnacle.">A distinctive rock pinnacle. </a></li>
 <li class="toc-entry toc-h3"><a href="#The-Horizon">The Horizon </a></li>
 </ul>
 </li>
@@ -185,7 +185,7 @@ window.onload = wrap_img;
 <p>Looking at the painting, I notice a few useful features.</p>
 <ol>
 <li>The sun</li>
-<li>A distinctive rock pinicle.</li>
+<li>A distinctive rock pinnacle.</li>
 <li>The horizon</li>
 </ol>
 <p>Let's look at each of these in isolation.</p>
@@ -282,10 +282,10 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="A-distinctive-rock-pinicle.">
-<a class="anchor" href="#A-distinctive-rock-pinicle." aria-hidden="true"><span class="octicon octicon-link"></span></a>A distinctive rock pinicle.<a class="anchor-link" href="#A-distinctive-rock-pinicle."> </a>
+<h3 id="A-distinctive-rock-pinnacle.">
+<a class="anchor" href="#A-distinctive-rock-pinnacle." aria-hidden="true"><span class="octicon octicon-link"></span></a>A distinctive rock pinnacle.<a class="anchor-link" href="#A-distinctive-rock-pinnacle."> </a>
 </h3>
-<p>Height of the pinicle<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>:</p>
+<p>Height of the pinnacle<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>:</p>
 <ul>
 <li>Low tide = 54.5m</li>
 <li>High tide = 46.0m </li>
@@ -293,13 +293,13 @@ window.onload = wrap_img;
 </ul>
 <p>In the image, we see that:</p>
 <ul>
-<li>Pinicle Peak = 1423 px</li>
-<li>Pinicle Base = 2486 px</li>
-<li>Pinicle Height = 1063 px</li>
+<li>Pinnacle Peak = 1423 px</li>
+<li>Pinnacle Base = 2486 px</li>
+<li>Pinnacle Height = 1063 px</li>
 </ul>
 <p>Using the same geometric argument from before, we see that:</p>
-<p>$\frac{R_{pinicle}}{D_{pinicle}} = \frac{r_{pixels}} {f_{pixels}}$</p>
-<p>$D_{pinicle} = \frac{R_{pinicle}}{(\frac{r_{pixels}} {f_{pixels}})}$</p>
+<p>$\frac{R_{pinnacle}}{D_{pinnacle}} = \frac{r_{pixels}} {f_{pixels}}$</p>
+<p>$D_{pinnacle} = \frac{R_{pinnacle}}{(\frac{r_{pixels}} {f_{pixels}})}$</p>
 
 </div>
 </div>
@@ -311,10 +311,10 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_pinicle</span> <span class="o">=</span> <span class="mf">50.25</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_pinnacle</span> <span class="o">=</span> <span class="mf">50.25</span>
 <span class="n">r_pixels</span> <span class="o">=</span> <span class="mi">1063</span>
-<span class="n">D_pinicle_meters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">R_pinicle</span><span class="o">/</span><span class="p">(</span><span class="n">r_pixels</span> <span class="o">/</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">D_pinicle_meters</span><span class="p">)</span>
+<span class="n">D_pinnacle_meters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">R_pinnacle</span><span class="o">/</span><span class="p">(</span><span class="n">r_pixels</span> <span class="o">/</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D_pinnacle_meters</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -341,7 +341,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So assuming the pinicle is approximately 743 m from the painter.</p>
+<p>So assuming the pinnacle is approximately 743 m from the painter.</p>
 
 </div>
 </div>
@@ -370,12 +370,12 @@ ${\displaystyle d\approx {\sqrt {2\,h\,r}}\,}$</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\frac{H_{Monet}}{D_{horizon}} = \frac{H_{intersection}}{D_{horizon}-D_{pinicle}}$</p>
-<p>$H_{Monet} =H_{intersection} \times  \frac{D_{horizon}}{D_{horizon}-D_{pinicle}}$</p>
+<p>$\frac{H_{Monet}}{D_{horizon}} = \frac{H_{intersection}}{D_{horizon}-D_{pinnacle}}$</p>
+<p>$H_{Monet} =H_{intersection} \times  \frac{D_{horizon}}{D_{horizon}-D_{pinnacle}}$</p>
 <p>Where:</p>
-<p>$H_{intersection}= 50.25 \times \frac{H_{intersection}}{H_{pinicle}}$</p>
+<p>$H_{intersection}= 50.25 \times \frac{H_{intersection}}{H_{pinnacle}}$</p>
 <p>We can now find an upper and lower bound for the height of Monet's view point above sea level.</p>
-<p>If we look at the fraction, $\frac{D_{horizon}}{D_{horizon}-D_{pinicle}}$, we can see that it approaches 1, as the horizon gets further and further away.</p>
+<p>If we look at the fraction, $\frac{D_{horizon}}{D_{horizon}-D_{pinnacle}}$, we can see that it approaches 1, as the horizon gets further and further away.</p>
 
 </div>
 </div>
@@ -387,13 +387,13 @@ ${\displaystyle d\approx {\sqrt {2\,h\,r}}\,}$</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_pinicle_meters</span> <span class="o">=</span> <span class="mf">50.25</span>
-<span class="n">Horizon_Height_Above_pinicle_base_pixels</span> <span class="o">=</span> <span class="mi">136</span>
-<span class="n">Pinicle_Height_pixels</span> <span class="o">=</span> <span class="mi">1063</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R_pinnacle_meters</span> <span class="o">=</span> <span class="mf">50.25</span>
+<span class="n">Horizon_Height_Above_pinnacle_base_pixels</span> <span class="o">=</span> <span class="mi">136</span>
+<span class="n">pinnacle_Height_pixels</span> <span class="o">=</span> <span class="mi">1063</span>
 <span class="n">D_horizon_meters</span> <span class="o">=</span> <span class="mi">5_000</span> 
 
-<span class="n">H_monet_lower</span> <span class="o">=</span> <span class="n">R_pinicle_meters</span>  <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinicle_base_pixels</span><span class="o">/</span><span class="n">Pinicle_Height_pixels</span><span class="p">)</span>  <span class="o">*</span>  <span class="n">D_horizon_meters</span><span class="o">/</span><span class="p">(</span><span class="n">D_horizon_meters</span><span class="o">-</span><span class="n">D_pinicle_meters</span><span class="p">)</span>
-<span class="n">H_monet_upper</span> <span class="o">=</span> <span class="n">R_pinicle_meters</span>  <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinicle_base_pixels</span><span class="o">/</span><span class="n">Pinicle_Height_pixels</span><span class="p">)</span>
+<span class="n">H_monet_lower</span> <span class="o">=</span> <span class="n">R_pinnacle_meters</span>  <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinnacle_base_pixels</span><span class="o">/</span><span class="n">pinnacle_Height_pixels</span><span class="p">)</span>  <span class="o">*</span>  <span class="n">D_horizon_meters</span><span class="o">/</span><span class="p">(</span><span class="n">D_horizon_meters</span><span class="o">-</span><span class="n">D_pinnacle_meters</span><span class="p">)</span>
+<span class="n">H_monet_upper</span> <span class="o">=</span> <span class="n">R_pinnacle_meters</span>  <span class="o">*</span> <span class="p">(</span><span class="n">Horizon_Height_Above_pinnacle_base_pixels</span><span class="o">/</span><span class="n">pinnacle_Height_pixels</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">H_monet_lower</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">H_monet_upper</span><span class="p">)</span>
@@ -636,17 +636,17 @@ Function evaluations 25, initial cost 1.2325e+06, final cost 7.3048e+00, first-o
     <span class="n">f_pixels</span> <span class="o">=</span> <span class="p">(</span><span class="n">sun_radius_pixels</span><span class="o">/</span><span class="p">(</span><span class="n">R_sun</span><span class="o">/</span><span class="n">D_sun</span><span class="p">))</span>
     <span class="k">return</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">compute_distance_to_pinicle</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">):</span>
-    <span class="n">height_pinicle_meters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">46</span><span class="p">,</span><span class="mf">54.5</span><span class="p">)</span>
-    <span class="n">hieght_pinicle_pixels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1063</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">distance_pinicle_meters</span> <span class="o">=</span> <span class="n">height_pinicle_meters</span><span class="o">/</span><span class="p">(</span><span class="n">hieght_pinicle_pixels</span><span class="o">/</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">))</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">distance_pinicle_meters</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_distance_to_pinnacle</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">):</span>
+    <span class="n">height_pinnacle_meters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">46</span><span class="p">,</span><span class="mf">54.5</span><span class="p">)</span>
+    <span class="n">hieght_pinnacle_pixels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1063</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">distance_pinnacle_meters</span> <span class="o">=</span> <span class="n">height_pinnacle_meters</span><span class="o">/</span><span class="p">(</span><span class="n">hieght_pinnacle_pixels</span><span class="o">/</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">distance_pinnacle_meters</span><span class="p">)</span>
 
 <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">):</span>
     <span class="n">f_pixels</span> <span class="o">=</span> <span class="n">compute_focal_length</span><span class="p">()</span>
-    <span class="n">distance_pinicle_meters</span> <span class="o">=</span> <span class="n">compute_distance_to_pinicle</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">)</span>
-    <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance_pinicle_meters</span><span class="p">)</span>
+    <span class="n">distance_pinnacle_meters</span> <span class="o">=</span> <span class="n">compute_distance_to_pinnacle</span><span class="p">(</span><span class="n">f_pixels</span><span class="p">)</span>
+    <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance_pinnacle_meters</span><span class="p">)</span>
 
 <span class="n">hist</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2000</span><span class="p">))</span>
 
@@ -927,6 +927,14 @@ Function evaluations 25, initial cost 1.2325e+06, final cost 7.3048e+00, first-o
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/Blog/images/copied_from_nb/../images/2020-04-13-Deconstructing-A-Monet/Rays.jpg" alt="Sun Rays"></p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -934,24 +942,14 @@ Function evaluations 25, initial cost 1.2325e+06, final cost 7.3048e+00, first-o
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">![</span>Sun Rays<span class="o">](</span>../images/2020-04-13-Deconstructing-A-Monet/Rays.jpg<span class="o">)</span>
-</pre></div>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sun_ray_heading</span> <span class="o">=</span> <span class="mf">243.51684945968697</span>
+<span class="n">sun_pinnacle_angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4255</span><span class="o">-</span><span class="mi">3424</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.531</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">73</span><span class="p">))</span>
+<span class="n">pinnacle_heading</span> <span class="o">=</span> <span class="n">sun_ray_heading</span><span class="o">-</span><span class="n">sun_pinnacle_angle</span>
 
-    </div>
-</div>
-</div>
 
-</div>
-    
 
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#xc,yc = 4255px,2044px</span>
+<span class="c1">#xc,yc = 4255px,2044px</span>
 
 <span class="c1">#sun_angle_above_horizon  = find_sun_angle_above_horizon(sun_center,horizon)</span>
 
@@ -963,6 +961,22 @@ Function evaluations 25, initial cost 1.2325e+06, final cost 7.3048e+00, first-o
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>116.48315054031303
+3.0223356164383564
+1.1129178082191782
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
