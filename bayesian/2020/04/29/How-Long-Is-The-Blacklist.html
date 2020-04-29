@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>How long is the blacklist? | Adventures with Numbers</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="How long is the blacklist?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Bayesian approach" />
+<meta property="og:description" content="A Bayesian approach" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html" />
+<meta property="og:site_name" content="Adventures with Numbers" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-29T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-29T00:00:00-05:00","headline":"How long is the blacklist?","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","description":"A Bayesian approach","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html","dateModified":"2020-04-29T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>How long is the blacklist? | Adventures with Numbers</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="How long is the blacklist?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Bayesian approach" />
+<meta property="og:description" content="A Bayesian approach" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html" />
+<meta property="og:site_name" content="Adventures with Numbers" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-29T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-29T00:00:00-05:00","headline":"How long is the blacklist?","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","description":"A Bayesian approach","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html","dateModified":"2020-04-29T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Adventures with Numbers</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How long is the blacklist?</h1><p class="page-description">A Bayesian approach</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-29T00:00:00-05:00" itemprop="datePublished">
+        Apr 29, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Bayesian">Bayesian</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Overview">Overview </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-04-29-How-Long-Is-The-Blacklist.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Overview">
+<a class="anchor" href="#Overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview<a class="anchor-link" href="#Overview"> </a>
+</h2>
+<p>I'm in the process of learning French, and as part of my language learning journey, I'm slowly working my way through <em>The Blacklist</em> on Netflix.</p>
+<p>The premise of the show involves an antihero played James Spader working his way through a list of neferious characters, taking them down one at a time.</p>
+<p>Out of idle intellectual curiousity, I was curious about how many names are on the list, based on the sample of names that are given. It's actually an interesting problem we can solve using Bayesian analysis, more commonly known as the "German Tank Problem", or the "Locomotive Problem".</p>
+<p>Fortunately Wikipedia provides us the data we need to help answer this question.</p>
+<p><a href="https://www.isaacslavitt.com/2015/12/19/german-tank-problem-with-pymc-and-pystan/">R1</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th>No. overall</th>
+<th>No. in season</th>
+<th>Title</th>
+<th>Blacklist guide</th>
+<th>Directed by</th>
+<th>Written by</th>
+<th>Original air date</th>
+<th>US viewers(millions)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>"Pilot"</td>
+<td>No. 52</td>
+<td>Joe Carnahan</td>
+<td>Jon Bokenkamp</td>
+<td>September 23, 2013</td>
+<td>12.58[10]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>"The Freelancer"</td>
+<td>No. 145</td>
+<td>Jace Alexander</td>
+<td>Jon Bokenkamp</td>
+<td>September 30, 2013</td>
+<td>11.35[11]</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>"Wujing"</td>
+<td>No. 84</td>
+<td>Michael Watkins</td>
+<td>Lukas Reiter</td>
+<td>October 7, 2013</td>
+<td>11.18[12]</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>"The Stewmaker"</td>
+<td>No. 161</td>
+<td>Vince Misiano</td>
+<td>Patrick Massett &amp; John Zinman</td>
+<td>October 14, 2013</td>
+<td>10.93[13]</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>"The Courier"</td>
+<td>No. 85</td>
+<td>Nick Gomez</td>
+<td>John C. Kelley</td>
+<td>October 21, 2013</td>
+<td>10.44[14]</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>"Gina Zanetakos"</td>
+<td>No. 152</td>
+<td>Adam Arkin</td>
+<td>Wendy West</td>
+<td>October 28, 2013</td>
+<td>10.51[15]</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>"Frederick Barnes"</td>
+<td>No. 47</td>
+<td>Michael Watkins</td>
+<td>J. R. Orci</td>
+<td>November 4, 2013</td>
+<td>10.34[16]</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>"General Ludd"</td>
+<td>No. 109</td>
+<td>Stephen Surjik</td>
+<td>Amanda Kate Shuman</td>
+<td>November 11, 2013</td>
+<td>10.69[17]</td>
+</tr>
+<tr>
+<td>9</td>
+<td>9</td>
+<td>"Anslo Garrick"</td>
+<td>No. 16</td>
+<td>Joe Carnahan</td>
+<td>Story by : Joe Carnahan &amp; Jason George Teleplay by : Joe Carnahan</td>
+<td>November 25, 2013</td>
+<td>10.96[18]</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>"Anslo Garrick Conclusion"</td>
+<td>No. 16</td>
+<td>Michael Watkins</td>
+<td>Lukas Reiter &amp; J. R. Orci</td>
+<td>December 2, 2013</td>
+<td>11.67[19]</td>
+</tr>
+<tr>
+<td>11</td>
+<td>11</td>
+<td>"The Good Samaritan"</td>
+<td>No. 106</td>
+<td>Dan Lerner</td>
+<td>Brandon Margolis &amp; Brandon Sonnier</td>
+<td>January 13, 2014</td>
+<td>9.35[20]</td>
+</tr>
+<tr>
+<td>12</td>
+<td>12</td>
+<td>"The Alchemist"</td>
+<td>No. 101</td>
+<td>Vince Misiano</td>
+<td>Anthony Sparks</td>
+<td>January 20, 2014</td>
+<td>8.83[21]</td>
+</tr>
+<tr>
+<td>13</td>
+<td>13</td>
+<td>"The Cyprus Agency"</td>
+<td>No. 64</td>
+<td>Michael Watkins</td>
+<td>Lukas Reiter</td>
+<td>January 27, 2014</td>
+<td>10.17[22]</td>
+</tr>
+<tr>
+<td>14</td>
+<td>14</td>
+<td>"Madeline Pratt"</td>
+<td>No. 73</td>
+<td>Michael Zinberg</td>
+<td>Jim Campolongo</td>
+<td>February 24, 2014</td>
+<td>11.18[23]</td>
+</tr>
+<tr>
+<td>15</td>
+<td>15</td>
+<td>"The Judge"</td>
+<td>No. 57</td>
+<td>Peter Werner</td>
+<td>Jonathan Shapiro &amp; Lukas Reiter</td>
+<td>March 3, 2014</td>
+<td>11.01[24]</td>
+</tr>
+<tr>
+<td>16</td>
+<td>16</td>
+<td>"Mako Tanida"</td>
+<td>No. 83</td>
+<td>Michael Watkins</td>
+<td>Story by : Joe Carnahan Teleplay by : John Eisendrath &amp; Jon Bokenkamp &amp; Patrick Massett &amp; John Zinman</td>
+<td>March 17, 2014</td>
+<td>10.97[25]</td>
+</tr>
+<tr>
+<td>17</td>
+<td>17</td>
+<td>"Ivan"</td>
+<td>No. 88</td>
+<td>Randy Zisk</td>
+<td>J.R. Orci &amp; Amanda Kate Shuman</td>
+<td>March 24, 2014</td>
+<td>10.80[26]</td>
+</tr>
+<tr>
+<td>18</td>
+<td>18</td>
+<td>"Milton Bobbit"</td>
+<td>No. 135</td>
+<td>Steven A. Adelson</td>
+<td>Daniel Voll</td>
+<td>March 31, 2014</td>
+<td>11.39[27]</td>
+</tr>
+<tr>
+<td>19</td>
+<td>19</td>
+<td>"The Pavlovich Brothers"</td>
+<td>Nos. 119-122</td>
+<td>Paul Edwards</td>
+<td>Elizabeth Benjamin</td>
+<td>April 21, 2014</td>
+<td>11.24[28]</td>
+</tr>
+<tr>
+<td>20</td>
+<td>20</td>
+<td>"The Kingmaker"</td>
+<td>No. 42</td>
+<td>Karen Gaviola</td>
+<td>J. R. Orci &amp; Lukas Reiter</td>
+<td>April 28, 2014</td>
+<td>10.85[29]</td>
+</tr>
+<tr>
+<td>21</td>
+<td>21</td>
+<td>"Berlin"</td>
+<td>No. 8</td>
+<td>Michael Zinberg</td>
+<td>John Eisendrath &amp; Jon Bokenkamp</td>
+<td>May 5, 2014</td>
+<td>10.47[30]</td>
+</tr>
+<tr>
+<td>22</td>
+<td>22</td>
+<td>"Berlin Conclusion"</td>
+<td>No. 8</td>
+<td>Michael Watkins</td>
+<td>Story by : Richard D'Ovidio Teleplay by : John Eisendrath &amp; Jon Bokenkamp &amp; Lukas Reiter &amp; J. R. Orci</td>
+<td>May 12, 2014</td>
+<td>10.44[31]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, we have: $P = [M | −MC]$</p>
+<p>M can be decomposed as $M=KR$ using the RQ decomposition.</p>
+<div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">K</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">rq</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+<p>So far, so good.</p>
+<p>Now things get a little more complex.</p>
+<p>We want to find a Camera matrix with a positive diagonal, giving positive focal lengths.</p>
+<p>However, in case this doesn't happen, we can adjust the sign of the column of each column of both the $K$ and $R$ matrix, to "Make it so".</p>
+<div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">K</span><span class="p">)))</span>
+<span class="k">if</span> <span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+
+<span class="c1"># D: the data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">52</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span>
+       <span class="mi">47</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span>
+       <span class="mi">64</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span>
+       <span class="mi">119</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">121</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span>
+       <span class="mi">89</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>
+       <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span>
+       <span class="mi">75</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span>
+       <span class="mi">55</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span>
+       <span class="mi">50</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span>
+       <span class="mi">95</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span>
+       <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>
+       <span class="mi">79</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span>
+       <span class="mi">98</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">163</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span>
+       <span class="mi">34</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>
+       <span class="mi">46</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+       <span class="mi">54</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span>
+       <span class="mi">56</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span>
+       <span class="mi">23</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span>
+       <span class="mi">20</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span>
+       <span class="mi">58</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span>
+        <span class="mi">6</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span>
+       <span class="mi">60</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span>
+       <span class="mi">130</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">159</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span>
+       <span class="mi">155</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">149</span><span class="p">,</span>
+       <span class="mi">150</span><span class="p">])</span>
+
+
+<span class="c1">#y = y[0:5]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># prior - P(N): N ~ uniform(max(y), 500)</span>
+    <span class="c1"># note: we use a large-ish number for the upper bound</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">DiscreteUniform</span><span class="p">(</span><span class="s2">"N"</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">upper</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+    <span class="c1"># likelihood - P(D|N): y ~ uniform(0, N)</span>
+    <span class="n">y_obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">DiscreteUniform</span><span class="p">(</span><span class="s2">"y_obs"</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># choose the sampling method - we have to use Metropolis-Hastings because</span>
+    <span class="c1"># the variables are discrete</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
+    
+    <span class="c1"># we'll use four chains, and parallelize to four cores</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"N"</span><span class="p">:</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()}</span> <span class="c1"># the highest number is a reasonable starting point</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+    
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>149
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Multiprocess sampling (2 chains in 2 jobs)
+Metropolis: [N]
+Sampling 2 chains, 0 divergences: 100%|██████████| 201000/201000 [00:22&lt;00:00, 9126.36draws/s]
+The number of effective samples is smaller than 10% for some parameters.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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s7aCgoM1feH/qpIpeCqv1sXhOvRTsn7471eaPGeJOvTo61mWeeZ0gf4lUR6HIo8cOaKjR48qKioqT3t0dLQkac+ePUUG27kQLW2YAgDKrtyC7couPZSTna30tFRFdetdaJ9M995WiHvvS5J+Obhf/92RpEtaF76nV5zyOBRZt25dhYaGatu2bbrppps87Vu3bpXkury/KOvXr1daWpo6duxYqscEAJRduQVbo2Ytdc3goXr+0Xs1aNg9ahnZXmczz2jfnl06+OMPui9+hho3b6k69Rto4QtTddu9DyvjVJqWvfy8Lq4XUabHbNasWbFBU5iPP/5Yv/76qyeo3nnnHdWtW1eRkZGKjIyUMUajRo3SzJkzFRoa6jnHFh8fr65du3pCa8GCBUpKSlL//v0VHh6ubdu2adq0aerSpYuuu+66Mo0HAFB65foF7dGPPamGl7TQ+2+8ptfmPa/Q6mFq0qK1+g8cIkkKqVxFjz7/ihZMf1zPPjxKdeo10OC779dXSZu17/td5VmaR3x8vD7++Lfvzd17772e9oSEBEnS008/rfDwcC1ZskTTp09X3bp1df3112vatGme834tW7bUokWLtGrVKqWkpCgiIkJ33nmnpk6dyhWRAOBDxhtfMF6940C5fks5LqpReW4eAFDxFHnxwu/+jyADAOxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEArEKwAQCsQrABAKxCsAEA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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="CGCooke/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Blog/bayesian/2020/04/29/How-Long-Is-The-Blacklist.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Assorted adventures with Numbers</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
