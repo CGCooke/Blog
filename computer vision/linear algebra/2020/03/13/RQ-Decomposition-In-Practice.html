@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-13T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-13T00:00:00-05:00","headline":"RQ Decomposition In Practice","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html","dateModified":"2020-03-13T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"headline":"RQ Decomposition In Practice","description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","datePublished":"2020-03-13T00:00:00-05:00","dateModified":"2020-03-13T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-13T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-13T00:00:00-05:00","headline":"RQ Decomposition In Practice","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html"},"@type":"BlogPosting","url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html","dateModified":"2020-03-13T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"headline":"RQ Decomposition In Practice","description":"How to use RQ Decomposition to recover your camera’s K, R and C matricies.","datePublished":"2020-03-13T00:00:00-05:00","dateModified":"2020-03-13T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-03-13-RQ-Decomposition-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/2020/03/13/RQ-Decomposition-In-Practice.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -50,9 +50,9 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
-    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         renderMathInElement( document.body, {
@@ -71,7 +71,7 @@ function wrap_img(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
         var elements = document.querySelectorAll(".post img");
         Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("title")) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
                 const caption = document.createElement('figcaption');
                 var node = document.createTextNode(el.getAttribute("title"));
                 caption.appendChild(node);
@@ -115,7 +115,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">RQ Decomposition In Practice</h1><p class="page-description">How to use RQ Decomposition to recover your camera&#39;s K, R and C matricies.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-13T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">RQ Decomposition In Practice</h1><p class="page-description">How to use RQ Decomposition to recover your camera's K, R and C matricies.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-13T00:00:00-05:00" itemprop="datePublished">
         Mar 13, 2020
       </time>
        • <span class="read-time" title="Estimated read time">

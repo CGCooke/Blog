@@ -161,7 +161,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "Hi, I’m Cameron, . I’m passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis, and the future of Aerospace. . I’m writing a blog because the first step to better understanding something is to try and explain it to someone else. . Plus I get excited about the incredible world around us, and writing helps me appreciate it all the more. . Until next time. . Cameron . .",
+          "content": "This is where you put the contents of your About page. Like all your pages, it’s in Markdown format. . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
           "url": "https://cgcooke.github.io/Blog/about/",
           "relUrl": "/about/",
           "date": ""
@@ -185,6 +185,20 @@
   
 
   
+  
+
+  
+  
+
+  
+      ,"page10": {
+          "title": "",
+          "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
+          "url": "https://cgcooke.github.io/Blog/robots.txt",
+          "relUrl": "/robots.txt",
+          "date": ""
+      }
+      
   
 
 }
