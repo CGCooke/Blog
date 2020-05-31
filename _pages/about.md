@@ -6,11 +6,11 @@ permalink: /about/
 
 Hi, I'm Cameron,
 
-I'm passionate about AI (Computer Vision in particular), Robotics and the future of Aerospace.
+I'm passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis, and the future of Aerospace.
 
-I'm writing a blog because the first step to truly understanding something is being able to explain it to someone else.
+I'm writing a blog because the first step to better understanding something is to try and explain it to someone else. 
 
-Plus I get excited about the incredible world around us, and can't wait to tell everyone about it!
+Plus I get excited about the incredible world around us, and writing helps me appreciate it all the more.
 
 Until next time.
 
