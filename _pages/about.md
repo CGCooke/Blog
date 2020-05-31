@@ -4,10 +4,17 @@ title: About Me
 permalink: /about/
 ---
 
-This is where you put the contents of your *About* page. Like all your pages, it's in [Markdown](https://guides.github.com/features/mastering-markdown/) format.
+Hi, I'm Cameron!
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
+I'm passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis and Flight.
+
+I'm writing a blog because the first step to better understanding something is to try and explain it to someone else. 
+
+Plus I get excited about the incredible world around us, and writing helps me appreciate it all the more.
+
+I currently work with Airbus in Toulouse, France, where I get to learn from some incredible people, while shaping the future of the Aerospace industry.
+
+Cameron
 
 
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+![_config.yml]({{ site.baseurl }}/images/about/IMG_1807.JPG)
