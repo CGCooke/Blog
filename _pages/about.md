@@ -6,13 +6,13 @@ permalink: /about/
 
 Hi, I'm Cameron,
 
-I'm passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis, and the future of Aerospace.
+I'm passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis and Flight.
 
 I'm writing a blog because the first step to better understanding something is to try and explain it to someone else. 
 
 Plus I get excited about the incredible world around us, and writing helps me appreciate it all the more.
 
-Until next time.
+I currently work with Airbus in Toulouse, France, where I get to learn from some incredible people, while shaping the future of the Aerospace industry.
 
 Cameron
 
