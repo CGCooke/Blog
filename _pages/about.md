@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-Hi, I'm Cameron,
+Hi, I'm Cameron!
 
 I'm passionate about Computer Vision, Robotics, Deep Learning, Bayesian Analysis and Flight.
 
