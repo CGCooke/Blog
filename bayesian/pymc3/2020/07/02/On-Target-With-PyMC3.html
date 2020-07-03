@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="On Target With PyMC3" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<meta property="og:description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
+<meta name="description" content="Let’s look and how we can use PyMC3 to help us improve our aim." />
+<meta property="og:description" content="Let’s look and how we can use PyMC3 to help us improve our aim." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-02T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"On Target With PyMC3","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","datePublished":"2020-07-02T00:00:00-05:00","dateModified":"2020-07-02T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-02-On-Target-With-PyMC3/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html","@context":"https://schema.org"}</script>
+{"headline":"On Target With PyMC3","description":"Let’s look and how we can use PyMC3 to help us improve our aim.","datePublished":"2020-07-02T00:00:00-05:00","dateModified":"2020-07-02T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-02-On-Target-With-PyMC3/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -29,8 +29,8 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="On Target With PyMC3" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<meta property="og:description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
+<meta name="description" content="Let’s look and how we can use PyMC3 to help us improve our aim." />
+<meta property="og:description" content="Let’s look and how we can use PyMC3 to help us improve our aim." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-02T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"On Target With PyMC3","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","datePublished":"2020-07-02T00:00:00-05:00","dateModified":"2020-07-02T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-02-On-Target-With-PyMC3/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html","@context":"https://schema.org"}</script>
+{"headline":"On Target With PyMC3","description":"Let’s look and how we can use PyMC3 to help us improve our aim.","datePublished":"2020-07-02T00:00:00-05:00","dateModified":"2020-07-02T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-02-On-Target-With-PyMC3/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/2020/07/02/On-Target-With-PyMC3.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -115,13 +115,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">On Target With PyMC3</h1><p class="page-description">Let's learn how to use a set of known 2D and 3D point correspondances to calibrate a camera</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-02T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">On Target With PyMC3</h1><p class="page-description">Let's look and how we can use PyMC3 to help us improve our aim.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-02T00:00:00-05:00" itemprop="datePublished">
         Jul 2, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -148,6 +148,8 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#The-situation">The situation </a></li>
+<li class="toc-entry toc-h2"><a href="#Lessons-learned">Lessons learned </a></li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
@@ -164,6 +166,21 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-situation">
+<a class="anchor" href="#The-situation" aria-hidden="true"><span class="octicon octicon-link"></span></a>The situation<a class="anchor-link" href="#The-situation"> </a>
+</h2>
+<p>Last weekend I was relaxing in the countryside at a colleague's château, and we decided to take turns shooting at a target with an air rifle. Unfortunately, we were all terrible shots, and the rifle was uncalibrated, which got me thinking about how we could calibrate the rifle in an intellectually principled way.</p>
+<p>Let's step back, and make some assumptions.</p>
+<p>Firstly, while we are aiming at the center of the target, because the rifle is uncalibrated, the pellets are landing at another location.</p>
+<p>Secondly, because of a number of factors, including wind, temperature, humidity, and above all, our terrible aim, the pellets aren't landing where we intend them to.</p>
+<p>Let's start modelling the situation in Python.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -190,6 +207,16 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, now let's pretend that our rifle is incorrectly calibrated such that, when we are aiming at exactly at the center of the target, our pellets will land 120 units to the right, and 80 pixels down.</p>
+<p>Let's also pretend that they will be normally distributed around this point, with a standard deviation of 85 pixels in each axis due to the wind/humidity/our terrible aim.</p>
+<p>Let's go ahead and randomly generate the results of 5 shots at the target.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -199,12 +226,26 @@ window.onload = wrap_img;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_observed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span><span class="mi">85</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">y_observed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span><span class="mi">85</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
 
-<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'data/2020-07-02-On-Target-With-PyMC3/1000px-10_m_Air_Rifle_target.svg.png'</span><span class="p">)</span>
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'data/2020-07-02-On-Target-With-PyMC3/1000px-10_m_Air_Rifle_target.svg.png'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_observed</span><span class="o">+</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="o">-</span><span class="n">y_observed</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">s</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="c1">#plt.scatter(120+500,500--80,alpha=0.9,s = 1000,color='g')</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -233,6 +274,14 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, now back to reality. Let's say that we have fired off 5 shots, and we have the target above as a result. What adjustments should we make in order to improve our aim?</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -460,10 +509,6 @@ Sampling 2 chains, 0 divergences: 100%|██████████| 22000/220
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s1">'x_offset'</span><span class="p">]</span><span class="o">+</span><span class="mi">500</span><span class="p">,</span> <span class="n">trace</span><span class="p">[:][</span><span class="s1">'y_offset'</span><span class="p">]</span><span class="o">+</span><span class="mi">500</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"hex"</span><span class="p">);</span>
 
-<span class="c1">#plot = sns.jointplot(x, y, kind="kde")</span>
-<span class="c1">#plot.ax_marg_x.set_xlim(0, 1000)</span>
-<span class="c1">#plot.ax_marg_y.set_ylim(0, 1000)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -531,6 +576,15 @@ Sampling 2 chains, 0 divergences: 100%|██████████| 22000/220
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lessons-learned">
+<a class="anchor" href="#Lessons-learned" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lessons learned<a class="anchor-link" href="#Lessons-learned"> </a>
+</h2>
+</div>
+</div>
+</div>
 </div>
 
 
