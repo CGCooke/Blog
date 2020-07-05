@@ -227,12 +227,12 @@ window.onload = wrap_img;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">Rotate_Translate</span><span class="p">(</span><span class="n">X_est</span><span class="p">,</span> <span class="n">Y_est</span><span class="p">,</span> <span class="n">Z_est</span><span class="p">):</span>
     <span class="c1">#Quaternions: X: 0.852 Y: -0.242 Z: 0.139 W: 0.442 </span>
-    <span class="n">Q0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Wq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.166</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">Q1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Xq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.894</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">Q2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Yq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.408</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">Q3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Zq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.084</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">Q0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Wq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.166</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Xq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.894</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Yq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.408</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Zq'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.084</span><span class="p">,</span>  <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
     
-    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     
     <span class="n">Q0</span> <span class="o">/=</span> <span class="n">norm</span>
     <span class="n">Q1</span> <span class="o">/=</span> <span class="n">norm</span>
@@ -244,11 +244,10 @@ window.onload = wrap_img;
         <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q1</span><span class="o">*</span><span class="n">Q3</span> <span class="o">-</span> <span class="n">Q0</span><span class="o">*</span><span class="n">Q2</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q0</span><span class="o">*</span><span class="n">Q1</span> <span class="o">+</span> <span class="n">Q2</span><span class="o">*</span><span class="n">Q3</span><span class="p">),</span> <span class="p">(</span><span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">)]]</span>
     
     
-    <span class="c1"># Define priors</span>
-    <span class="n">X_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'X_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.85</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="n">Y_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Y_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">12.92</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="c1"># Define priors </span>
+    <span class="n">X_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'X_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.85</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">Y_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Y_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">12.92</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
     <span class="n">Z_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'Z_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">2.75</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
-    
     
     <span class="n">RIC_0_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
     <span class="n">RIC_1_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
@@ -277,15 +276,14 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span> <span class="c1"># model specifications in PyMC3 are wrapped in a with-statement</span>
-    
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
     
     <span class="c1">#Focal length (Pixels): 1010</span>
     <span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">1010</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
     
-    <span class="n">k1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k1'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.327041</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.16</span><span class="p">)</span>
-    <span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k2'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.175031</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.08</span><span class="p">)</span>
-    <span class="n">k3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k3'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.030751</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">)</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k1'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.327041</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="mf">0.327041</span><span class="p">)</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k2'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.175031</span><span class="p">,</span>  <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="mf">0.175031</span><span class="p">)</span>
+    <span class="n">k3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'k3'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.030751</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="mf">0.030751</span><span class="p">)</span>
     
     <span class="n">c_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'c_x'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">1038.58</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
     <span class="n">c_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'c_y'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">2663.52</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
@@ -294,9 +292,11 @@ window.onload = wrap_img;
     <span class="n">py_est</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">Z</span>
     
     <span class="c1">#Radial distortion</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">px_est</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">py_est</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">px_est</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">py_est</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">px_est</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">py_est</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">radial_distortion_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k1</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">px_est</span> <span class="o">*=</span> <span class="n">radial_distortion_factor</span>
+    <span class="n">py_est</span> <span class="o">*=</span> <span class="n">radial_distortion_factor</span>
     
     <span class="n">px_est</span> <span class="o">*=</span> <span class="n">focal_length</span>
     <span class="n">py_est</span> <span class="o">*=</span> <span class="n">focal_length</span>
@@ -306,13 +306,13 @@ window.onload = wrap_img;
     
     <span class="n">error_scale</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#px</span>
     
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">px</span> <span class="o">-</span> <span class="n">px_est</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">py</span> <span class="o">-</span> <span class="n">py_est</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">px</span> <span class="o">-</span> <span class="n">px_est</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">py</span> <span class="o">-</span> <span class="n">py_est</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     
     <span class="c1"># Define likelihood</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">'rms_pixel_error'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">delta</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">error_scale</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">number_points</span><span class="p">))</span>
 
     <span class="c1"># Inference!</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">1_000</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">'adapt_diag'</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span> <span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1_000</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">1_000</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">'adapt_diag'</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">4</span> <span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1_000</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -327,12 +327,30 @@ window.onload = wrap_img;
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Auto-assigning NUTS sampler...
 Initializing NUTS using adapt_diag...
-Multiprocess sampling (2 chains in 2 jobs)
+Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [c_y, c_x, k3, k2, k1, focal_length, Z_translate, Y_translate, X_translate, Zq, Yq, Xq, Wq]
-Sampling 2 chains, 2 divergences:  61%|██████    | 2440/4000 [04:19&lt;03:07,  8.33draws/s]</pre>
+Sampling 4 chains, 0 divergences:  39%|███▉      | 3153/8000 [03:23&lt;06:51, 11.77draws/s]</pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Profiling of the logp call</span>
+<span class="c1">#model.profile(model.logpt).summary()</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
