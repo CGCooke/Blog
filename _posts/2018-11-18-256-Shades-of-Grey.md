@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: Visualizing Digital Elevation Maps
 categories: [Remote Sensing]
-image: images/2020-07-02-On-Target-With-PyMC3/header.jpg
+image: images/2018-11-18-256-Shades-of-Grey/header.jpg
 ---
 
 On February 22, 2000, after 11 days of measurements, the most comprehensive map ever created of the earth's topography was complete. The space shuttle *Endeavor* had just completed the Shuttle Radar Topography Mission, using a specialised radar to image the earths surface.
@@ -119,7 +119,7 @@ Hillshading
 
 At this point we can begin to visualise the DEM. One highly effective method is *hillshading*, which models the way the surface of the DEM would be illuminated by light projected onto it.  Shading of the slopes allows the DEM to be more intuitively interpreted than just coloring by height alone. 
 
-![_config.yml]({{ site.baseurl }}/images/256_Shades_of_Grey/hillshade.png)
+![_config.yml]({{ site.baseurl }}/images/2018-11-18-256-Shades-of-Grey/hillshade.png)
 
 
 ```python
@@ -134,7 +134,7 @@ Hypsometric Tinting
 
 Hillshading can also be combined with height information to aid interpretation of the topography. The technical name for the process of coloring a DEM based on  height is *hypsometric tinting*. The process is simple, with GDAL mapping colors to cell heights, using a provided color scheme. 
 
-![_config.yml]({{ site.baseurl }}/images/256_Shades_of_Grey/color_relief.png)
+![_config.yml]({{ site.baseurl }}/images/2018-11-18-256-Shades-of-Grey/color_relief.png)
 
 
 ```python
@@ -169,7 +169,7 @@ Slope Shading
 
 Another technique for visualizing terrain is slopeshading. While hypsometric tinting assigns colors to cells based on elevation, slope shading assigns colors to pixels based on the slope (0º to 90º). In this case, white (255,255,255) is assigned to slopes of 0º and black (0,0,0) is assigned to slopes of 90º, with varying shades of grey for slopes in-between. 
 
-![_config.yml]({{ site.baseurl }}/images/256_Shades_of_Grey/slopeshade.png)
+![_config.yml]({{ site.baseurl }}/images/2018-11-18-256-Shades-of-Grey/slopeshade.png)
 
 This color scheme is encoded in a txt file for gdaldem as follows: 
 
@@ -204,7 +204,7 @@ One important detail to note is that the pixel by pixel multiplication occurs in
 
 In one final tweak, the brightness of the output image is increased by 40%, to offset the average reduction in brightness caused by multiplying the layers together. 
 
-![_config.yml]({{ site.baseurl }}/images/256_Shades_of_Grey/blended.png)
+![_config.yml]({{ site.baseurl }}/2018-11-18-256-Shades-of-Grey/256_Shades_of_Grey/blended.png)
 
 ```python
 ''' Merge components using Python Image Lib '''
