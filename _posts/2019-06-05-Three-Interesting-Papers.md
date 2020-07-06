@@ -3,6 +3,7 @@ toc: true
 layout: post
 description: Three Interesting Papers
 categories: [Deep Learning,Computer Vision]
+image: images/2019-06-05-Three-Interesting-Papers/header.jpg
 ---
 
 
