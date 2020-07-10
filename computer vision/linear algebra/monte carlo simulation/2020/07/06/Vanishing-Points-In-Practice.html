@@ -646,6 +646,7 @@ VP3 [2.45111941e+01 2.60455689e+04]
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From the above visualisation, we can see that we have a distribution of attitudes. Let's make a subtle change, and find the <em>quaternion</em> representation of the angles.</p>
 <p><em>Quaternions</em> are an elegant way to represent a rotation in 3 dimensions, using 4 numbers. Without going into details, they have many useful properties. If you want to learn more, <a href="https://www.youtube.com/watch?v=zjMuIxRvygQ">3Blue1Brown</a> has done some incredible videos explaining them in more details.</p>
+<p>Let's do a <em>Monte carlo simulation</em>, and compute both the means, <em>and</em> variances of the attitudes.</p>
 
 </div>
 </div>
@@ -768,7 +769,7 @@ W: Mean: 0.57, Std: 0.22
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now let's have a look at the focal length:</p>
+<p>Now let's do the same for the focal length:</p>
 
 </div>
 </div>
@@ -934,8 +935,8 @@ W: Mean: 0.57, Std: 0.22
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It's clear there is still a lot of uncertinty regarding the principle point of the camera, however we can still see that the principle point is likely inside the image.</p>
-<p>The net result of this analysis is that we now have prior estimates for what we think the camera's intrinsic matrix looks like, as well as what we think it's attitude is.</p>
+<p>It's clear there is still a lot of uncertainty regarding the principle point of the camera, however we can still see that the principle point is likely inside the image.</p>
+<p>The net result of this analysis is that we now have prior estimates for what we think the camera's intrinsic matrix looks like, as well as what we think it's attitude is. IE, We have both the mean, and the variance for each parameter, based on what we have observed.</p>
 <p>In the next post, I will combine this information, with other information we have, to produce a more accurate estimate of the camera's position and attitude. </p>
 
 </div>
