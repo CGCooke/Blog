@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -734,9 +734,10 @@ VP3 [2.45111941e+01 2.60455689e+04]
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">component_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'X'</span><span class="p">,</span><span class="s1">'Y'</span><span class="p">,</span><span class="s1">'Z'</span><span class="p">,</span><span class="s1">'W'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
     <span class="n">mean</span><span class="p">,</span> <span class="n">var</span>  <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">quats</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Mean: </span><span class="si">{:.2f}</span><span class="s2">,Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">{}</span><span class="s2">: Mean: </span><span class="si">{:.2f}</span><span class="s2">, Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">component_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)),)</span> 
     
 </pre></div>
 
@@ -750,10 +751,10 @@ VP3 [2.45111941e+01 2.60455689e+04]
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Mean: 0.71,Std: 0.21
-Mean: -0.30,Std: 0.13
-Mean: 0.27,Std: 0.16
-Mean: 0.57,Std: 0.22
+<pre>X: Mean: 0.71, Std: 0.21
+Y: Mean: -0.30, Std: 0.13
+Z: Mean: 0.27, Std: 0.16
+W: Mean: 0.57, Std: 0.22
 </pre>
 </div>
 </div>
@@ -764,6 +765,14 @@ Mean: 0.57,Std: 0.22
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's have a look at the focal length:</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -810,6 +819,14 @@ Mean: 0.57,Std: 0.22
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, let's see what we think the principle point of the camera might be:</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -822,14 +839,14 @@ Mean: 0.57,Std: 0.22
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="n">mean</span><span class="p">,</span> <span class="n">var</span>  <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Ks</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Mean: </span><span class="si">{:.2f}</span><span class="s2">,Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Mean (CX): </span><span class="si">{:.2f}</span><span class="s2">,Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)))</span> 
 
 <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">Ks</span><span class="p">[:,</span><span class="mi">5</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">'cy'</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="n">mean</span><span class="p">,</span> <span class="n">var</span>  <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Ks</span><span class="p">[:,</span><span class="mi">5</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Mean: </span><span class="si">{:.2f}</span><span class="s2">,Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Mean (CY): </span><span class="si">{:.2f}</span><span class="s2">,Std: </span><span class="si">{:.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)))</span> 
 </pre></div>
 
     </div>
@@ -914,118 +931,16 @@ Mean: 0.57,Std: 0.22
 </div>
     
 
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
+<div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.998</span><span class="p">,</span><span class="mf">0.014</span><span class="p">,</span><span class="o">-</span><span class="mf">0.06</span> <span class="p">],</span>
- <span class="p">[</span> <span class="mf">0.061</span><span class="p">,</span><span class="o">-</span><span class="mf">0.103</span><span class="p">,</span><span class="mf">0.993</span><span class="p">],</span>
- <span class="p">[</span> <span class="mf">0.008</span><span class="p">,</span><span class="o">-</span><span class="mf">0.995</span><span class="p">,</span><span class="o">-</span><span class="mf">0.104</span><span class="p">]])</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-<span class="n">r</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.742357  ,  0.02525024, -0.01750683, -0.66929965])</pre>
-</div>
-
-</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It's clear there is still a lot of uncertinty regarding the principle point of the camera, however we can still see that the principle point is likely inside the image.</p>
+<p>The net result of this analysis is that we now have prior estimates for what we think the camera's intrinsic matrix looks like, as well as what we think it's attitude is.</p>
+<p>In the next post, I will combine this information, with other information we have, to produce a more accurate estimate of the camera's position and attitude. </p>
 
 </div>
 </div>
-
 </div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.68522616</span><span class="p">,</span><span class="o">-</span><span class="mf">0.09349431</span><span class="p">,</span><span class="mf">0.7223046</span> <span class="p">],</span>
- <span class="p">[</span><span class="o">-</span><span class="mf">0.72720858</span><span class="p">,</span><span class="o">-</span><span class="mf">0.14284675</span><span class="p">,</span><span class="mf">0.67138848</span><span class="p">],</span>
- <span class="p">[</span> <span class="mf">0.04040786</span><span class="p">,</span><span class="o">-</span><span class="mf">0.98531905</span><span class="p">,</span><span class="o">-</span><span class="mf">0.16587219</span><span class="p">]])</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-<span class="n">r</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.7060356 , -0.29060251,  0.2700687 , -0.58662322])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_quat</span><span class="p">([</span><span class="mf">0.894</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.408</span><span class="p">,</span> <span class="mf">0.084</span><span class="p">,</span> <span class="mf">0.166</span><span class="p">])</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-
-<span class="n">r</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.89386057, -0.40793637,  0.0839869 , -0.16597411])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
 </div>
 
 
