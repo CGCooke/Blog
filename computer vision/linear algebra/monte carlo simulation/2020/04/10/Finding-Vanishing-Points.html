@@ -266,7 +266,7 @@ Sometimes it can be easy to find the location of vanishing point in an image, fo
 <p>Straight lines in 3D space are mapped to straight lines in 2D space by an ideal camera. We can automate the detection of straight lines using algorithms like a hough transform. However I've used an external program to manual annotate the straight lines in the image. I've annotated 3 sets of lines that correspond to one of 3 different vanishing points.</p>
 <p>Often, we use a <em>manhattan world</em> assumption, that is assuming that there are 3 different sets of orthogonal parallel lines present in the world. We assume that there are 2 orthogonal lines that form the ground plane. In an image, each set of parallel lines that lies on this plane online, which in practice is the horizon.</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-04-10-Finding-Vanishing-Points/Annotated.jpg" alt="An annotated image"></p>
-<p>Now, let's use linear algebra and least mean squares (and the magic of [Stack Overflow])(<a href="https://stackoverflow.com/questions/52088966/nearest-intersection-point-to-many-lines-in-python">https://stackoverflow.com/questions/52088966/nearest-intersection-point-to-many-lines-in-python</a>) to find one of the vanishing points. </p>
+<p>Now, let's use linear algebra and least mean squares (and the magic of <a href="https://stackoverflow.com/questions/52088966/nearest-intersection-point-to-many-lines-in-python">Stack Overflow</a>) to find one of the vanishing points. </p>
 
 </div>
 </div>
