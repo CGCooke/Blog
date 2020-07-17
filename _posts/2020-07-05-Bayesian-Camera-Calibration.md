@@ -1,12 +1,12 @@
 ---
 toc: true
 layout: post
-description: Let's look and how we can use PyMC3 to help us improve our aim.
-categories: [Bayesian, PyMC3]
+description: Let's apply PyMC3 to our camera calibration problem
+categories: [Bayesian, PyMC3, Computer Vision]
 image: images/2018-11-18-256-Shades-of-Grey/header.jpg
 ---
 
-DEM
+Paragraph Header
 ===============
 
 
@@ -52,10 +52,10 @@ def normalize_quaternions(Q0,Q1,Q2,Q3):
     return(Q0,Q1,Q2,Q3)
 
 def Rotate_Translate(X_est, Y_est, Z_est):
-    Q0 = pm.Normal('Wq', mu = 0.166,  sigma=0.2)
-    Q1 = pm.Normal('Xq', mu = 0.894,  sigma=0.2)
-    Q2 = pm.Normal('Yq', mu = -0.408, sigma=0.2)
-    Q3 = pm.Normal('Zq', mu = 0.084,  sigma=0.2)
+    Q1 = pm.StudentT('Xq', nu = 1.983, mu = 0.707, sigma = 0.016)
+    Q2 = pm.StudentT('Yq', nu = 1.799, mu = -0.298, sigma = 0.004)
+    Q3 = pm.StudentT('Zq', nu = 2.178, mu = 0.272, sigma = 0.012)
+    Q0 = pm.StudentT('Wq', nu = 1.545, mu = 0.583, sigma = 0.013)
     
     Q0,Q1,Q2,Q3 = normalize_quaternions(Q0,Q1,Q2,Q3)
     
@@ -75,7 +75,6 @@ def Rotate_Translate(X_est, Y_est, Z_est):
     Z_out = X_est * R[2][0] + Y_est * R[2][1] + Z_est * R[2][2] + RIC_2_3
     
     return(X_out, Y_out, Z_out)
-    
 ```
 
 
@@ -85,15 +84,14 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
     
-    #Focal length (Pixels): 1010
-    focal_length = pm.Normal('focal_length',mu = 1010, sigma = 100)
+    focal_length = pm.Normal('focal_length',mu = 2191, sigma = 11.50)
     
-    k1 = pm.Normal('k1', mu = -0.327041, sigma = 0.1 * 0.327041)
-    k2 = pm.Normal('k2', mu = 0.175031,  sigma = 0.1 * 0.175031)
-    k3 = pm.Normal('k3', mu = -0.030751, sigma = 0.1 * 0.030751)
+    k1 = pm.Normal('k1', mu = -0.327041, sigma = 0.5 * 0.327041)
+    k2 = pm.Normal('k2', mu = 0.175031,  sigma = 0.5 * 0.175031)
+    k3 = pm.Normal('k3', mu = -0.030751, sigma = 0.5 * 0.030751)
     
-    c_x = pm.Normal('c_x', mu = 1038.58, sigma = 200)
-    c_y = pm.Normal('c_y', mu = 2663.52, sigma = 200)
+    c_x = pm.Normal('c_x', mu = 2268/2.0, sigma = 1000)
+    c_y = pm.Normal('c_y', mu = 1503/2.0, sigma = 1000)
     
     px_est = X / Z
     py_est = Y / Z
@@ -119,7 +117,7 @@ with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-
     likelihood = pm.Normal('rms_pixel_error', mu = delta, sigma = error_scale, observed=np.zeros(number_points))
 
     # Inference!
-    trace = pm.sample(draws=10_000, init='adapt_diag', cores=3, tune=10_000)
+    trace = pm.sample(draws=10_000, init='adapt_diag', cores=3, tune=5_000)
 ```
 
 
