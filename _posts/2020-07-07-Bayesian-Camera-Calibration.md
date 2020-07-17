@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: Let's apply PyMC3 to our camera calibration problem
 categories: [Bayesian, PyMC3, Computer Vision]
-image: images/2018-11-18-256-Shades-of-Grey/header.jpg
+image: images/2020-07-07-Bayesian-Camera-Calibration/header.jpg
 ---
 
 Paragraph Header
