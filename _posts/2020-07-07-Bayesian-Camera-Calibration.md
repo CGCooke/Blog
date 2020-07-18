@@ -7,7 +7,17 @@ image: images/2020-07-07-Bayesian-Camera-Calibration/header.jpg
 ---
 
 ## The Context
+In a previous [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I attempted to reverse-engineer information about a camera, from a photo it had taken of a scene. While I found a solution, I wasn't sure how confident I could be in the answer. I was also curious if I could improve the solution by injecting prior knowlege, from other sources.
 
+
+I the idea to apply Bayesian analysis, and try and find a solution using *Makov Chain Monte Carlo* and [PyMC3](https://docs.pymc.io/). After a bit of searching, I also found this [paper](https://www.sciencedirect.com/science/article/pii/S0924271619302734), which told me that the idea wasn't completely outlandish.
+
+
+In this post, we will combine a *prior* belief (probability distributions) about some of the camera's parameters, with measured 2D-3D scene correspondances. By combining these two sources of information, we can compute *posterior* distributions for each camera parameter. 
+
+Because we have a probability distribution, we can understand how certain we are about each paramter. 
+
+Let's start by building a model.
 
 
 ## Modelling
@@ -38,7 +48,13 @@ points3d = np.vstack([X_input,Y_input,Z_input]).T
 ```
 
 
+Ok, so now that we have loaded in our 2D and 3D point correspondances, we can now turn to representing the camera itself.
+
 ### Quaternions
+
+
+For reasons of numerical stability, I'm going to use [quaternions](https://www.youtube.com/watch?v=3BR8tK-LuB0) to represent the camera's orientation/attitude in 3D space. 
+
 
 ```python
 def create_rotation_matrix(Q0,Q1,Q2,Q3):
