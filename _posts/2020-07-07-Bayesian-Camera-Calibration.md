@@ -78,8 +78,6 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 ```
 
 
-
-
 ```python
 with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
