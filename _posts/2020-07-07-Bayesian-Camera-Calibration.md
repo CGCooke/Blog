@@ -15,7 +15,7 @@ I the idea to apply Bayesian analysis, and try and find a solution using *Makov 
 
 In this post, we will combine a *prior* belief (probability distributions) about some of the camera's parameters, with measured 2D-3D scene correspondances. By combining these two sources of information, we can compute *posterior* distributions for each camera parameter. 
 
-Because we have a probability distribution, we can understand how certain we are about each paramter. 
+Because we have a probability distribution, we can understand how certain we are about each parameter. 
 
 Let's start by building a model.
 
@@ -58,6 +58,7 @@ For reasons of numerical stability, I'm going to use [quaternions](https://www.y
 
 ```python
 def create_rotation_matrix(Q0,Q1,Q2,Q3):
+    #Create a rotation matrix from a Quaternion representation of an angle.
     R =[[Q0**2 + Q1**2 - Q2**2 - Q3**2, 2*(Q1*Q2 - Q0*Q3), 2*(Q0*Q2 + Q1*Q3)],
         [2*(Q1*Q2 + Q0*Q3), Q0**2 - Q1**2 + Q2**2 - Q3**2, 2*(Q2*Q3 - Q0*Q1)],
         [2*(Q1*Q3 - Q0*Q2), 2*(Q0*Q1 + Q2*Q3), (Q0**2 - Q1**2 - Q2**2 + Q3**2)]]
@@ -72,16 +73,41 @@ def normalize_quaternions(Q0,Q1,Q2,Q3):
     return(Q0,Q1,Q2,Q3)
 ```
 
+
+In a [previous post](https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html), I used sets of parallel lines in the image, to find the locations of vanishing points.
+
+By using these [vanishing points](https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html), I was able to determine both an estimate for the orientation of the camera, as well as of the *intrinsic parameters*.
+
+
+
+Because we are using quaternions to represent the orientation of the camera, we have 4 different components (X,Y,Z,W). 
 ![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/rotation_priors.png)
 
 
+A *prior* is a probability distribution on a parameter, and I'm using [Student's T](https://docs.pymc.io/api/distributions/continuous.html#pymc3.distributions.continuous.StudentT) to model this distribution.
+
 
 ### Extrinsics
+
+```python
+Q1 = pm.StudentT('Xq', nu = 1.824, mu = 0.706, sigma = 0.015)
+Q2 = pm.StudentT('Yq', nu = 1.694, mu = -0.298, sigma = 0.004)
+Q3 = pm.StudentT('Zq', nu = 2.015, mu = 0.272, sigma = 0.011)
+Q0 = pm.StudentT('Wq', nu = 0.970, mu = 0.590, sigma = 0.019)
+```
+
+```python
+# Define  translation priors 
+X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
+Y_translate = pm.Normal('Y_translate', mu = -12.92, sigma = 10)
+Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 5)
+```
 
 
 
 ```python
 def Rotate_Translate(X_est, Y_est, Z_est):
+    #Define rotation priors
     Q1 = pm.StudentT('Xq', nu = 1.824, mu = 0.706, sigma = 0.015)
     Q2 = pm.StudentT('Yq', nu = 1.694, mu = -0.298, sigma = 0.004)
     Q3 = pm.StudentT('Zq', nu = 2.015, mu = 0.272, sigma = 0.011)
@@ -91,7 +117,7 @@ def Rotate_Translate(X_est, Y_est, Z_est):
     
     R = create_rotation_matrix(Q0,Q1,Q2,Q3)
     
-    # Define priors 
+    # Define  translation priors 
     X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
     Y_translate = pm.Normal('Y_translate', mu = -12.92, sigma = 10)
     Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 5)
