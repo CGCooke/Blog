@@ -6,12 +6,11 @@ categories: [Bayesian, PyMC3, Computer Vision]
 image: images/2020-07-07-Bayesian-Camera-Calibration/header.jpg
 ---
 
-Paragraph Header
-===============
+## The Context
 
 
 
-
+## Modelling
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,6 +38,8 @@ points3d = np.vstack([X_input,Y_input,Z_input]).T
 ```
 
 
+### Quaternions
+
 ```python
 def create_rotation_matrix(Q0,Q1,Q2,Q3):
     R =[[Q0**2 + Q1**2 - Q2**2 - Q3**2, 2*(Q1*Q2 - Q0*Q3), 2*(Q0*Q2 + Q1*Q3)],
@@ -53,7 +54,17 @@ def normalize_quaternions(Q0,Q1,Q2,Q3):
     Q2 /= norm
     Q3 /= norm
     return(Q0,Q1,Q2,Q3)
+```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/rotation_priors.png)
+
+
+
+### Extrinsics
+
+
+
+```python
 def Rotate_Translate(X_est, Y_est, Z_est):
     Q1 = pm.StudentT('Xq', nu = 1.824, mu = 0.706, sigma = 0.015)
     Q2 = pm.StudentT('Yq', nu = 1.694, mu = -0.298, sigma = 0.004)
@@ -81,6 +92,7 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 ```
 
 
+### Intrinsics
 ```python
 with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
@@ -122,7 +134,7 @@ with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-
 ```
 
 
-
+## Results
 ```python
 pm.plot_posterior(trace);
 ```
