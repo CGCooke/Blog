@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -155,6 +155,15 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#results">Results</a></li>
 </ul><h2 id="the-context">
 <a class="anchor" href="#the-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context</h2>
+<p>In a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I attempted to reverse-engineer information about a camera, from a photo it had taken of a scene. While I found a solution, I wasn’t sure how confident I could be in the answer. I was also curious if I could improve the solution by injecting prior knowlege, from other sources.</p>
+
+<p>I the idea to apply Bayesian analysis, and try and find a solution using <em>Makov Chain Monte Carlo</em> and <a href="https://docs.pymc.io/">PyMC3</a>. After a bit of searching, I also found this <a href="https://www.sciencedirect.com/science/article/pii/S0924271619302734">paper</a>, which told me that the idea wasn’t completely outlandish.</p>
+
+<p>In this post, we will combine a <em>prior</em> belief (probability distributions) about some of the camera’s parameters, with measured 2D-3D scene correspondances. By combining these two sources of information, we can compute <em>posterior</em> distributions for each camera parameter.</p>
+
+<p>Because we have a probability distribution, we can understand how certain we are about each paramter.</p>
+
+<p>Let’s start by building a model.</p>
 
 <h2 id="modelling">
 <a class="anchor" href="#modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling</h2>
@@ -182,8 +191,12 @@ window.onload = wrap_img;
 <span class="n">points3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_input</span><span class="p">,</span><span class="n">Y_input</span><span class="p">,</span><span class="n">Z_input</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </code></pre></div></div>
 
+<p>Ok, so now that we have loaded in our 2D and 3D point correspondances, we can now turn to representing the camera itself.</p>
+
 <h3 id="quaternions">
 <a class="anchor" href="#quaternions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quaternions</h3>
+
+<p>For reasons of numerical stability, I’m going to use <a href="https://www.youtube.com/watch?v=3BR8tK-LuB0">quaternions</a> to represent the camera’s orientation/attitude in 3D space.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_rotation_matrix</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span><span class="p">):</span>
     <span class="n">R</span> <span class="o">=</span><span class="p">[[</span><span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q1</span><span class="o">*</span><span class="n">Q2</span> <span class="o">-</span> <span class="n">Q0</span><span class="o">*</span><span class="n">Q3</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q0</span><span class="o">*</span><span class="n">Q2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">*</span><span class="n">Q3</span><span class="p">)],</span>
