@@ -187,10 +187,10 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">Rotate_Translate</span><span class="p">(</span><span class="n">X_est</span><span class="p">,</span> <span class="n">Y_est</span><span class="p">,</span> <span class="n">Z_est</span><span class="p">):</span>
-    <span class="n">Q1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Xq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.983</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.707</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.016</span><span class="p">)</span>
-    <span class="n">Q2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Yq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.799</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.298</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.004</span><span class="p">)</span>
-    <span class="n">Q3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Zq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">2.178</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.272</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.012</span><span class="p">)</span>
-    <span class="n">Q0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Wq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.545</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.583</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.013</span><span class="p">)</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Xq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.824</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.706</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">)</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Yq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.694</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.298</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.004</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Zq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">2.015</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.272</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.011</span><span class="p">)</span>
+    <span class="n">Q0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Wq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.970</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.590</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.019</span><span class="p">)</span>
     
     <span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span> <span class="o">=</span> <span class="n">normalize_quaternions</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span><span class="p">)</span>
     
@@ -215,8 +215,8 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span> <span class="c1"># model specifications in PyMC3 are wrapped in a with-statement
 </span>    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
     
-    <span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">2191</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">11.50</span><span class="p">)</span>
-    
+    <span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mf">2189.49</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">11.74</span><span class="p">)</span>
+     
     <span class="n">k1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k1'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.327041</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.327041</span><span class="p">)</span>
     <span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k2'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.175031</span><span class="p">,</span>  <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.175031</span><span class="p">)</span>
     <span class="n">k3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k3'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.030751</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.030751</span><span class="p">)</span>
@@ -254,32 +254,53 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors.png" alt="_config.yml"></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'X_translate'</span><span class="p">,</span><span class="s">'Y_translate'</span><span class="p">,</span><span class="s">'Z_translate'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png" alt="_config.yml"></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'k1'</span><span class="p">,</span> <span class="s">'k2'</span><span class="p">,</span> <span class="s">'k3'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'c_x'</span><span class="p">,</span> <span class="s">'c_y'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png" alt="_config.yml"></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'Wq'</span><span class="p">,</span> <span class="s">'Xq'</span><span class="p">,</span><span class="s">'Yq'</span><span class="p">,</span><span class="s">'Zq'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s">'X_translate'</span><span class="p">],</span> <span class="n">trace</span><span class="p">[:][</span><span class="s">'Y_translate'</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s">"hex"</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors7.png" alt="_config.yml"></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s">'X_translate'</span><span class="p">],</span> <span class="n">trace</span><span class="p">[:][</span><span class="s">'Z_translate'</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s">"hex"</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors8.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s">'c_x'</span><span class="p">],</span> <span class="n">trace</span><span class="p">[:][</span><span class="s">'c_y'</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s">"hex"</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors9.png" alt="_config.yml"></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s">'Wq'</span><span class="p">],</span> <span class="n">trace</span><span class="p">[:][</span><span class="s">'Xq'</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s">"hex"</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors10.png" alt="_config.yml"></p>
+
 
   </div><a class="u-url" href="/Blog/bayesian/pymc3/computer%20vision/2020/07/07/Bayesian-Camera-Calibration.html" hidden></a>
 </article>
