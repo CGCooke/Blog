@@ -10,6 +10,8 @@ Paragraph Header
 ===============
 
 
+
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,6 +38,7 @@ number_points = px.shape[0]
 points3d = np.vstack([X_input,Y_input,Z_input]).T
 ```
 
+
 ```python
 def create_rotation_matrix(Q0,Q1,Q2,Q3):
     R =[[Q0**2 + Q1**2 - Q2**2 - Q3**2, 2*(Q1*Q2 - Q0*Q3), 2*(Q0*Q2 + Q1*Q3)],
@@ -52,10 +55,10 @@ def normalize_quaternions(Q0,Q1,Q2,Q3):
     return(Q0,Q1,Q2,Q3)
 
 def Rotate_Translate(X_est, Y_est, Z_est):
-    Q1 = pm.StudentT('Xq', nu = 1.983, mu = 0.707, sigma = 0.016)
-    Q2 = pm.StudentT('Yq', nu = 1.799, mu = -0.298, sigma = 0.004)
-    Q3 = pm.StudentT('Zq', nu = 2.178, mu = 0.272, sigma = 0.012)
-    Q0 = pm.StudentT('Wq', nu = 1.545, mu = 0.583, sigma = 0.013)
+    Q1 = pm.StudentT('Xq', nu = 1.824, mu = 0.706, sigma = 0.015)
+    Q2 = pm.StudentT('Yq', nu = 1.694, mu = -0.298, sigma = 0.004)
+    Q3 = pm.StudentT('Zq', nu = 2.015, mu = 0.272, sigma = 0.011)
+    Q0 = pm.StudentT('Wq', nu = 0.970, mu = 0.590, sigma = 0.019)
     
     Q0,Q1,Q2,Q3 = normalize_quaternions(Q0,Q1,Q2,Q3)
     
@@ -82,8 +85,8 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
     
-    focal_length = pm.Normal('focal_length',mu = 2191, sigma = 11.50)
-    
+    focal_length = pm.Normal('focal_length',mu = 2189.49, sigma = 11.74)
+     
     k1 = pm.Normal('k1', mu = -0.327041, sigma = 0.5 * 0.327041)
     k2 = pm.Normal('k2', mu = 0.175031,  sigma = 0.5 * 0.175031)
     k3 = pm.Normal('k3', mu = -0.030751, sigma = 0.5 * 0.030751)
@@ -124,38 +127,71 @@ with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-
 pm.plot_posterior(trace);
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors.png)
+
+
 ```python
 pm.summary(trace)
 ```
+
+
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png)
+
 
 ```python
 pm.pairplot(trace, var_names=['X_translate','Y_translate','Z_translate'], divergences=True);
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png)
+
 ```python
 pm.pairplot(trace, var_names=['k1', 'k2', 'k3'], divergences=True);
 ```
+
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png)
 
 ```python
 pm.pairplot(trace, var_names=['c_x', 'c_y'], divergences=True);
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png)
+
 ```python
 pm.pairplot(trace, var_names=['Wq', 'Xq','Yq','Zq'], divergences=True);
 ```
+
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png)
+
 
 ```python
 sns.jointplot(trace[:]['X_translate'], trace[:]['Y_translate'], kind="hex");
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors7.png)
+
 ```python
 sns.jointplot(trace[:]['X_translate'], trace[:]['Z_translate'], kind="hex");
 ```
+
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors8.png)
 
 ```python
 sns.jointplot(trace[:]['c_x'], trace[:]['c_y'], kind="hex");
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors9.png)
+
 ```python
 sns.jointplot(trace[:]['Wq'], trace[:]['Xq'], kind="hex");
 ```
+
+
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors10.png)
+
+
+
+
+
+
+
+
