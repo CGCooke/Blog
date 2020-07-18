@@ -144,10 +144,20 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#paragraph-header">Paragraph Header</a></li>
-</ul><h1 id="paragraph-header">
-<a class="anchor" href="#paragraph-header" aria-hidden="true"><span class="octicon octicon-link"></span></a>Paragraph Header</h1>
+<li class="toc-entry toc-h2"><a href="#the-context">The Context</a></li>
+<li class="toc-entry toc-h2"><a href="#modelling">Modelling</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#quaternions">Quaternions</a></li>
+<li class="toc-entry toc-h3"><a href="#extrinsics">Extrinsics</a></li>
+<li class="toc-entry toc-h3"><a href="#intrinsics">Intrinsics</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#results">Results</a></li>
+</ul><h2 id="the-context">
+<a class="anchor" href="#the-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context</h2>
 
+<h2 id="modelling">
+<a class="anchor" href="#modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
@@ -172,6 +182,9 @@ window.onload = wrap_img;
 <span class="n">points3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_input</span><span class="p">,</span><span class="n">Y_input</span><span class="p">,</span><span class="n">Z_input</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </code></pre></div></div>
 
+<h3 id="quaternions">
+<a class="anchor" href="#quaternions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quaternions</h3>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_rotation_matrix</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span><span class="p">):</span>
     <span class="n">R</span> <span class="o">=</span><span class="p">[[</span><span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q1</span><span class="o">*</span><span class="n">Q2</span> <span class="o">-</span> <span class="n">Q0</span><span class="o">*</span><span class="n">Q3</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q0</span><span class="o">*</span><span class="n">Q2</span> <span class="o">+</span> <span class="n">Q1</span><span class="o">*</span><span class="n">Q3</span><span class="p">)],</span>
         <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q1</span><span class="o">*</span><span class="n">Q2</span> <span class="o">+</span> <span class="n">Q0</span><span class="o">*</span><span class="n">Q3</span><span class="p">),</span> <span class="n">Q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Q3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Q2</span><span class="o">*</span><span class="n">Q3</span> <span class="o">-</span> <span class="n">Q0</span><span class="o">*</span><span class="n">Q1</span><span class="p">)],</span>
@@ -185,8 +198,14 @@ window.onload = wrap_img;
     <span class="n">Q2</span> <span class="o">/=</span> <span class="n">norm</span>
     <span class="n">Q3</span> <span class="o">/=</span> <span class="n">norm</span>
     <span class="k">return</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span><span class="n">Q1</span><span class="p">,</span><span class="n">Q2</span><span class="p">,</span><span class="n">Q3</span><span class="p">)</span>
+</code></pre></div></div>
 
-<span class="k">def</span> <span class="nf">Rotate_Translate</span><span class="p">(</span><span class="n">X_est</span><span class="p">,</span> <span class="n">Y_est</span><span class="p">,</span> <span class="n">Z_est</span><span class="p">):</span>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/rotation_priors.png" alt="_config.yml"></p>
+
+<h3 id="extrinsics">
+<a class="anchor" href="#extrinsics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extrinsics</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Rotate_Translate</span><span class="p">(</span><span class="n">X_est</span><span class="p">,</span> <span class="n">Y_est</span><span class="p">,</span> <span class="n">Z_est</span><span class="p">):</span>
     <span class="n">Q1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Xq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.824</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.706</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">)</span>
     <span class="n">Q2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Yq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">1.694</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.298</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.004</span><span class="p">)</span>
     <span class="n">Q3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Zq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">2.015</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.272</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.011</span><span class="p">)</span>
@@ -212,6 +231,8 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">X_out</span><span class="p">,</span> <span class="n">Y_out</span><span class="p">,</span> <span class="n">Z_out</span><span class="p">)</span>
 </code></pre></div></div>
 
+<h3 id="intrinsics">
+<a class="anchor" href="#intrinsics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intrinsics</h3>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span> <span class="c1"># model specifications in PyMC3 are wrapped in a with-statement
 </span>    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
     
@@ -251,6 +272,8 @@ window.onload = wrap_img;
 </span>    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s">'adapt_diag'</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">5_000</span><span class="p">)</span>
 </code></pre></div></div>
 
+<h2 id="results">
+<a class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">);</span>
 </code></pre></div></div>
 
