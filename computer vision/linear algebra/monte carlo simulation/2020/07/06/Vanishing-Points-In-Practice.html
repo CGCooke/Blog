@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Vanishing points in practice" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s look how to mathematically find a vanishing point." />
-<meta property="og:description" content="Let’s look how to mathematically find a vanishing point." />
+<meta name="description" content="Let’s apply some of the techniques from previous points to a" />
+<meta property="og:description" content="Let’s apply some of the techniques from previous points to a" />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Vanishing points in practice","description":"Let’s look how to mathematically find a vanishing point.","datePublished":"2020-07-06T00:00:00-05:00","dateModified":"2020-07-06T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-06-Vanishing-Points-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html","@context":"https://schema.org"}</script>
+{"headline":"Vanishing points in practice","description":"Let’s apply some of the techniques from previous points to a","datePublished":"2020-07-06T00:00:00-05:00","dateModified":"2020-07-06T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-06-Vanishing-Points-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -29,8 +29,8 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Vanishing points in practice" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s look how to mathematically find a vanishing point." />
-<meta property="og:description" content="Let’s look how to mathematically find a vanishing point." />
+<meta name="description" content="Let’s apply some of the techniques from previous points to a" />
+<meta property="og:description" content="Let’s apply some of the techniques from previous points to a" />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Vanishing points in practice","description":"Let’s look how to mathematically find a vanishing point.","datePublished":"2020-07-06T00:00:00-05:00","dateModified":"2020-07-06T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-06-Vanishing-Points-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html","@context":"https://schema.org"}</script>
+{"headline":"Vanishing points in practice","description":"Let’s apply some of the techniques from previous points to a","datePublished":"2020-07-06T00:00:00-05:00","dateModified":"2020-07-06T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-07-06-Vanishing-Points-In-Practice/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -115,7 +115,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Vanishing points in practice</h1><p class="page-description">Let's look how to mathematically find a vanishing point.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-06T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Vanishing points in practice</h1><p class="page-description">Let's apply some of the techniques from previous points to a</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-06T00:00:00-05:00" itemprop="datePublished">
         Jul 6, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -151,8 +151,16 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#The-Context">The Context </a></li>
 <li class="toc-entry toc-h2"><a href="#Maximum-Likelihood-Estimate">Maximum Likelihood Estimate </a></li>
 <li class="toc-entry toc-h2"><a href="#Monte-Carlo-Simulation">Monte Carlo Simulation </a></li>
+<li class="toc-entry toc-h2"><a href="#Parameter-distributions">Parameter distributions </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Quaternions">Quaternions </a></li>
+<li class="toc-entry toc-h3"><a href="#Focal-Length">Focal Length </a></li>
+<li class="toc-entry toc-h3"><a href="#Principle-Point">Principle Point </a></li>
+</ul>
+</li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
@@ -172,6 +180,9 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Context">
+<a class="anchor" href="#The-Context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context<a class="anchor-link" href="#The-Context"> </a>
+</h2>
 <p>In a <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">previous post</a>, I used optimisation to try to calibrate a camera. Ultimately, while we arrived at a plausible solution, I was left with some questions.</p>
 <p>In particular, I wasn't sure how much I could trust this solution. The principle point of the image, which is normally located near the center of the image, was located far outside it. This in of itself isn't fatal. The image could have been a crop of a photo, however it's extremely unusual.</p>
 <p>If we want a more accurate answer, we can break this down into a two step process, firstly, computing estimates of the attitude and the camera calibration matrix. We can then combine these estimates with the points we have measured previously, to produce a new estimate of the position and attitude of the camera.</p>
@@ -647,6 +658,12 @@ VP3 [2.45111941e+01 2.60455689e+04]
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Parameter-distributions">
+<a class="anchor" href="#Parameter-distributions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameter distributions<a class="anchor-link" href="#Parameter-distributions"> </a>
+</h2>
+<h3 id="Quaternions">
+<a class="anchor" href="#Quaternions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quaternions<a class="anchor-link" href="#Quaternions"> </a>
+</h3>
 <p>From the above visualisation, we can see that we have a distribution of attitudes. Let's make a subtle change, and find the <em>quaternion</em> representation of the angles.</p>
 <p><em>Quaternions</em> are an elegant way to represent a rotation in 3 dimensions, using 4 numbers. Without going into details, they have many useful properties. If you want to learn more, <a href="https://www.youtube.com/watch?v=zjMuIxRvygQ">3Blue1Brown</a> has done some incredible videos explaining them in more details.</p>
 <p>Let's do a <em>Monte carlo simulation</em>, and compute both the means, <em>and</em> variances of the attitudes.</p>
@@ -785,6 +802,9 @@ W: nu: 0.970, mu: 0.590, sigma: 0.019
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Focal-Length">
+<a class="anchor" href="#Focal-Length" aria-hidden="true"><span class="octicon octicon-link"></span></a>Focal Length<a class="anchor-link" href="#Focal-Length"> </a>
+</h3>
 <p>Now let's do the same for the focal length:</p>
 
 </div>
@@ -839,6 +859,9 @@ W: nu: 0.970, mu: 0.590, sigma: 0.019
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Principle-Point">
+<a class="anchor" href="#Principle-Point" aria-hidden="true"><span class="octicon octicon-link"></span></a>Principle Point<a class="anchor-link" href="#Principle-Point"> </a>
+</h3>
 <p>Finally, let's see what we think the principle point of the camera might be:</p>
 
 </div>
@@ -915,6 +938,14 @@ W: nu: 0.970, mu: 0.590, sigma: 0.019
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's plot the joint distribution of th.e principle point in 2D space.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">

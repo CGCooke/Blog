@@ -151,7 +151,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#The-context">The context </a></li>
+<li class="toc-entry toc-h2"><a href="#The-Context">The Context </a></li>
 <li class="toc-entry toc-h2"><a href="#Control-points">Control points </a></li>
 <li class="toc-entry toc-h2"><a href="#Camera-Parameters">Camera Parameters </a></li>
 <li class="toc-entry toc-h2"><a href="#Modelling-the-Camera">Modelling the Camera </a>
@@ -162,7 +162,7 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Putting-it-all-together">Putting it all together </a></li>
-<li class="toc-entry toc-h2"><a href="#Initiating-parameters">Initiating parameters </a></li>
+<li class="toc-entry toc-h2"><a href="#Initial-Parameters">Initial Parameters </a></li>
 <li class="toc-entry toc-h2"><a href="#Optimisation">Optimisation </a></li>
 <li class="toc-entry toc-h2"><a href="#Results">Results </a></li>
 <li class="toc-entry toc-h2"><a href="#In-Conclusion">In Conclusion </a></li>
@@ -185,8 +185,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-context">
-<a class="anchor" href="#The-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The context<a class="anchor-link" href="#The-context"> </a>
+<h2 id="The-Context">
+<a class="anchor" href="#The-Context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context<a class="anchor-link" href="#The-Context"> </a>
 </h2>
 <p>It's Febrary 1972, the <a href="https://en.wikipedia.org/wiki/Airbus_A300">A300</a> airliner is being unviled in Toulouse, let's go on an adventure (In camera calibration!).</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/A300.jpg" alt="An image of the Airbus A300 Final Assembly line in Toulouse"></p>
@@ -681,8 +681,8 @@ y_c = y(1 + k_1  r + k_2 r^2 + k_3 r^3)
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Initiating-parameters">
-<a class="anchor" href="#Initiating-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initiating parameters<a class="anchor-link" href="#Initiating-parameters"> </a>
+<h2 id="Initial-Parameters">
+<a class="anchor" href="#Initial-Parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initial Parameters<a class="anchor-link" href="#Initial-Parameters"> </a>
 </h2>
 <p>Let's start by providing some hints to the optimiser about what the solution could be like, by putting in some reasonable starting conditions.</p>
 <p>We know both the image width and height, and we can assume that the principal point is in the center of the image.</p>
@@ -708,6 +708,7 @@ y_c = y(1 + k_1  r + k_2 r^2 + k_3 r^3)
 <span class="n">camera_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rot</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">as_rotvec</span><span class="p">()</span>
+
 <span class="c1">#Rotation matrix</span>
 <span class="n">camera_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">camera_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -1026,15 +1027,6 @@ Finally, let's overlay the hexagons on the floor, to visually build confidence i
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Users/cooke_c/.local/lib/python3.7/site-packages/IPython/core/pylabtools.py:128: MatplotlibDeprecationWarning: Support for uppercase single-letter colors is deprecated since Matplotlib 3.1 and will be removed in 3.3; please use lowercase instead.
-  fig.canvas.print_figure(bytes_io, **kw)
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
