@@ -172,7 +172,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In a previous post, I used optimisation to try to calibrate a camera. Ultimately, while we arrived at a plausible solution, I was left with some questions.</p>
+<p>In a <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">previous post</a>, I used optimisation to try to calibrate a camera. Ultimately, while we arrived at a plausible solution, I was left with some questions.</p>
 <p>In particular, I wasn't sure how much I could trust this solution. The principle point of the image, which is normally located near the center of the image, was located far outside it. This in of itself isn't fatal. The image could have been a crop of a photo, however it's extremely unusual.</p>
 <p>If we want a more accurate answer, we can break this down into a two step process, firstly, computing estimates of the attitude and the camera calibration matrix. We can then combine these estimates with the points we have measured previously, to produce a new estimate of the position and attitude of the camera.</p>
 <p>We can compute the attitude and camera matrix using the method shown in a couple of previous blog posts.</p>
