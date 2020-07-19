@@ -106,7 +106,7 @@ From this [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/l
 # Define  translation priors 
 X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
 Y_translate = pm.Normal('Y_translate', mu = -12.92, sigma = 10)
-Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 5)
+Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 10)
 ```
 
 
@@ -126,7 +126,7 @@ def Rotate_Translate(X_est, Y_est, Z_est):
     # Define  translation priors 
     X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
     Y_translate = pm.Normal('Y_translate', mu = -12.92, sigma = 10)
-    Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 5)
+    Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 10)
     
     RIC_0_3 = R[0][0] * -X_translate + R[0][1] * -Y_translate + R[0][2] * -Z_translate
     RIC_1_3 = R[1][0] * -X_translate + R[1][1] * -Y_translate + R[1][2] * -Z_translate
@@ -187,7 +187,7 @@ with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-
 pm.plot_posterior(trace);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors1.png)
 
 
 ```python
