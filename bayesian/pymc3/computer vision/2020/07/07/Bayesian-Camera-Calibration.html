@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      6 min read
     
 </span></p>
 
@@ -232,13 +232,54 @@ window.onload = wrap_img;
 <span class="n">Q0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s">'Wq'</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.970</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.590</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.019</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>To form a prior estimate for the location of the camera, I’m taking 
-From this <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I’m taking the solution I generated as an inital</p>
+<p>To form a prior estimate for the location of the camera, I’m taking the results we found in this <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I’m taking the solution I generated as an inital estimate. However, I’m going to be open minded, and model the position using a normal distribution, with a standard deviation of 10 meters.</p>
+
+<p>As I mentioned at the end of <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, While I found a solution for the location of the camera, It was much lower that what I would have guessed.</p>
+
+<p>I can imagine the camera being about 7-10 meters off the ground, so by using a broad prior, we are saying that this outcome wouldn’t be that supprising, if it was supported by the evidence.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define  translation priors 
 </span><span class="n">X_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'X_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.85</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">Y_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'Y_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">12.92</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">Z_translate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'Z_translate'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">2.75</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre></div></div>
+
+<p>Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.</p>
+
+<p>\begin{equation<em>}
+[R | t]
+\end{equation</em>}</p>
+
+<p>Where $t$ is:
+\begin{equation<em>}
+t = −RC
+\end{equation</em>}</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Camera Center
+</span><span class="n">C</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">IC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="o">-</span><span class="n">C</span><span class="p">])</span>
+<span class="n">RIC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">IC</span><span class="p">)</span>
+
+<span class="c1">#Make points Homogeneous
+</span><span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">points</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))])</span>
+
+<span class="c1">#Perform Rotation and Translation
+#(n,k), (k,m) -&gt; (n,m)
+</span><span class="n">points_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">RIC</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Unfortunately, while in a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I used Numpy</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RIC_0_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
+<span class="n">RIC_1_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
+<span class="n">RIC_2_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
+
+<span class="n">X_out</span> <span class="o">=</span> <span class="n">X_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">Y_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Z_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">RIC_0_3</span>
+<span class="n">Y_out</span> <span class="o">=</span> <span class="n">X_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">Y_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Z_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">RIC_1_3</span>
+<span class="n">Z_out</span> <span class="o">=</span> <span class="n">X_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">Y_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Z_est</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">RIC_2_3</span>
+</code></pre></div></div>
+
+<p>Now let’s put it all together,</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Rotate_Translate</span><span class="p">(</span><span class="n">X_est</span><span class="p">,</span> <span class="n">Y_est</span><span class="p">,</span> <span class="n">Z_est</span><span class="p">):</span>
     <span class="c1">#Define rotation priors
