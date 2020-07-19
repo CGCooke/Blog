@@ -246,14 +246,20 @@ window.onload = wrap_img;
 
 <p>Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.</p>
 
-<p>\begin{equation<em>}
+<span class="katex-error" title="ParseError: KaTeX parse error: No such environment: equation* at position 7: \begin{̲e̲q̲u̲a̲t̲i̲o̲n̲*̲}̲
 [R | t]
-\end{equation</em>}</p>
+\end{e…" style="color:#cc0000">\begin{equation*}
+[R | t]
+\end{equation*}</span>
 
 <p>Where $t$ is:
-\begin{equation<em>}
+<span class="katex-error" title="ParseError: KaTeX parse error: No such environment: equation* at position 7: \begin{̲e̲q̲u̲a̲t̲i̲o̲n̲*̲}̲
 t = −RC
-\end{equation</em>}</p>
+\end{e…" style="color:#cc0000">\begin{equation*}
+t = −RC
+\end{equation*}</span></p>
+
+<p>In a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I was able to elegantly use Numpy.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Camera Center
 </span><span class="n">C</span> <span class="o">=</span> <span class="n">camera_params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -268,7 +274,7 @@ t = −RC
 </span><span class="n">points_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">RIC</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Unfortunately, while in a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I used Numpy</p>
+<p>However, we are a little constrained with PyMC3, so I explicity (and inelegantly) carry out out this as follows.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RIC_0_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
 <span class="n">RIC_1_3</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">X_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Y_translate</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="n">Z_translate</span>
@@ -310,6 +316,19 @@ t = −RC
 
 <h3 id="intrinsics">
 <a class="anchor" href="#intrinsics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intrinsics</h3>
+
+<p>For the intrinsics, I’m using a mixture of priors from what</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mf">2189.49</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">11.74</span><span class="p">)</span>
+     
+<span class="n">k1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k1'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.327041</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.327041</span><span class="p">)</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k2'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.175031</span><span class="p">,</span>  <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.175031</span><span class="p">)</span>
+<span class="n">k3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'k3'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.030751</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.030751</span><span class="p">)</span>
+
+<span class="n">c_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'c_x'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">2268</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">c_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'c_y'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">1503</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+</code></pre></div></div>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span> <span class="c1"># model specifications in PyMC3 are wrapped in a with-statement
 </span>    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
     
