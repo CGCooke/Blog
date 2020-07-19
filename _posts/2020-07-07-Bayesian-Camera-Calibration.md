@@ -202,32 +202,32 @@ pm.summary(trace)
 pm.pairplot(trace, var_names=['X_translate','Y_translate','Z_translate'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior2.png)
 
 ```python
 pm.pairplot(trace, var_names=['k1', 'k2', 'k3'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior3.png)
 
 ```python
 pm.pairplot(trace, var_names=['c_x', 'c_y'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior4.png)
 
 ```python
 pm.pairplot(trace, var_names=['Wq', 'Xq','Yq','Zq'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior5.png)
 
 
 ```python
 sns.jointplot(trace[:]['X_translate'], trace[:]['Y_translate'], kind="hex");
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior6.png)
 
 
 
