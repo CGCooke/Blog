@@ -79,13 +79,11 @@ In a [previous post](https://cgcooke.github.io/Blog/computer%20vision/linear%20a
 By using these [vanishing points](https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/04/10/Finding-Vanishing-Points.html), I was able to determine both an estimate for the orientation of the camera, as well as of the *intrinsic parameters*.
 
 
-
 Because we are using quaternions to represent the orientation of the camera, we have 4 different components (X,Y,Z,W). 
 ![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/rotation_priors.png)
 
 
 A *prior* is a probability distribution on a parameter, and I'm using [Student's T](https://docs.pymc.io/api/distributions/continuous.html#pymc3.distributions.continuous.StudentT) to model this distribution.
-
 
 ### Extrinsics
 
@@ -98,16 +96,65 @@ Q3 = pm.StudentT('Zq', nu = 2.015, mu = 0.272, sigma = 0.011)
 Q0 = pm.StudentT('Wq', nu = 0.970, mu = 0.590, sigma = 0.019)
 ```
 
+To form a prior estimate for the location of the camera, I'm taking the results we found in this [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I'm taking the solution I generated as an inital estimate. However, I'm going to be open minded, and model the position using a normal distribution, with a standard deviation of 10 meters.
 
+As I mentioned at the end of [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), While I found a solution for the location of the camera, It was much lower that what I would have guessed. 
 
-To form a prior estimate for the location of the camera, I'm taking 
-From this [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I'm taking the solution I generated as an inital
+I can imagine the camera being about 7-10 meters off the ground, so by using a broad prior, we are saying that this outcome wouldn't be that supprising, if it was supported by the evidence.
+
 ```python
 # Define  translation priors 
 X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
 Y_translate = pm.Normal('Y_translate', mu = -12.92, sigma = 10)
 Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 10)
 ```
+
+
+Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.
+
+\begin{equation*}
+[R | t]
+\end{equation*}
+
+Where $t$ is:
+\begin{equation*}
+t = −RC
+\end{equation*}
+
+```python
+#Camera Center
+C = camera_params[3:6].reshape(3,1)
+IC = np.hstack([np.eye(3),-C])
+RIC = np.matmul(R,IC)
+
+#Make points Homogeneous
+points = np.hstack([points,np.ones((points.shape[0],1))])
+
+#Perform Rotation and Translation
+#(n,k), (k,m) -> (n,m)
+points_proj = np.matmul(points,RIC.T)
+```
+    
+
+
+
+
+
+Unfortunately, while in a previous [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I used Numpy
+
+```python
+RIC_0_3 = R[0][0] * -X_translate + R[0][1] * -Y_translate + R[0][2] * -Z_translate
+RIC_1_3 = R[1][0] * -X_translate + R[1][1] * -Y_translate + R[1][2] * -Z_translate
+RIC_2_3 = R[2][0] * -X_translate + R[2][1] * -Y_translate + R[2][2] * -Z_translate
+
+X_out = X_est * R[0][0] + Y_est * R[0][1] + Z_est * R[0][2] + RIC_0_3
+Y_out = X_est * R[1][0] + Y_est * R[1][1] + Z_est * R[1][2] + RIC_1_3
+Z_out = X_est * R[2][0] + Y_est * R[2][1] + Z_est * R[2][2] + RIC_2_3
+```
+
+
+
+Now let's put it all together, 
 
 
 
