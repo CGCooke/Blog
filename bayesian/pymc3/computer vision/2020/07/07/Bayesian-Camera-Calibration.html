@@ -323,27 +323,27 @@ From this <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'X_translate'</span><span class="p">,</span><span class="s">'Y_translate'</span><span class="p">,</span><span class="s">'Z_translate'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior2.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'k1'</span><span class="p">,</span> <span class="s">'k2'</span><span class="p">,</span> <span class="s">'k3'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior3.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'c_x'</span><span class="p">,</span> <span class="s">'c_y'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior4.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s">'Wq'</span><span class="p">,</span> <span class="s">'Xq'</span><span class="p">,</span><span class="s">'Yq'</span><span class="p">,</span><span class="s">'Zq'</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior5.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">trace</span><span class="p">[:][</span><span class="s">'X_translate'</span><span class="p">],</span> <span class="n">trace</span><span class="p">[:][</span><span class="s">'Y_translate'</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s">"hex"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior6.png" alt="_config.yml"></p>
 
 
   </div><a class="u-url" href="/Blog/bayesian/pymc3/computer%20vision/2020/07/07/Bayesian-Camera-Calibration.html" hidden></a>
