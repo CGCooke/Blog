@@ -112,14 +112,17 @@ Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 10)
 
 Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.
 
-\begin{equation*}
+$$\begin{equation*}
 [R | t]
-\end{equation*}
+\end{equation*}$$
 
 Where $t$ is:
-\begin{equation*}
+$$\begin{equation*}
 t = −RC
-\end{equation*}
+\end{equation*}$$
+
+
+In a previous [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I was able to elegantly use Numpy. 
 
 ```python
 #Camera Center
@@ -134,13 +137,9 @@ points = np.hstack([points,np.ones((points.shape[0],1))])
 #(n,k), (k,m) -> (n,m)
 points_proj = np.matmul(points,RIC.T)
 ```
-    
 
+However, we are a little constrained with PyMC3, so I explicity (and inelegantly) carry out out this as follows.
 
-
-
-
-Unfortunately, while in a previous [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I used Numpy
 
 ```python
 RIC_0_3 = R[0][0] * -X_translate + R[0][1] * -Y_translate + R[0][2] * -Z_translate
@@ -188,6 +187,22 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 
 
 ### Intrinsics
+
+For the intrinsics, I'm using a mixture of priors from what 
+
+
+```python
+focal_length = pm.Normal('focal_length',mu = 2189.49, sigma = 11.74)
+     
+k1 = pm.Normal('k1', mu = -0.327041, sigma = 0.5 * 0.327041)
+k2 = pm.Normal('k2', mu = 0.175031,  sigma = 0.5 * 0.175031)
+k3 = pm.Normal('k3', mu = -0.030751, sigma = 0.5 * 0.030751)
+
+c_x = pm.Normal('c_x', mu = 2268/2.0, sigma = 1000)
+c_y = pm.Normal('c_y', mu = 1503/2.0, sigma = 1000)
+```
+
+
 ```python
 with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
