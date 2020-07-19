@@ -89,6 +89,8 @@ A *prior* is a probability distribution on a parameter, and I'm using [Student's
 
 ### Extrinsics
 
+
+
 ```python
 Q1 = pm.StudentT('Xq', nu = 1.824, mu = 0.706, sigma = 0.015)
 Q2 = pm.StudentT('Yq', nu = 1.694, mu = -0.298, sigma = 0.004)
@@ -96,6 +98,10 @@ Q3 = pm.StudentT('Zq', nu = 2.015, mu = 0.272, sigma = 0.011)
 Q0 = pm.StudentT('Wq', nu = 0.970, mu = 0.590, sigma = 0.019)
 ```
 
+
+
+To form a prior estimate for the location of the camera, I'm taking 
+From this [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I'm taking the solution I generated as an inital
 ```python
 # Define  translation priors 
 X_translate = pm.Normal('X_translate', mu = -6.85, sigma = 10)
@@ -189,62 +195,39 @@ pm.summary(trace)
 ```
 
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Summary.png)
 
 
 ```python
 pm.pairplot(trace, var_names=['X_translate','Y_translate','Z_translate'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors2.png)
 
 ```python
 pm.pairplot(trace, var_names=['k1', 'k2', 'k3'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors3.png)
 
 ```python
 pm.pairplot(trace, var_names=['c_x', 'c_y'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors4.png)
 
 ```python
 pm.pairplot(trace, var_names=['Wq', 'Xq','Yq','Zq'], divergences=True);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors5.png)
 
 
 ```python
 sns.jointplot(trace[:]['X_translate'], trace[:]['Y_translate'], kind="hex");
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors7.png)
-
-```python
-sns.jointplot(trace[:]['X_translate'], trace[:]['Z_translate'], kind="hex");
-```
-
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors8.png)
-
-```python
-sns.jointplot(trace[:]['c_x'], trace[:]['c_y'], kind="hex");
-```
-
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors9.png)
-
-```python
-sns.jointplot(trace[:]['Wq'], trace[:]['Xq'], kind="hex");
-```
-
-
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors10.png)
-
-
-
-
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors6.png)
 
 
 
