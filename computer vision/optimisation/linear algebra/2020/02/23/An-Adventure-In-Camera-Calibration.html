@@ -188,14 +188,14 @@ window.onload = wrap_img;
 <h2 id="The-Context">
 <a class="anchor" href="#The-Context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context<a class="anchor-link" href="#The-Context"> </a>
 </h2>
-<p>It's Febrary 1972, the <a href="https://en.wikipedia.org/wiki/Airbus_A300">A300</a> airliner is being unviled in Toulouse, let's go on an adventure (In camera calibration!).</p>
+<p>It's February 1972, the <a href="https://en.wikipedia.org/wiki/Airbus_A300">A300</a> airliner is being unveiled in Toulouse, let's go on an adventure (In camera calibration!).</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/A300.jpg" alt="An image of the Airbus A300 Final Assembly line in Toulouse"></p>
 <p>Let's say we have seen this photo published in a magazine, and we want to try and learn as much about the dimensions of Airbus's new aircraft as possible. In order to do so, we will need to mathematically reconstruct the camera used to take the photo, as well as the scene itself.</p>
 <h2 id="Control-points">
 <a class="anchor" href="#Control-points" aria-hidden="true"><span class="octicon octicon-link"></span></a>Control points<a class="anchor-link" href="#Control-points"> </a>
 </h2>
 <p>Now, In this case, we are lucky, because we notice the hexagonal pattern on the floor. In particular, we notice that it's a tessellating hexagonal pattern, which can only happen if all the hexagons have identical dimensions.</p>
-<p>While we don't know the dimensions of the hexagon, we guess that each side is approximately 1.6m long, based on the high of the people in the photo. If we assume some point on the ground, say the center of a polygon is the point 0,0, we can work out the X &amp; Y location of each other polygon vertex we can see. Furthermore, we could also assume that the factory floor is flat and level. Hence the Z coordinate of each point is 0.</p>
+<p>While we don't know the dimensions of the hexagon, we guess that each side is approximately 1.6m long, based on the height of the people in the photo. If we assume some point on the ground, say the center of a polygon is the point 0,0, we can work out the X &amp; Y location of each other polygon vertex we can see. Furthermore, we could also assume that the factory floor is flat and level. Hence the Z coordinate of each point is 0.</p>
 <p>Let's spend ±5 minutes annotating the image, using an annotation tool like label me. I've generated a file, which you can find attached here:</p>
 <p><img src="/Blog/images/copied_from_nb/../images/2020-02-23-An-Adventure-In-Camera-Calibration/Hexagons.jpg" alt="An annotated image of the Airbus A300 Final Assembly line in Toulouse"></p>
 <p>Firstly, lets load in all of the x and y points:</p>
@@ -686,9 +686,9 @@ y_c = y(1 + k_1  r + k_2 r^2 + k_3 r^3)
 </h2>
 <p>Let's start by providing some hints to the optimiser about what the solution could be like, by putting in some reasonable starting conditions.</p>
 <p>We know both the image width and height, and we can assume that the principal point is in the center of the image.</p>
-<p>I think the cameras is about 10 meters off the ground.</p>
-<p>To make the task of optimization easier, lets rotate the camera so that it's facing directly down. This means that the points should be in front of/below it.</p>
-<p>Let's also start off by assuming that the camera is centered above the points. It's obviously not correct, based on what we can see in the image, but it's not horrifically wrong.</p>
+<p>I think the camera is about 10 meters off the ground.</p>
+<p>To make the task of optimization easier, let's rotate the camera so that it's facing directly down. This means that the points should be in front of/below it.</p>
+<p>Let's also start off by assuming that the camera is centered above the points. It's obviously not correct, based on what we can see in the image, but it's not horrifically wrong. </p>
 
 </div>
 </div>
@@ -1051,11 +1051,11 @@ Finally, let's overlay the hexagons on the floor, to visually build confidence i
 <a class="anchor" href="#In-Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>In Conclusion<a class="anchor-link" href="#In-Conclusion"> </a>
 </h2>
 <p>Awesome, we can see visually that we have found a semi-reasonable solution.</p>
-<p>However, I'm worried about the location of the principle point of the image. Normally, most cameras, this is near the center of the image. In our case, it isn't. There are a number of reasons why this could be the case, for example, the image might have been cropped, however it's a little concerning.</p>
-<p>I'm also worried about the height of the camera, whcih is only 2.75M aboe the ground. The camera looks like it's at approximately the same height as the roof of the aircraft, which would typically be 7-10m above the ground.</p>
+<p>However, I'm worried about the location of the principle point of the image. Normally, with most cameras, this is near the center of the image. In our case, it isn't. There are a number of reasons why this could be the case, for example, the image might have been cropped, however it's a little concerning.</p>
+<p>I'm also worried about the height of the camera, which is only 2.75M above the ground. The camera looks like it's at approximately the same height as the roof of the aircraft, which would typically be 7-10m above the ground.</p>
 <p>In the future, Let's look more about how we can extract some more useful information from this image, and understand how confident we can be in our solution.</p>
 <p>Thanks to <em>Nikolay Mayorov</em> who created the awesome demo of optimization in Scipy that I built upon, you can find the original code <a href="https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html">here</a>.</p>
-<p>Multiple View Geometry in Computer Vision is an incredible book, that I learn more from, each time I read it. in particular, for further information see:</p>
+<p>Multiple View Geometry in Computer Vision is an incredible book that I learn more from, each time I read it. in particular, for further information see:</p>
 <ul>
 <li>Finite cameras. Page 153, Multiple View Geometry in Computer Vision (Second edition)</li>
 <li>Note: Minimizing geometric error. Page 176, Multiple View Geometry in Computer Vision (Second edition)</li>
