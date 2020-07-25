@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -246,18 +246,10 @@ window.onload = wrap_img;
 
 <p>Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.</p>
 
-<span class="katex-error" title="ParseError: KaTeX parse error: No such environment: equation* at position 7: \begin{̲e̲q̲u̲a̲t̲i̲o̲n̲*̲}̲
-[R | t]
-\end{e…" style="color:#cc0000">\begin{equation*}
-[R | t]
-\end{equation*}</span>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>R</mi><mi mathvariant="normal">∣</mi><mi>t</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[R | t]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord">∣</span><span class="mord mathdefault">t</span><span class="mclose">]</span></span></span></span></span>
 
 <p>Where $t$ is:
-<span class="katex-error" title="ParseError: KaTeX parse error: No such environment: equation* at position 7: \begin{̲e̲q̲u̲a̲t̲i̲o̲n̲*̲}̲
-t = −RC
-\end{e…" style="color:#cc0000">\begin{equation*}
-t = −RC
-\end{equation*}</span></p>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mtext>−</mtext><mi>R</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">t = −RC</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span></p>
 
 <p>In a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html">post</a>, I was able to elegantly use Numpy.</p>
 
@@ -317,7 +309,7 @@ t = −RC
 <h3 id="intrinsics">
 <a class="anchor" href="#intrinsics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intrinsics</h3>
 
-<p>For the intrinsics, I’m using a mixture of priors from what</p>
+<p>For the intrinsics, I’m using a mixture of priors from the results of our optimisation, as well as what was identified in <a href="https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html">this post</a>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mf">2189.49</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">11.74</span><span class="p">)</span>
      
@@ -329,8 +321,8 @@ t = −RC
 <span class="n">c_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'c_y'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">1503</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span> <span class="c1"># model specifications in PyMC3 are wrapped in a with-statement
-</span>    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Rotate_Translate</span><span class="p">(</span><span class="n">points3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">points3d</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
     
     <span class="n">focal_length</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'focal_length'</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="mf">2189.49</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">11.74</span><span class="p">)</span>
      
@@ -364,16 +356,26 @@ t = −RC
     <span class="c1"># Define likelihood
 </span>    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">'rms_pixel_error'</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">delta</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">error_scale</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">number_points</span><span class="p">))</span>
 
+</code></pre></div></div>
+
+<p>Finally we can use <em>Markov Chain Monte Carlo</em> (MCMC) to find find the <em>posterior</em> distribution of the paramters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="c1"># Inference!
-</span>    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s">'adapt_diag'</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">5_000</span><span class="p">)</span>
+</span>    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s">'adapt_diag'</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">5_000</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="results">
 <a class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h2>
+
+<p>Now that the MCMC sampling has finished, let’s look at the results:</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors1.png" alt="_config.yml"></p>
+<p><img src="/Blog/images/2020-07-07-Bayesian-Camera-Calibration/Posterior1.png" alt="_config.yml"></p>
+
+<p>From this we can see two things. In the left hand column, we can see the distribution of potential values for each paraemeter. In the right hand column, we can see how the MCMC sampler moved through this space over time.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </code></pre></div></div>
