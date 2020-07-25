@@ -112,14 +112,10 @@ Z_translate = pm.Normal('Z_translate', mu = 2.75, sigma = 10)
 
 Now we have to Rotate and Translate the points, in 3D space, according to the attitude and the position of the camera in 3D space.
 
-$$\begin{equation*}
-[R | t]
-\end{equation*}$$
+$$[R | t]$$
 
 Where $t$ is:
-$$\begin{equation*}
-t = −RC
-\end{equation*}$$
+$$t = −RC$$
 
 
 In a previous [post](https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html), I was able to elegantly use Numpy. 
@@ -188,7 +184,7 @@ def Rotate_Translate(X_est, Y_est, Z_est):
 
 ### Intrinsics
 
-For the intrinsics, I'm using a mixture of priors from what 
+For the intrinsics, I'm using a mixture of priors from the results of our optimisation, as well as what was identified in [this post](https://cgcooke.github.io/Blog/computer%20vision/linear%20algebra/monte%20carlo%20simulation/2020/07/06/Vanishing-Points-In-Practice.html).
 
 
 ```python
@@ -204,7 +200,7 @@ c_y = pm.Normal('c_y', mu = 1503/2.0, sigma = 1000)
 
 
 ```python
-with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
+with pm.Model() as model:
     X, Y, Z = Rotate_Translate(points3d[:,0], points3d[:,1], points3d[:,2])
     
     focal_length = pm.Normal('focal_length',mu = 2189.49, sigma = 11.74)
@@ -239,18 +235,30 @@ with pm.Model() as model: # model specifications in PyMC3 are wrapped in a with-
     # Define likelihood
     likelihood = pm.Normal('rms_pixel_error', mu = delta, sigma = error_scale, observed=np.zeros(number_points))
 
+```
+
+
+Finally we can use *Markov Chain Monte Carlo* (MCMC) to find find the *posterior* distribution of the paramters. 
+
+```python
+with pm.Model() as model:
     # Inference!
-    trace = pm.sample(draws=10_000, init='adapt_diag', cores=3, tune=5_000)
+    trace = pm.sample(draws=10_000, init='adapt_diag', cores=4, tune=5_000)
 ```
 
 
 ## Results
+
+Now that the MCMC sampling has finished, let's look at the results:
+
 ```python
 pm.plot_posterior(trace);
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posteriors1.png)
+![_config.yml]({{ site.baseurl }}/images/2020-07-07-Bayesian-Camera-Calibration/Posterior1.png)
 
+
+From this we can see two things. In the left hand column, we can see the distribution of potential values for each paraemeter. In the right hand column, we can see how the MCMC sampler moved through this space over time. 
 
 ```python
 pm.summary(trace)
