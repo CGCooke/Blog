@@ -9,14 +9,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How can we model the growth in Afterpay’s customer base?" />
 <meta property="og:description" content="How can we model the growth in Afterpay’s customer base?" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-12T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Modelling Afterpay’s customer Growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-12T00:00:00-05:00","dateModified":"2020-08-12T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html","@context":"https://schema.org"}</script>
+{"headline":"Modelling Afterpay’s customer Growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-12T00:00:00-05:00","dateModified":"2020-08-12T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -31,14 +31,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How can we model the growth in Afterpay’s customer base?" />
 <meta property="og:description" content="How can we model the growth in Afterpay’s customer base?" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-12T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Modelling Afterpay’s customer Growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-12T00:00:00-05:00","dateModified":"2020-08-12T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html","@context":"https://schema.org"}</script>
+{"headline":"Modelling Afterpay’s customer Growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-12T00:00:00-05:00","dateModified":"2020-08-12T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-04-10-Finding-Vanishing-Points/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      4 min read
     
 </span></p>
 
@@ -151,11 +151,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#The-context">The context </a></li>
 <li class="toc-entry toc-h2"><a href="#The-model">The model </a></li>
 <li class="toc-entry toc-h2"><a href="#The-Results">The Results </a></li>
+<li class="toc-entry toc-h2"><a href="#Posterior-Predictive-Checks">Posterior Predictive Checks </a></li>
+<li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/20-08-13-Modelling-Afterpays-Customer-Growth.ipynb
+# file to edit: _notebooks/20-08-13-Modelling-Afterpay's-Customer-Growth.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -684,6 +686,17 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Posterior-Predictive-Checks">
+<a class="anchor" href="#Posterior-Predictive-Checks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Posterior Predictive Checks<a class="anchor-link" href="#Posterior-Predictive-Checks"> </a>
+</h2>
+<p>Let's see if our model makes sense. By drawing samples from our model, we can further investigate the potential growth rates of Afterpay. </p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -725,6 +738,14 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's start forcasting into the future. We can compare what we modelled to the actual customer numbers (3.1M) reported by Afterpay 54 months after they first launched.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -744,9 +765,6 @@ The number of effective samples is smaller than 25% for some parameters.
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Millions of customers'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Months after launch'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
- 
-
-    
 </pre></div>
 
     </div>
@@ -772,6 +790,14 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also generate a histogram, and compare the predictions of our model with the actual true number of 3.1M.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -780,13 +806,9 @@ The number of effective samples is smaller than 25% for some parameters.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">54</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">20000</span><span class="p">)</span>
-
-<span class="n">y</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">'L'</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">trace</span><span class="p">[</span><span class="s1">'k'</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">trace</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">])))</span>
-                              
+<span class="n">y</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">'L'</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">trace</span><span class="p">[</span><span class="s1">'k'</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">trace</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">])))</span>                              
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="mf">3.1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.175</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Most recent report'</span><span class="p">)</span>
-        
         
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Millions of customers'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -817,6 +839,18 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">
+<a class="anchor" href="#Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion<a class="anchor-link" href="#Conclusion"> </a>
+</h2>
+<p>In Conclusion, Bayesian analysis is a powerful tool, because it allows us to understand how confident we are in our predictions. It's also powerful because we can feed in information that we might already believe. If you are 80% confident that no more than 20% of the Australian population will use Afterpay, then you can feed this in as a prior.</p>
+<p>While this is a fairly <em>rough and ready</em> model, I'm going to continue analysing <em>Afterpay</em>. My end-game is to try and gain an understanding of their default rates. It's an area</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
@@ -829,7 +863,7 @@ The number of effective samples is smaller than 25% for some parameters.
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/Blog/bayesian/finance/2020/08/12/Modelling-Afterpays-Customer-Growth.html" hidden></a>
+</script><a class="u-url" href="/Blog/bayesian/finance/2020/08/12/Modelling-Afterpay's-Customer-Growth.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
