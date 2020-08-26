@@ -256,7 +256,7 @@ window.onload = wrap_img;
 <a class="anchor" href="#Direct-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Direct Model<a class="anchor-link" href="#Direct-Model"> </a>
 </h3>
 <p>As part of our simulation, we need to know the distribution of late fees, for any given probability of late payment.</p>
-<p>We can directly model this in PyMC3, and it takes 3 seconds to generate 100,000 samples.</p>
+<p>We can directly model this in PyMC3, using the Binomial distribution to model the number of times someone makes a late payment. While this model directly models what happens in reality, it takes 3 seconds to generate 100,000 samples.</p>
 
 </div>
 </div>
