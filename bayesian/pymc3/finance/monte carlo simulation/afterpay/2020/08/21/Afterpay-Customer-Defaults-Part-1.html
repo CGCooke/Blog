@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>How often do Afterpay transactions attract late fees? | Adventures with Numbers</title>
+<title>How often do Afterpay transactions attract late fees? (Part 1) | Adventures with Numbers</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="How often do Afterpay transactions attract late fees?" />
+<meta property="og:title" content="How often do Afterpay transactions attract late fees? (Part 1)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
 <meta property="og:description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-21T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"How often do Afterpay transactions attract late fees?","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-21T00:00:00-05:00","dateModified":"2020-08-21T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html","@context":"https://schema.org"}</script>
+{"headline":"How often do Afterpay transactions attract late fees? (Part 1)","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-21T00:00:00-05:00","dateModified":"2020-08-21T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -25,9 +25,9 @@
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-59953722-2','auto');ga('require','displayfeatures');ga('send','pageview');</script>
 
 <link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>How often do Afterpay transactions attract late fees? | Adventures with Numbers</title>
+<title>How often do Afterpay transactions attract late fees? (Part 1) | Adventures with Numbers</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="How often do Afterpay transactions attract late fees?" />
+<meta property="og:title" content="How often do Afterpay transactions attract late fees? (Part 1)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
 <meta property="og:description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-21T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"How often do Afterpay transactions attract late fees?","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-21T00:00:00-05:00","dateModified":"2020-08-21T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html","@context":"https://schema.org"}</script>
+{"headline":"How often do Afterpay transactions attract late fees? (Part 1)","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-21T00:00:00-05:00","dateModified":"2020-08-21T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -115,7 +115,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">How often do Afterpay transactions attract late fees?</h1><p class="page-description">Let's take a high level view of how often Afterpay customers pay late, based on Afterpay's FY2019 Annual report.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-21T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">How often do Afterpay transactions attract late fees? (Part 1)</h1><p class="page-description">Let's take a high level view of how often Afterpay customers pay late, based on Afterpay's FY2019 Annual report.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-21T00:00:00-05:00" itemprop="datePublished">
         Aug 21, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
