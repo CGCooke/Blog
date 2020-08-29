@@ -12,11 +12,11 @@
 <link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-6/header.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-29T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"How often do Afterpay’s customers default? (Part 6)","description":"I want to take a step back, and discuss what we have learned so far, and what I think the next steps could be.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html","@context":"https://schema.org"}</script>
+{"headline":"How often do Afterpay’s customers default? (Part 6)","description":"I want to take a step back, and discuss what we have learned so far, and what I think the next steps could be.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-6/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -34,11 +34,11 @@
 <link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-6/header.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-08-29T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"How often do Afterpay’s customers default? (Part 6)","description":"I want to take a step back, and discuss what we have learned so far, and what I think the next steps could be.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-21-Afterpay-Customer-Defaults-Part-1/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html","@context":"https://schema.org"}</script>
+{"headline":"How often do Afterpay’s customers default? (Part 6)","description":"I want to take a step back, and discuss what we have learned so far, and what I think the next steps could be.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-6/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-6.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -121,7 +121,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -159,6 +159,7 @@ window.onload = wrap_img;
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#Raison-d'être">Raison d&#39;être </a></li>
 <li class="toc-entry toc-h2"><a href="#What-are-the-numbers?">What are the numbers? </a></li>
+<li class="toc-entry toc-h2"><a href="#Next-steps">Next steps </a></li>
 <li class="toc-entry toc-h2"><a href="#Appendix">Appendix </a></li>
 </ul><!--
 #################################################
@@ -201,14 +202,17 @@ window.onload = wrap_img;
 <li>If you are late on one payment, there is a moderate chance that you will be late on one of the other 3<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</li>
 <li>Late fees are 12-14 AUD on average<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.</li>
 </ol>
-<p>All together, this is pretty interesting,</p>
+<p>All together, this is pretty interesting, and I think brings a lot of clarity to any discussion around <em>Afterpay</em> and late fees. However, what we are seeing are these numbers in isolation. We will never know what trade-offs someone may have made, to pay <em>Afterpay</em> one time.</p>
+<h2 id="Next-steps">
+<a class="anchor" href="#Next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next steps<a class="anchor-link" href="#Next-steps"> </a>
+</h2>
+<p>Now that we have a clearer picture of how late fees, I want to turn my focus to defaults. I'm interested in how often people just walk away. This is a topic where <em>Afterpay</em> has provided very little information, apart from a headline figure of losses. Hence I think any clarity would be very valuable in helping us understand <em>Afterpay</em>, and it's impact, for better or worse on society.</p>
 <h2 id="Appendix">
 <a class="anchor" href="#Appendix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Appendix<a class="anchor-link" href="#Appendix"> </a>
 </h2>
 <p></p>
 <div class="footnotes"><p id="fn-1">1. 9.5% to 10.5% of purchases, &lt;a href=<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 <div class="footnotes"><p id="fn-2">2. Moderate chance is 0-40% probability, best guess 20%&lt;a href=<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-3">3. &lt;a href=<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
