@@ -158,12 +158,10 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
-<li class="toc-entry toc-h2"><a href="#Robustness-Study">Robustness Study </a></li>
 <li class="toc-entry toc-h2"><a href="#Improving-performance">Improving performance </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Direct-Model">Direct Model </a></li>
 <li class="toc-entry toc-h3"><a href="#Categorical-Model">Categorical Model </a></li>
-<li class="toc-entry toc-h3"><a href="#Transaction-value-model">Transaction value model </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Grid-Evaluation">Grid Evaluation </a></li>
@@ -197,24 +195,19 @@ window.onload = wrap_img;
 <h2 id="Introduction">
 <a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h2>
-<p>From the <a href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/22/Afterpay-Customer-Defaults-Part-2.html">previous post</a>, I looked at how to model customer late payment rates, from a single distribution. Now I want to turn things up a notch, and model it using a range of distributions, from two different families. 
-</p>
+<p>There is a lot going on in this post, but our ultimate goal is to conduct a robustnes study.</p>
+<p>From the <a href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/22/Afterpay-Customer-Defaults-Part-2.html">previous post</a>, I looked at how to model customer late payment rates, from a single distribution. Now I want to turn things up a notch, and model it using a range of distributions, from two different families.</p>
+<p>To achive this, we need to:</p>
+<ol>
+<li>Compute distributions of late fees rapidly.</li>
+<li>Compute the average late fee, under a wide range of different assumptions.</li>
+<li>Find the distribution of how frequent late payments are.
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
     <strong>Important: </strong>Obviously I need a disclaimer. If you use anything I say as the basis for any decision, financial or otherwise, you are an idiot.
 </div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Robustness-Study">
-<a class="anchor" href="#Robustness-Study" aria-hidden="true"><span class="octicon octicon-link"></span></a>Robustness Study<a class="anchor-link" href="#Robustness-Study"> </a>
-</h2>
-<p>We now have ability to compute the expected average late fee, given a distribution of transaction values, and a probability of making payment on time.</p>
-<p>Given this, we can try lots of different distributions, and use this to find the distribution of average late fees that we could see.</p>
+</li>
+</ol>
 
 </div>
 </div>
@@ -408,17 +401,6 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Transaction-value-model">
-<a class="anchor" href="#Transaction-value-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transaction value model<a class="anchor-link" href="#Transaction-value-model"> </a>
-</h3>
-<p>As in the last post, we can model the transaction values has being exponentially distributed. I'm also applying an upper bound at 1,500 AUD, which is the limit for a transaction using <em>Afterpay</em>.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">

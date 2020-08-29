@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>How often do Afterpay transactions attract late fees? (Part 5) | Adventures with Numbers</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="How often do Afterpay transactions attract late fees? (Part 5)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
+<meta property="og:description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html" />
+<meta property="og:site_name" content="Adventures with Numbers" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-5/header.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-29T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"How often do Afterpay transactions attract late fees? (Part 5)","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-5/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-59953722-2','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>How often do Afterpay transactions attract late fees? (Part 5) | Adventures with Numbers</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="How often do Afterpay transactions attract late fees? (Part 5)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
+<meta property="og:description" content="Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report." />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html" />
+<meta property="og:site_name" content="Adventures with Numbers" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-5/header.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-29T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"How often do Afterpay transactions attract late fees? (Part 5)","description":"Let’s take a high level view of how often Afterpay customers pay late, based on Afterpay’s FY2019 Annual report.","datePublished":"2020-08-29T00:00:00-05:00","dateModified":"2020-08-29T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-29-Afterpay-Customer-Defaults-Part-5/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-59953722-2','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Adventures with Numbers</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How often do Afterpay transactions attract late fees? (Part 5)</h1><p class="page-description">Let's take a high level view of how often Afterpay customers pay late, based on Afterpay's FY2019 Annual report.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-29T00:00:00-05:00" itemprop="datePublished">
+        Aug 29, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Bayesian">Bayesian</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#PyMC3">PyMC3</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#Finance">Finance</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#Monte Carlo Simulation">Monte Carlo Simulation</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#Afterpay">Afterpay</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
+<li class="toc-entry toc-h2"><a href="#Average-Late-Fees">Average Late Fees </a></li>
+<li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-08-29-Afterpay-Customer-Defaults-Part-5.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h2>
+<p>Now that we have some more data from <em>Afterpay</em>, on the true rate of purchases that attract late fees (±10%), I wanted to go back and compute the average late fees. This post is effectively an adaption of the work I did in <a href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/21/Afterpay-Customer-Defaults-Part-1.html">this</a> post.
+</p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>Obviously I need a disclaimer. If you use anything I say as the basis for any decision, financial or otherwise, you are an idiot.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Average-Late-Fees">
+<a class="anchor" href="#Average-Late-Fees" aria-hidden="true"><span class="octicon octicon-link"></span></a>Average Late Fees<a class="anchor-link" href="#Average-Late-Fees"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.figsize"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">average_late_fee_model</span><span class="p">:</span>
+    <span class="n">underlying_sales_aud</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">'underlying_sales_aud'</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">5.24715</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">5.247249</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">)</span>
+    
+    <span class="n">late_fees_rev_aud</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">'late_fees_rev'</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">46.05</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">46.149</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>
+    
+    <span class="n">average_transaction_value_aud</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">'average_transaction_value'</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">144.50</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">154.49</span><span class="p">)</span>
+    
+    <span class="n">late_payment_rate</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">'late_payment_rate'</span><span class="p">,</span><span class="n">lower</span><span class="o">=</span><span class="mf">9.5</span><span class="p">,</span><span class="n">upper</span><span class="o">=</span><span class="mf">10.5</span><span class="p">)</span><span class="o">/</span><span class="mf">100.0</span>
+    
+    <span class="n">number_of_transactions</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'number_of_transactions'</span><span class="p">,</span> <span class="n">underlying_sales_aud</span> <span class="o">/</span> <span class="n">average_transaction_value_aud</span><span class="p">)</span>
+    
+    <span class="n">late_transactions</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'late_transactions'</span><span class="p">,</span> <span class="n">late_payment_rate</span> <span class="o">*</span> <span class="n">number_of_transactions</span><span class="p">)</span>
+                                         
+    <span class="n">average_late_fee_aud</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'average_late_fee_aud'</span><span class="p">,</span> <span class="n">late_fees_rev_aud</span> <span class="o">/</span> <span class="n">late_transactions</span><span class="p">)</span>
+    
+<span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">average_late_fee_model</span><span class="p">:</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">100_000</span><span class="p">)</span>      
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">late_fee_samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s1">'average_late_fee_aud'</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Histogram of late fees'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Relative Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Late fee (AUD)'</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">late_fee_samples</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">norm_hist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="s2">"average_late_fee_aud"</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>arviz.stats.stats_utils - WARNING - Shape validation failed: input_shape: (1, 100000), minimum_shape: (chains=2, draws=4)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean</th>
+      <th>sd</th>
+      <th>hpd_3%</th>
+      <th>hpd_97%</th>
+      <th>mcse_mean</th>
+      <th>mcse_sd</th>
+      <th>ess_mean</th>
+      <th>ess_sd</th>
+      <th>ess_bulk</th>
+      <th>ess_tail</th>
+      <th>r_hat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>13.146</td>
+      <td>0.458</td>
+      <td>12.313</td>
+      <td>13.982</td>
+      <td>0.001</td>
+      <td>0.001</td>
+      <td>99393.0</td>
+      <td>99393.0</td>
+      <td>99248.0</td>
+      <td>99302.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">
+<a class="anchor" href="#Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion<a class="anchor-link" href="#Conclusion"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The late fees that <em>Afterpay</em> customers pay are quite low on average, somewhere between 12 AUD and 14 AUD. This fits with what we observed in previous psots, where customers were typically late on only one of the four payments.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="CGCooke/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/29/Afterpay-Customer-Defaults-Part-5.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Adventures with Numbers with Cameron Cooke</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/CGCooke" title="CGCooke"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
