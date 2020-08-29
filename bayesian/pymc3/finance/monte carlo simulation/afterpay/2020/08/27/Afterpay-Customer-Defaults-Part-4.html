@@ -159,7 +159,12 @@ window.onload = wrap_img;
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
 <li class="toc-entry toc-h2"><a href="#The-Model">The Model </a></li>
-<li class="toc-entry toc-h2"><a href="#Results">Results </a></li>
+<li class="toc-entry toc-h2"><a href="#Results">Results </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Average-late-payments-per-purchase">Average late payments per purchase </a></li>
+<li class="toc-entry toc-h3"><a href="#Binomial-assumption">Binomial assumption </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
 </ul><!--
 #################################################
@@ -388,6 +393,9 @@ window.onload = wrap_img;
 <h2 id="Results">
 <a class="anchor" href="#Results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results<a class="anchor-link" href="#Results"> </a>
 </h2>
+<h3 id="Average-late-payments-per-purchase">
+<a class="anchor" href="#Average-late-payments-per-purchase" aria-hidden="true"><span class="octicon octicon-link"></span></a>Average late payments per purchase<a class="anchor-link" href="#Average-late-payments-per-purchase"> </a>
+</h3>
 <p>We can now visualise the distribution of the number of late transactions per purchase, given that there is one or more late fees. We can notice, that because we have taken the rounding into account, our model shows that sometimes there are less than 1 late payment, per purchase. Obviously this is impossible in practice!</p>
 
 </div>
@@ -403,7 +411,7 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s1">'average_num_late_purchase_transactions_incuring_late_fees'</span><span class="p">]</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">1.75</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span><span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">norm_hist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Average number of late payments per transaction'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Average number of late payments per purchase'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Relative Frequency'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -434,6 +442,9 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Binomial-assumption">
+<a class="anchor" href="#Binomial-assumption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binomial assumption<a class="anchor-link" href="#Binomial-assumption"> </a>
+</h3>
 <p>Finally we can make one last modelling assumption, to help</p>
 <p>Given that one of the 4 payments was late, we might assume that each of the 3 equally, and independently likely to be late as well. IE, we are using the <em>Binomial</em> distribution to model late payments.</p>
 <p>Binomial($n$,$p$), where $n$ is 3, and we want to find $p$.</p>
