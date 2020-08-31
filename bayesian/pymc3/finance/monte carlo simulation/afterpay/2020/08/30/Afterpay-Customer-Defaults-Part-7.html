@@ -9,14 +9,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How can we model the growth in Afterpay’s customer base?" />
 <meta property="og:description" content="How can we model the growth in Afterpay’s customer base?" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-08-13T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-08-30T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Modelling Afterpay’s customer growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-13T00:00:00-05:00","dateModified":"2020-08-13T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html","@context":"https://schema.org"}</script>
+{"headline":"Modelling Afterpay’s customer growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-30T00:00:00-05:00","dateModified":"2020-08-30T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -31,14 +31,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="How can we model the growth in Afterpay’s customer base?" />
 <meta property="og:description" content="How can we model the growth in Afterpay’s customer base?" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html" />
+<link rel="canonical" href="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html" />
+<meta property="og:url" content="https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
 <meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-08-13T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-08-30T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"Modelling Afterpay’s customer growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-13T00:00:00-05:00","dateModified":"2020-08-13T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html","@context":"https://schema.org"}</script>
+{"headline":"Modelling Afterpay’s customer growth","description":"How can we model the growth in Afterpay’s customer base?","datePublished":"2020-08-30T00:00:00-05:00","dateModified":"2020-08-30T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-08-13-Modelling-Afterpays-Customer-Growth/header.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html"},"url":"https://cgcooke.github.io/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -115,8 +115,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Modelling Afterpay&#39;s customer growth</h1><p class="page-description">How can we model the growth in Afterpay's customer base?</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-13T00:00:00-05:00" itemprop="datePublished">
-        Aug 13, 2020
+    <h1 class="post-title p-name" itemprop="name headline">Modelling Afterpay&#39;s customer growth</h1><p class="page-description">How can we model the growth in Afterpay's customer base?</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-30T00:00:00-05:00" itemprop="datePublished">
+        Aug 30, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -158,7 +158,6 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#The-Context">The Context </a></li>
-<li class="toc-entry toc-h2"><a href="#Our-goal">Our goal </a></li>
 <li class="toc-entry toc-h2"><a href="#The-Model">The Model </a></li>
 <li class="toc-entry toc-h2"><a href="#The-Results">The Results </a></li>
 <li class="toc-entry toc-h2"><a href="#Posterior-Predictive-Checks">Posterior Predictive Checks </a></li>
@@ -167,7 +166,7 @@ window.onload = wrap_img;
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2020-08-13-Modelling-Afterpay's-Customer-Growth.ipynb
+# file to edit: _notebooks/020-08-29-Afterpay-Customer-Defaults-Part-7.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -185,34 +184,21 @@ window.onload = wrap_img;
 <h2 id="The-Context">
 <a class="anchor" href="#The-Context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context<a class="anchor-link" href="#The-Context"> </a>
 </h2>
+<p>I want to start by telling a story.</p>
+<p>Let's imagine you are a customer of <em>Afterpay</em>, and you buy a</p>
 <p>Founded in 2014, <a href="https://www.afterpay.com/index">Afterpay</a> is a wildly successful Australian fintech startup. 
 With a market capitalisation of circa 14 billion USD, it has rapidly grown to be a one of Australia's largest companies. In summary, Afterpay let's customers pay for products in 4 separate payments, and charges stores a margin for this.</p>
-<p>I'm interested in applying Bayesian analysis to understand more about Afterpay, based on the information that it has provided to the market, plus a little common sense.</p>
-<p>Why Bayesian analysis? After all, we could just use least means squares to fit a curve.</p>
-<p>In short, Bayesian analysis will give us a better idea to how wrong we could be. 
+<p>I'm interested in applying Bayesian analysis to understand more about Afterpay, based on the information that it has provided to the market, plus a little common sense. Why Bayesian analysis? We could just use least means squares to fit a curve. In short, Bayesian analysis will give us a better clue to how wrong we could be. 
 </p>
 <div class="flash flash-warn">
-    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
     <strong>Important: </strong>Obviously I need a disclaimer. If you use anything I say as the basis for any decision, financial or otherwise, you are an idiot.
 </div>
 <p>Now, with that out of the way, let's get started.</p>
-<h2 id="Our-goal">
-<a class="anchor" href="#Our-goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Our goal<a class="anchor-link" href="#Our-goal"> </a>
-</h2>
-<p>While reading through Afterpay's releases to the markets, I came across this chart, which appears on page 3 of <a href="https://www.afterpaytouch.com/images/APT_ASX-Announcement_Q2-FY18_16-Jan-Final-2.pdf">this</a> release.</p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-08-13-Modelling-Afterpays-Customer-Growth/CustomerGrowth.png" alt="Image of Afterpay custmer growth"></p>
-<p>Given this graph, you might try to answer some questions:</p>
-<ol>
-<li>What is the "saturation level" of <em>Afterpay</em> in the Australian market?</li>
-<li>How long will it take to get there?</li>
-<li>When will it be growing the fastest?</li>
-<li>How confident can you be in your answer?</li>
-</ol>
-<p>Bayesian analysis can help us answer these questions.</p>
 <h2 id="The-Model">
 <a class="anchor" href="#The-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Model<a class="anchor-link" href="#The-Model"> </a>
 </h2>
-<p>First off, let's load in the libraries we will later need.</p>
+<p>First off, let's load in a bunch of libraries.</p>
 
 </div>
 </div>
@@ -246,6 +232,15 @@ With a market capitalisation of circa 14 billion USD, it has rapidly grown to be
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While reading through Afterpay's releases to the markets, I came across this chart, which appears on page 3 of <a href="https://www.afterpaytouch.com/images/APT_ASX-Announcement_Q2-FY18_16-Jan-Final-2.pdf">this</a> release.</p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-08-13-Modelling-Afterpays-Customer-Growth/CustomerGrowth.png" alt="Image of Afterpay custmer growth"></p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -264,7 +259,6 @@ With a market capitalisation of circa 14 billion USD, it has rapidly grown to be
 <span class="s1">            0.8,30-jun-2017,21</span>
 <span class="s1">            1.1,30-sep-2017,24</span>
 <span class="s1">            1.5,31-dec-2017,27'''</span><span class="p">)</span>
-
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">","</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">month_count</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">millions_customers</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">)</span>
@@ -773,9 +767,8 @@ The number of effective samples is smaller than 25% for some parameters.
 <a class="anchor" href="#Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion<a class="anchor-link" href="#Conclusion"> </a>
 </h2>
 <p>In conclusion, Bayesian analysis is a powerful tool, because it allows us to understand how confident we are in our predictions. It's also powerful because we can feed in information that we might already believe. If you are 80% confident that no more than 20% of the Australian population will use Afterpay, then you can feed this in as a prior.</p>
-<p>This type of analysis is also important, as the <a href="https://www.afr.com/markets/equity-markets/afterpay-s-fate-tied-to-us-growth-20200827-p55pwu">AFR</a> makes clear, <em>Afterpay's</em> fate intricately linked to their customer growth.</p>
 <p>While this is a fairly <em>rough and ready</em> model It's interesting. We can see clearly that there is a huge amount of uncertainty in the final number of customers we expect Afterpay to have.</p>
-<p>We also need to keep in mind that we might have picked an inappropriate model to fit, which might not appropriately fit reality.</p>
+<p>We also need to keep in mind that we might have picked an inappropriate model, which might not appropriately fit reality.</p>
 
 </div>
 </div>
@@ -792,7 +785,7 @@ The number of effective samples is smaller than 25% for some parameters.
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/13/Modelling-Afterpay's-Customer-Growth.html" hidden></a>
+</script><a class="u-url" href="/Blog/bayesian/pymc3/finance/monte%20carlo%20simulation/afterpay/2020/08/30/Afterpay-Customer-Defaults-Part-7.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
