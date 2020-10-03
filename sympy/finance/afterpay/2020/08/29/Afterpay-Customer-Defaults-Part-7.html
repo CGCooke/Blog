@@ -155,7 +155,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#The-Model">The Model </a></li>
 <li class="toc-entry toc-h2"><a href="#Loading-the-data">Loading the data </a></li>
 <li class="toc-entry toc-h2"><a href="#Fitting-a-curve">Fitting a curve </a></li>
-<li class="toc-entry toc-h2"><a href="#Some-Algebra">Some Algebra </a></li>
+<li class="toc-entry toc-h2"><a href="#Delays-in-reporting.">Delays in reporting. </a></li>
 <li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
 <li class="toc-entry toc-h1"><a href="#Appendix">Appendix </a>
 <ul>
@@ -218,7 +218,6 @@ window.onload = wrap_img;
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-
 <span class="kn">import</span> <span class="nn">scipy.optimize</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.figsize"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
@@ -236,8 +235,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While reading through Afterpay's releases to the markets, I came across this chart, which appears on page 3 of <a href="https://www.afterpaytouch.com/images/APT_ASX-Announcement_Q2-FY18_16-Jan-Final-2.pdf">this</a> release.</p>
-<p><img src="/Blog/images/copied_from_nb/../images/2020-08-13-Modelling-Afterpays-Customer-Growth/CustomerGrowth.png" alt="Image of Afterpay custmer growth"></p>
+<p>While reading through Afterpay's releases to the markets, I came across this chart, which appears on page 3 of <a href="https://www.afterpaytouch.com/images/APT_ASX-Announcement_Q2-FY18_16-Jan-Final-2.pdf">this</a> release. Let's use this to build a simple quadratic model of the reported sales.</p>
+<p><img src="/Blog/images/copied_from_nb/../images/2020-08-13-Modelling-Afterpays-Customer-Growth/CustomerGrowth.png" alt="Image of Afterpay customer growth"></p>
 
 </div>
 </div>
@@ -283,6 +282,8 @@ window.onload = wrap_img;
 <h2 id="Fitting-a-curve">
 <a class="anchor" href="#Fitting-a-curve" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fitting a curve<a class="anchor-link" href="#Fitting-a-curve"> </a>
 </h2>
+<p>Let's first fit quadratic:</p>
+
 </div>
 </div>
 </div>
@@ -302,9 +303,24 @@ window.onload = wrap_img;
 
 <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">curve_fit</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
 
-
 <span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">quadratic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'data'</span><span class="p">)</span>
@@ -351,19 +367,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ok, let's pause for a moment, and actually think about what this curve represents.</p>
-<p>It's the sum, or integral of the total sales for the preceding 1 year period.</p>
-<p>Now, let's find the underlying function which is being integrated, which will give us a more accurate picture of the growth in sales at any point in time.</p>
-<p>Later in the article, we will find this function, but for now let's just stay focused on understanding how delays in recognising defaults, affect effective default rates. </p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Some-Algebra">
-<a class="anchor" href="#Some-Algebra" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some Algebra<a class="anchor-link" href="#Some-Algebra"> </a>
+<h2 id="Delays-in-reporting.">
+<a class="anchor" href="#Delays-in-reporting." aria-hidden="true"><span class="octicon octicon-link"></span></a>Delays in reporting.<a class="anchor-link" href="#Delays-in-reporting."> </a>
 </h2>
 <p>So we found that we could model the annual reported sales as: $$2.170 t^2 - 17.61t - 58.725$$</p>
 <p>The instantanious rate of sales, is given by : $$0.1808t^2 + 0.7021t -9.36$$.</p>
@@ -413,6 +418,15 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's model a delay of 6 months between when the transaction happens, and when <em>Afterpay</em> finally realised there was a default.</p>
+<p>From this we can see there is a potentially significant difference between the true rate at which losses are occurring, and the rate at which we observe them occurring, at any point in time.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -458,6 +472,14 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's integrate by financial year.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
