@@ -3,6 +3,7 @@ toc: true
 layout: post
 description: Programmatic Blender
 categories: [Blender,Computer Vision]
-image: images/2020-10-03-Programmatic-Blender/header.png
+image: images/2019-06-05-Three-Interesting-Papers/header.jpg
 ---
+
 TEST
