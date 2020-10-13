@@ -319,6 +319,6 @@ sns.jointplot(trace[:]['X_translate'], trace[:]['Y_translate'], kind="hex");
 ## Conclusion
 I've been planning to write this post for about a few months, but to get here was an interesting journey, as I needed to first put many of the building blocks in place.
 
-I'm still on my Bayesian modelling journey, but I've been inspired by others along the way, in particular, this awesome [post](https://docs.pymc.io/notebooks/putting_workflow.html).
+I'm still on my bayesian modelling journey, but I've been inspired by others along the way, in particular, this awesome [post](https://docs.pymc.io/notebooks/putting_workflow.html).
 
 
