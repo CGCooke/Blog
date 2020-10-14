@@ -2,9 +2,10 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>An Adventure in Camera Calibration | Adventures with Numbers</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="An Adventure in Camera Calibration" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
@@ -16,7 +17,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
 <script type="application/ld+json">
-{"headline":"An Adventure in Camera Calibration","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","datePublished":"2020-02-23T00:00:00-06:00","dateModified":"2020-02-23T00:00:00-06:00","image":"https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","@context":"https://schema.org"}</script>
+{"url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","@type":"BlogPosting","headline":"An Adventure in Camera Calibration","dateModified":"2020-02-23T00:00:00-06:00","datePublished":"2020-02-23T00:00:00-06:00","image":"https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -24,35 +25,12 @@
 
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-59953722-2','auto');ga('require','displayfeatures');ga('send','pageview');</script>
 
-<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>An Adventure in Camera Calibration | Adventures with Numbers</title>
-<meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="An Adventure in Camera Calibration" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<meta property="og:description" content="Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera" />
-<link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
-<meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html" />
-<meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-02-23T00:00:00-06:00" />
-<script type="application/ld+json">
-{"headline":"An Adventure in Camera Calibration","description":"Let’s learn how to use a set of known 2D and 3D point correspondances to calibrate a camera","datePublished":"2020-02-23T00:00:00-06:00","dateModified":"2020-02-23T00:00:00-06:00","image":"https://cgcooke.github.io/Blog/images/2020-02-23-An-Adventure-In-Camera-Calibration/header.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html"},"url":"https://cgcooke.github.io/Blog/computer%20vision/optimisation/linear%20algebra/2020/02/23/An-Adventure-In-Camera-Calibration.html","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
-
-
-
-<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-59953722-2','auto');ga('require','displayfeatures');ga('send','pageview');</script>
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         renderMathInElement( document.body, {
@@ -95,7 +73,8 @@ window.onload = wrap_img;
     elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
     });
 </script>
-</head><body><header class="site-header">
+</head>
+<body><header class="site-header">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Adventures with Numbers</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -175,13 +154,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -341,7 +313,7 @@ window.onload = wrap_img;
 <p>Let's talk more about cameras.
 </p>
 <div class="flash flash-warn">
-    <svg class="octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <svg class="octicon octicon-zap" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 00-.01.004L3.286 8.571A.25.25 0 003.462 9H6.75a.75.75 0 01.694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0012.538 7H9.25a.75.75 0 01-.683-1.06l2.008-4.418.003-.006a.02.02 0 00-.004-.009.02.02 0 00-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 012.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 01-.871.354h-.302a1.25 1.25 0 01-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"></path></svg>
     <strong>Important: </strong>There are many correct ways to model a camera mathematically. This is one way.
 </div>
 <p>Mathematically, cameras are are composed of two types of parameters, <em>Intrinsic</em> and <em>Extrinsic</em>.
@@ -351,7 +323,7 @@ The <em>Extrinsic</em> parameters define the position and rotation of the camera
 <p>The <em>Intrinsic</em> parameters are more complex. There are a number of great resources, for example <em>Multiple View Geometry in Computer Vision</em>, or the OpenCV documentation. However, In this case, I am assuming that the principal point, the focal length, and the radial parameters are unknown.
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>To be clear, I’m building on the shoulders of giants, I’ve heavily adapted this example from this incredible demo by <em>Nikolay Mayorov</em> which you can find <a href="https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html">here</a>
 </div>
 <p>Firstly, let's go and import a bunch of stuff we will need later.</p>
