@@ -6,28 +6,26 @@ categories: [Computer Vision,Blender]
 image: images/2020-10-14-Robotic-Blender/header.png
 ---
 
-What is Blender?
+## What is Blender?
+===============
+
+## Why would we want to automate Blender?
 ===============
 
 
-
-Why would we want to automate Blender?
+## How can we automate Blender?
 ===============
 
 
-How can we automate Blender?
-===============
-
-
+`blender --background --python myscript.py`
 
 
 ```python
 import os
 import bpy
+```
 
-
-#blender --background --python myscript.py
-
+```python
 def create_material(object_name,material_name, rgba):
         mat = bpy.data.materials.new(name=material_name)
         bpy.data.objects[object_name].active_material = mat
@@ -93,7 +91,7 @@ bpy.ops.render.render(write_still=True)
 ```
 
 
-The Results
+## The Results
 ===============
 
 ![_config.yml]({{ site.baseurl }}/images/2020-10-14-Robotic-Blender/render.png)
