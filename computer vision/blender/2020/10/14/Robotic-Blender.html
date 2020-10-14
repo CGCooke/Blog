@@ -120,26 +120,29 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#what-is-blender">What is Blender?</a></li>
-<li class="toc-entry toc-h1"><a href="#why-would-we-want-to-automate-blender">Why would we want to automate Blender?</a></li>
-<li class="toc-entry toc-h1"><a href="#how-can-we-automate-blender">How can we automate Blender?</a></li>
-<li class="toc-entry toc-h1"><a href="#the-results">The Results</a></li>
-</ul><h1 id="what-is-blender">
-<a class="anchor" href="#what-is-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Blender?</h1>
+<li class="toc-entry toc-h2"><a href="#what-is-blender">What is Blender?</a></li>
+<li class="toc-entry toc-h2"><a href="#why-would-we-want-to-automate-blender">Why would we want to automate Blender?</a></li>
+<li class="toc-entry toc-h2"><a href="#how-can-we-automate-blender">How can we automate Blender?</a></li>
+<li class="toc-entry toc-h2"><a href="#the-results">The Results</a></li>
+</ul><h2 id="what-is-blender">
+<a class="anchor" href="#what-is-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Blender?</h2>
+<p>===============</p>
 
-<h1 id="why-would-we-want-to-automate-blender">
-<a class="anchor" href="#why-would-we-want-to-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why would we want to automate Blender?</h1>
+<h2 id="why-would-we-want-to-automate-blender">
+<a class="anchor" href="#why-would-we-want-to-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why would we want to automate Blender?</h2>
+<p>===============</p>
 
-<h1 id="how-can-we-automate-blender">
-<a class="anchor" href="#how-can-we-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can we automate Blender?</h1>
+<h2 id="how-can-we-automate-blender">
+<a class="anchor" href="#how-can-we-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can we automate Blender?</h2>
+<p>===============</p>
+
+<p><code class="language-plaintext highlighter-rouge">blender --background --python myscript.py</code></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">bpy</span>
+</code></pre></div></div>
 
-
-<span class="c1">#blender --background --python myscript.py
-</span>
-<span class="k">def</span> <span class="nf">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">,</span> <span class="n">rgba</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">,</span> <span class="n">rgba</span><span class="p">):</span>
         <span class="n">mat</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="n">object_name</span><span class="p">].</span><span class="n">active_material</span> <span class="o">=</span> <span class="n">mat</span>
         
@@ -197,8 +200,9 @@ window.onload = wrap_img;
 <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h1 id="the-results">
-<a class="anchor" href="#the-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Results</h1>
+<h2 id="the-results">
+<a class="anchor" href="#the-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Results</h2>
+<p>===============</p>
 
 <p><img src="/Blog/images/2020-10-14-Robotic-Blender/render.png" alt="_config.yml"></p>
 
