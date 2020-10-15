@@ -126,20 +126,25 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#the-results">The Results</a></li>
 </ul><h2 id="what-is-blender">
 <a class="anchor" href="#what-is-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Blender?</h2>
-<p>===============</p>
 
 <h2 id="why-would-we-want-to-automate-blender">
 <a class="anchor" href="#why-would-we-want-to-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why would we want to automate Blender?</h2>
-<p>===============</p>
 
 <h2 id="how-can-we-automate-blender">
 <a class="anchor" href="#how-can-we-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can we automate Blender?</h2>
-<p>===============</p>
 
 <p><code class="language-plaintext highlighter-rouge">blender --background --python myscript.py</code></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">bpy</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">primitive_plane_add</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">enter_editmode</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s">'WORLD'</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cube_scale</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
+<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">,</span> <span class="n">rgba</span><span class="p">):</span>
@@ -152,6 +157,10 @@ window.onload = wrap_img;
         <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
 
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_material</span><span class="p">(</span><span class="s">"Cube"</span><span class="p">,</span><span class="s">"Cube_material"</span><span class="p">,(</span><span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">223</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">create_material</span><span class="p">(</span><span class="s">"Plane"</span><span class="p">,</span><span class="s">"Plane_material"</span><span class="p">,(</span><span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">235</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_camera</span><span class="p">():</span>
@@ -175,34 +184,21 @@ window.onload = wrap_img;
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_render</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s">'CYCLES'</span>
-
-        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/Simple2.png"</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/render.png"</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">resolution_x</span> <span class="o">=</span> <span class="mi">1920</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">resolution_y</span> <span class="o">=</span> <span class="mi">1080</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">primitive_plane_add</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">enter_editmode</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s">'WORLD'</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cube_scale</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
-<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_material</span><span class="p">(</span><span class="s">"Cube"</span><span class="p">,</span><span class="s">"Cube_material"</span><span class="p">,(</span><span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">223</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">create_material</span><span class="p">(</span><span class="s">"Plane"</span><span class="p">,</span><span class="s">"Plane_material"</span><span class="p">,(</span><span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">235</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="n">configure_camera</span><span class="p">()</span>
 <span class="n">configure_light</span><span class="p">()</span>
 <span class="n">configure_render</span><span class="p">()</span>
-
 
 <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="the-results">
 <a class="anchor" href="#the-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Results</h2>
-<p>===============</p>
 
 <p><img src="/Blog/images/2020-10-14-Robotic-Blender/render.png" alt="_config.yml"></p>
 
