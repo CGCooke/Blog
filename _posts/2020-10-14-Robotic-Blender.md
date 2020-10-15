@@ -6,15 +6,16 @@ categories: [Computer Vision,Blender]
 image: images/2020-10-14-Robotic-Blender/header.png
 ---
 
-## What is Blender?
-===============
-
-## Why would we want to automate Blender?
-===============
+What is Blender?
+-------------
 
 
-## How can we automate Blender?
-===============
+Why would we want to automate Blender?
+-------------
+
+
+How can we automate Blender?
+-------------
 
 
 `blender --background --python myscript.py`
@@ -24,6 +25,17 @@ image: images/2020-10-14-Robotic-Blender/header.png
 import os
 import bpy
 ```
+
+```python 
+bpy.ops.mesh.primitive_plane_add(size=1000, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+```
+
+```python 
+cube_scale = 0.5
+bpy.data.objects["Cube"].scale = (cube_scale,cube_scale,cube_scale)
+bpy.data.objects["Cube"].location = (0,0,cube_scale)
+```
+
 
 ```python
 def create_material(object_name,material_name, rgba):
@@ -37,6 +49,13 @@ def create_material(object_name,material_name, rgba):
         nodes["Principled BSDF"].inputs[7].default_value = 0.1
 
 ```
+
+
+```python 
+create_material("Cube","Cube_material",(3/255.0, 223/255.0, 252/255.0,1))
+create_material("Plane","Plane_material",(252/255.0, 3/255.0, 235/255.0,1))
+```
+
 
 ```python
 def configure_camera():
@@ -62,37 +81,25 @@ def configure_light():
 ```python 
 def configure_render():
         bpy.context.scene.render.engine = 'CYCLES'
-
-        bpy.context.scene.render.filepath = os.getcwd()+"/Simple2.png"
+        bpy.context.scene.render.filepath = os.getcwd()+"/render.png"
         bpy.context.scene.render.resolution_x = 1920
         bpy.context.scene.render.resolution_y = 1080
 ```
 
-```python 
-bpy.ops.mesh.primitive_plane_add(size=1000, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
-```
+
 
 ```python 
-cube_scale = 0.5
-bpy.data.objects["Cube"].scale = (cube_scale,cube_scale,cube_scale)
-bpy.data.objects["Cube"].location = (0,0,cube_scale)
-```
-
-```python 
-create_material("Cube","Cube_material",(3/255.0, 223/255.0, 252/255.0,1))
-create_material("Plane","Plane_material",(252/255.0, 3/255.0, 235/255.0,1))
 
 configure_camera()
 configure_light()
 configure_render()
 
-
 bpy.ops.render.render(write_still=True)
 ```
 
 
-## The Results
-===============
+The Results
+-------------
 
 ![_config.yml]({{ site.baseurl }}/images/2020-10-14-Robotic-Blender/render.png)
 
