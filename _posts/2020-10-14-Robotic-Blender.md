@@ -17,6 +17,7 @@ Many reasons, but my real focus is on creating synthetic data for training new m
 
 Using *Blender*, we can generate arbitrary amounts of synthetic data, where we can precisely control the scene. Because of this, we can generate metadata at the same time, and try to generate data which better covers the available input space. 
 
+A classic example of this, is the [CLEVR](https://github.com/facebookresearch/clevr-dataset-gen) dataset, used for *Visual Reasoning*.
 
 How can we automate Blender?
 -------------
