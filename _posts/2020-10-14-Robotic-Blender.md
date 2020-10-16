@@ -43,7 +43,6 @@ import bpy
 When *Blender* loads, the default scene already contains a cube, called *Cube*. 
 Let's adjust it's position and scale.
 
-
 ```python 
 cube_scale = 0.5
 bpy.data.objects["Cube"].scale = (cube_scale,cube_scale,cube_scale)
@@ -96,15 +95,8 @@ Now let's configure the camera's position, and orientation/attitude (Using quate
 
 ```python
 def configure_camera():
-        bpy.data.objects["Camera"].location[0] = 5
-        bpy.data.objects["Camera"].location[1] = -5
-        bpy.data.objects["Camera"].location[2] = 4
-
-
-        bpy.data.objects["Camera"].rotation_quaternion[0] = 0.892399
-        bpy.data.objects["Camera"].rotation_quaternion[1] = 0.369644
-        bpy.data.objects["Camera"].rotation_quaternion[2] = 0.099046
-        bpy.data.objects["Camera"].rotation_quaternion[3] = 0.239118
+        bpy.data.objects["Camera"].location = (5, -5, 4)
+        bpy.data.objects["Camera"].rotation_quaternion = (0.892399, 0.369644, 0.099046, 0.239118_
 
 configure_camera()
 ```
