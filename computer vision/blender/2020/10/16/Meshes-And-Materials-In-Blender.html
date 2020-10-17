@@ -8,8 +8,8 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Meshes And Materials In Blender" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s learn how we can create synthetic imagery, for training machine learning modesl." />
-<meta property="og:description" content="Let’s learn how we can create synthetic imagery, for training machine learning modesl." />
+<meta name="description" content="In this post, I want to dig a little deeper into materials, and importing meshes." />
+<meta property="og:description" content="In this post, I want to dig a little deeper into materials, and importing meshes." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
@@ -17,7 +17,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-10-16T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html","@type":"BlogPosting","headline":"Meshes And Materials In Blender","dateModified":"2020-10-16T00:00:00-05:00","datePublished":"2020-10-16T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-10-16-Meshes-And-Materials-In-Blender/header.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html"},"description":"Let’s learn how we can create synthetic imagery, for training machine learning modesl.","@context":"https://schema.org"}</script>
+{"url":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html","@type":"BlogPosting","headline":"Meshes And Materials In Blender","dateModified":"2020-10-16T00:00:00-05:00","datePublished":"2020-10-16T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-10-16-Meshes-And-Materials-In-Blender/header.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/16/Meshes-And-Materials-In-Blender.html"},"description":"In this post, I want to dig a little deeper into materials, and importing meshes.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -94,7 +94,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Meshes And Materials In Blender</h1><p class="page-description">Let's learn how we can create synthetic imagery, for training machine learning modesl.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-16T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Meshes And Materials In Blender</h1><p class="page-description">In this post, I want to dig a little deeper into materials, and importing meshes.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-16T00:00:00-05:00" itemprop="datePublished">
         Oct 16, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -120,19 +120,18 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#how-can-we-automate-blender">How can we automate Blender?</a></li>
-<li class="toc-entry toc-h2"><a href="#hello-world">Hello World</a></li>
+<li class="toc-entry toc-h2"><a href="#the-script">The script</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#importing-mesh">Importing Mesh</a></li>
+<li class="toc-entry toc-h3"><a href="#materials">Materials</a></li>
+<li class="toc-entry toc-h3"><a href="#lights-camera-render">Lights, Camera, Render!</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#the-results">The Results</a></li>
-</ul><h2 id="how-can-we-automate-blender">
-<a class="anchor" href="#how-can-we-automate-blender" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can we automate Blender?</h2>
-<p><em>Blender</em> has a <a href="https://docs.blender.org/api/current/index.html">comprehensivley documented</a> API. However, I love using <em>Blender</em>’s <a href="https://www.youtube.com/watch?v=5e56gdHZtB0">scripting mode</a>, to experment with.</p>
-
-<p>In short, we can create a python script, which we can then run using <em>Blender</em>.</p>
+</ul><h2 id="the-script">
+<a class="anchor" href="#the-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>The script</h2>
 
 <p><code class="language-plaintext highlighter-rouge">blender --background --python myscript.py</code></p>
-
-<h2 id="hello-world">
-<a class="anchor" href="#hello-world" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hello World</h2>
 
 <p>Let’s walk through what <code class="language-plaintext highlighter-rouge">myscript.py</code> 
 could look like:</p>
@@ -142,6 +141,24 @@ could look like:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">primitive_plane_add</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </code></pre></div></div>
+
+<h3 id="importing-mesh">
+<a class="anchor" href="#importing-mesh" aria-hidden="true"><span class="octicon octicon-link"></span></a>Importing Mesh</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_bunny</span><span class="p">():</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">import_scene</span><span class="p">.</span><span class="n">obj</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/stanford_bunny.obj"</span><span class="p">)</span>
+        <span class="n">ob</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"stanford_bunny"</span><span class="p">]</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.35</span><span class="p">)</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Bunny'</span>
+        
+        <span class="c1">#Perform subdivision
+</span>        <span class="n">bevel_mod</span> <span class="o">=</span> <span class="n">ob</span><span class="p">.</span><span class="n">modifiers</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s">'Subsurf'</span><span class="p">,</span> <span class="s">'SUBSURF'</span><span class="p">)</span>
+        <span class="n">bevel_mod</span><span class="p">.</span><span class="n">render_levels</span> <span class="o">=</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<h3 id="materials">
+<a class="anchor" href="#materials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Materials</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">):</span>
         <span class="n">mat</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
@@ -170,28 +187,22 @@ could look like:</p>
         <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">15</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">16</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.75</span>
 
-<span class="k">def</span> <span class="nf">create_bunny</span><span class="p">():</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">import_scene</span><span class="p">.</span><span class="n">obj</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/stanford_bunny.obj"</span><span class="p">)</span>
-        <span class="n">ob</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"stanford_bunny"</span><span class="p">]</span>
-        <span class="n">ob</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-        <span class="n">ob</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.35</span><span class="p">)</span>
-        <span class="n">ob</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Bunny'</span>
-        
-        <span class="c1">#Perform subdivision
-</span>        <span class="n">bevel_mod</span> <span class="o">=</span> <span class="n">ob</span><span class="p">.</span><span class="n">modifiers</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s">'Subsurf'</span><span class="p">,</span> <span class="s">'SUBSURF'</span><span class="p">)</span>
-        <span class="n">bevel_mod</span><span class="p">.</span><span class="n">render_levels</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">create_bunny_material</span><span class="p">(</span><span class="s">"Bunny"</span><span class="p">,</span><span class="s">"Bunny_Material"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_camera</span><span class="p">():</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<h3 id="lights-camera-render">
+<a class="anchor" href="#lights-camera-render" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lights, Camera, Render!</h3>
 
-<span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">data</span><span class="p">.</span><span class="nb">type</span> <span class="o">=</span> <span class="s">'AREA'</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        
+
+<span class="k">def</span> <span class="nf">configure_camera</span><span class="p">():</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
 <span class="k">def</span> <span class="nf">configure_render</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s">'CYCLES'</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/render.png"</span>
@@ -199,8 +210,9 @@ could look like:</p>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">resolution_y</span> <span class="o">=</span> <span class="mi">1200</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">cycles</span><span class="p">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">2560</span>
 
-<span class="n">configure_camera</span><span class="p">()</span>
+
 <span class="n">configure_light</span><span class="p">()</span>
+<span class="n">configure_camera</span><span class="p">()</span>
 <span class="n">configure_render</span><span class="p">()</span>
 
 <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
