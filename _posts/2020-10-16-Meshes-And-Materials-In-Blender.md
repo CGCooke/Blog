@@ -1,22 +1,15 @@
 ---
 toc: true
 layout: post
-description: Let's learn how we can create synthetic imagery, for training machine learning modesl.
+description: In this post, I want to dig a little deeper into materials, and importing meshes.
 categories: [Computer Vision,Blender]
 image: images/2020-10-16-Meshes-And-Materials-In-Blender/header.png
 ---
 
-
-How can we automate Blender?
+The script
 -------------
-*Blender* has a [comprehensivley documented](https://docs.blender.org/api/current/index.html) API. However, I love using *Blender*'s [scripting mode](https://www.youtube.com/watch?v=5e56gdHZtB0), to experment with.
-
-In short, we can create a python script, which we can then run using *Blender*.
 
 `blender --background --python myscript.py`
-
-Hello World 
--------------
 
 Let's walk through what `myscript.py` 
 could look like:
@@ -28,6 +21,23 @@ bpy.data.objects.remove(bpy.data.objects['Cube'], do_unlink = True)
 ```python
 bpy.ops.mesh.primitive_plane_add(size=1000,location=(0, 0, 0), scale=(1, 1, 1))
 ```
+
+### Importing Mesh
+
+```python
+def create_bunny():
+        bpy.ops.import_scene.obj(filepath=os.getcwd()+"/stanford_bunny.obj")
+        ob = bpy.data.objects["stanford_bunny"]
+        ob.scale = (10,10,10)
+        ob.location = (1,0,-0.35)
+        ob.name = 'Bunny'
+        
+        #Perform subdivision
+        bevel_mod = ob.modifiers.new('Subsurf', 'SUBSURF')
+        bevel_mod.render_levels = 3
+```
+
+### Materials
 
 ```python
 def create_material(object_name,material_name):
@@ -48,7 +58,6 @@ create_ground_plane_material("Plane","Plane_material")
 ```
 
 
-
 ```python
 
 def create_bunny_material(object_name,material_name):
@@ -60,30 +69,23 @@ def create_bunny_material(object_name,material_name):
         nodes["Principled BSDF"].inputs[15].default_value = 1
         nodes["Principled BSDF"].inputs[16].default_value = 0.75
 
-def create_bunny():
-        bpy.ops.import_scene.obj(filepath=os.getcwd()+"/stanford_bunny.obj")
-        ob = bpy.data.objects["stanford_bunny"]
-        ob.scale = (10,10,10)
-        ob.location = (1,0,-0.35)
-        ob.name = 'Bunny'
-        
-        #Perform subdivision
-        bevel_mod = ob.modifiers.new('Subsurf', 'SUBSURF')
-        bevel_mod.render_levels = 3
+create_bunny_material("Bunny","Bunny_Material")
 ```
 
 
-```python
-def configure_camera():
-        bpy.data.objects["Camera"].location = (0.7, -4, 3)
-        bpy.data.objects["Camera"].rotation_euler = (np.radians(60),0,0)
+### Lights, Camera, Render!
 
+```python
 def configure_light():
         bpy.data.objects["Light"].data.type = 'AREA'
         bpy.data.objects["Light"].scale = (10,10,1)
         bpy.data.objects["Light"].location = (0,0,6)
         bpy.data.objects["Light"].rotation_euler = (0,0,0)
-        
+
+def configure_camera():
+        bpy.data.objects["Camera"].location = (0.7, -4, 3)
+        bpy.data.objects["Camera"].rotation_euler = (np.radians(60),0,0)
+
 def configure_render():
         bpy.context.scene.render.engine = 'CYCLES'
         bpy.context.scene.render.filepath = os.getcwd()+"/render.png"
@@ -91,8 +93,9 @@ def configure_render():
         bpy.context.scene.render.resolution_y = 1200
         bpy.context.scene.cycles.samples = 2560
 
-configure_camera()
+
 configure_light()
+configure_camera()
 configure_render()
 
 bpy.ops.render.render(write_still=True)

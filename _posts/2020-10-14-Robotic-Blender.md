@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: Robotic Blender
+description: Let's learn how we can create synthetic imagery, for training machine learning models.
 categories: [Computer Vision,Blender]
 image: images/2020-10-14-Robotic-Blender/header.png
 ---
