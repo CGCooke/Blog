@@ -96,6 +96,7 @@ Now let's configure the camera's position, and orientation/attitude (Using quate
 ```python
 def configure_camera():
         bpy.data.objects["Camera"].location = (5, -5, 4)
+        bpy.data.objects["Camera"].rotation_mode = 'QUATERNION'
         bpy.data.objects["Camera"].rotation_quaternion = (0.892399, 0.369644, 0.099046, 0.239118_
 
 configure_camera()
