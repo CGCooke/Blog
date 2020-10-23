@@ -13,6 +13,12 @@ Supervised learning in computer vision is fundamentally about building a model t
 
 Using *Blender*, we have seen how we can generate arbitrary scenes, and in this post I will look at how we can create *Semantic Segmentation Maps* and *Depth Maps*.
 
+
+While writingthis post, I found [this](http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/) post by *Tobias Weis* to be really helpful for understanding rendering nodes. 
+
+For a more industrial solution, I suggest looking at the [bpycv](https://github.com/DIYer22/bpycv) project on Github.
+
+
 The Code
 -------------
 
