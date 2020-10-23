@@ -190,9 +190,13 @@ Let’s adjust it’s position and scale.</p>
         
         <span class="n">mat</span><span class="p">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">mat</span><span class="p">.</span><span class="n">node_tree</span><span class="p">.</span><span class="n">nodes</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="c1"># Base Color
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
+        <span class="c1"># Specular 
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># Roughness
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
 
 </code></pre></div></div>
 

@@ -146,7 +146,8 @@ could look like:</p>
 <a class="anchor" href="#importing-mesh" aria-hidden="true"><span class="octicon octicon-link"></span></a>Importing Mesh</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_bunny</span><span class="p">():</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">import_scene</span><span class="p">.</span><span class="n">obj</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/stanford_bunny.obj"</span><span class="p">)</span>
+        <span class="c1"># Load the mesh
+</span>        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">import_scene</span><span class="p">.</span><span class="n">obj</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/stanford_bunny.obj"</span><span class="p">)</span>
         <span class="n">ob</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"stanford_bunny"</span><span class="p">]</span>
         <span class="n">ob</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
         <span class="n">ob</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.35</span><span class="p">)</span>
@@ -170,9 +171,12 @@ could look like:</p>
 
 <span class="k">def</span> <span class="nf">create_ground_plane_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">):</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">)</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="c1">#
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1">#
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
 
 <span class="n">create_ground_plane_material</span><span class="p">(</span><span class="s">"Plane"</span><span class="p">,</span><span class="s">"Plane_material"</span><span class="p">)</span>
 </code></pre></div></div>
@@ -180,12 +184,21 @@ could look like:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="k">def</span> <span class="nf">create_bunny_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">):</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">)</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span>  <span class="p">(</span><span class="mf">0.603828</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.707399</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
 
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">14</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.5</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">15</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">16</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.75</span>
+        <span class="c1"># Base Color
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span>  <span class="p">(</span><span class="mf">0.603828</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.707399</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Roughness
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="c1"># IOR (Index of Refraction)
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">14</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+        <span class="c1"># Transmission
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">15</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Transmission Roughness
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">16</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.75</span>
 
 <span class="n">create_bunny_material</span><span class="p">(</span><span class="s">"Bunny"</span><span class="p">,</span><span class="s">"Bunny_Material"</span><span class="p">)</span>
 </code></pre></div></div>
