@@ -66,8 +66,12 @@ def create_material(object_name,material_name, rgba):
         
         mat.use_nodes = True
         nodes = mat.node_tree.nodes
+
+        # Base Color
         nodes["Principled BSDF"].inputs[0].default_value = rgba
+        # Specular 
         nodes["Principled BSDF"].inputs[5].default_value = 1
+        # Roughness
         nodes["Principled BSDF"].inputs[7].default_value = 0.1
 
 ```

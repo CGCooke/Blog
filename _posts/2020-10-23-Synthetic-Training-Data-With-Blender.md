@@ -1,16 +1,20 @@
 ---
 toc: true
 layout: post
-description: Let's learn how we can create synthetic imagery, for training machine learning models.
+description: Let's learn how we can create depth and semantic maps, for training machine learning models.
 categories: [Computer Vision,Blender]
 image: images/2020-10-23-Synthetic-Training-Data-With-Blender/header.png
 ---
 
-Hello World 
+Introduction
 -------------
 
-Let's walk through what `myscript.py` 
-could look like:
+
+
+
+The Code
+-------------
+
 
 ```python
 import os
@@ -25,16 +29,16 @@ def create_dragon_material(material_name,rgba):
         mat.use_nodes = True
         nodes = mat.node_tree.nodes
 
-        #Base Color
+        # Base Color
         nodes["Principled BSDF"].inputs[0].default_value = rgba
 
-        #Subsurface
+        # Subsurface
         nodes["Principled BSDF"].inputs[1].default_value = 0.5
 
-        #Subsurface Color
+        # Subsurface Color
         nodes["Principled BSDF"].inputs[3].default_value = rgba
         
-        #Clearcoat 
+        # Clearcoat 
         nodes["Principled BSDF"].inputs[12].default_value = 0.5
         return(mat)
 
@@ -44,10 +48,10 @@ def create_floor_material(material_name,rgba):
         mat.use_nodes = True
         nodes = mat.node_tree.nodes
 
-        #Base Color
+        # Base Color
         nodes["Principled BSDF"].inputs[0].default_value = rgba
 
-        #Clearcoat 
+        # Clearcoat 
         nodes["Principled BSDF"].inputs[12].default_value = 0.5
         return(mat)
 ```
@@ -139,7 +143,6 @@ def configure_render():
 ```python 
 bpy.data.objects.remove(bpy.data.objects['Cube'], do_unlink = True)
 
-
 create_floor()
 create_dragon(location=(0,0.78,-0.56), rotation=(np.radians(90),0,0), rgba=(0.799, 0.125, 0.0423, 1), index=1)
 create_dragon(location=(-1.5,4.12,-0.56), rotation=(np.radians(90),0,np.radians(227)), rgba=(0.0252, 0.376, 0.799, 1), index=2)
@@ -155,9 +158,18 @@ bpy.ops.render.render(write_still=True)
 The Results
 -------------
 
+### Image output
+
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/render.png)
 
+
+### Dept hmap
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/Depth.png)
 
+
+### Semantic map
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/Index.png)
+
+
+
 

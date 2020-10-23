@@ -28,6 +28,7 @@ bpy.ops.mesh.primitive_plane_add(size=1000,location=(0, 0, 0), scale=(1, 1, 1))
 
 ```python
 def create_bunny():
+        # Load the mesh
         bpy.ops.import_scene.obj(filepath=os.getcwd()+"/stanford_bunny.obj")
         ob = bpy.data.objects["stanford_bunny"]
         ob.scale = (10,10,10)
@@ -52,8 +53,11 @@ def create_material(object_name,material_name):
 
 def create_ground_plane_material(object_name,material_name):
         nodes = create_material(object_name,material_name)
+        #
         nodes["Principled BSDF"].inputs[0].default_value = (0.7,0.7,0.7,1)
+        #
         nodes["Principled BSDF"].inputs[5].default_value = 1
+        #
         nodes["Principled BSDF"].inputs[7].default_value = 0.1
 
 create_ground_plane_material("Plane","Plane_material")
@@ -64,11 +68,20 @@ create_ground_plane_material("Plane","Plane_material")
 
 def create_bunny_material(object_name,material_name):
         nodes = create_material(object_name,material_name)
+
+        # Base Color
         nodes["Principled BSDF"].inputs[0].default_value =  (0.603828, 1, 0.707399, 1)
+
+        # Roughness
         nodes["Principled BSDF"].inputs[7].default_value = 0.1
 
+        # IOR (Index of Refraction)
         nodes["Principled BSDF"].inputs[14].default_value = 1.5
+
+        # Transmission
         nodes["Principled BSDF"].inputs[15].default_value = 1
+
+        # Transmission Roughness
         nodes["Principled BSDF"].inputs[16].default_value = 0.75
 
 create_bunny_material("Bunny","Bunny_Material")
