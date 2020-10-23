@@ -15,7 +15,6 @@ Introduction
 The Code
 -------------
 
-
 ```python
 import os
 import bpy
@@ -80,8 +79,9 @@ def create_floor():
 ```
 
 ### Light & Camera 
-```python
 
+
+```python
 def configure_light():
         bpy.data.objects["Light"].data.type = 'AREA'
         bpy.data.objects["Light"].scale[0] = 20
@@ -95,6 +95,9 @@ def configure_camera():
 ```
 
 ### Renderer
+
+
+
 ```python 
 def configure_render():
         bpy.context.scene.render.engine = 'CYCLES'
@@ -102,42 +105,51 @@ def configure_render():
         bpy.context.scene.render.image_settings.file_format = 'OPEN_EXR'
         bpy.context.scene.cycles.samples = 1
 
-        #Configure renderer to record object index
+        # Configure renderer to record object index
         bpy.context.scene.view_layers["View Layer"].use_pass_object_index = True
 
 
-        # switch on nodes and get reference
+        # Switch on nodes and get reference
         bpy.context.scene.use_nodes = True
         tree = bpy.context.scene.node_tree
         links = tree.links
 
-        ## clear default nodes
+        ## Clear default nodes
         for node in tree.nodes:
             tree.nodes.remove(node)
 
-
+        # Create a node for outputting the rendered image
         image_output_node = tree.nodes.new(type="CompositorNodeOutputFile")
         image_output_node.label = "Image_Output"
         image_output_node.base_path = "Metadata/Image"
         image_output_node.location = 400,0
 
+        # Create a node for outputting the depth of each pixel from the camera
         depth_output_node = tree.nodes.new(type="CompositorNodeOutputFile")
         depth_output_node.label = "Depth_Output"
         depth_output_node.base_path = "Metadata/Depth"
         depth_output_node.location = 400,-100
 
+        # Create a node for outputting the index of each object
         index_output_node = tree.nodes.new(type="CompositorNodeOutputFile")
         index_output_node.label = "Index_Output"
         index_output_node.base_path = "Metadata/Index"
         index_output_node.location = 400,-200
 
+        # Create a node for the output from the renderer
         render_layers_node = tree.nodes.new(type="CompositorNodeRLayers")
         render_layers_node.location = 0,0
 
+        # Link all the nodes together
         links.new(render_layers_node.outputs[0], image_output_node.inputs[0])
         links.new(render_layers_node.outputs[2], depth_output_node.inputs[0])
         links.new(render_layers_node.outputs[3], index_output_node.inputs[0])
 ```
+
+
+![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/BlenderInterface.png)
+
+
 
 ### Execution
 ```python 
@@ -163,7 +175,7 @@ The Results
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/render.png)
 
 
-### Dept hmap
+### Depth map
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/Depth.png)
 
 

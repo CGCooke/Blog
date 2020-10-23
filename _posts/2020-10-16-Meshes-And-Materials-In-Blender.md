@@ -65,7 +65,6 @@ create_ground_plane_material("Plane","Plane_material")
 
 
 ```python
-
 def create_bunny_material(object_name,material_name):
         nodes = create_material(object_name,material_name)
 
