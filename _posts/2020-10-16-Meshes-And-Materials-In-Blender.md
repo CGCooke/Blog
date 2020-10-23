@@ -6,6 +6,8 @@ categories: [Computer Vision,Blender]
 image: images/2020-10-16-Meshes-And-Materials-In-Blender/header.png
 ---
 
+
+
 The script
 -------------
 

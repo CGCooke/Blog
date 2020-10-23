@@ -3,29 +3,8 @@ toc: true
 layout: post
 description: Let's learn how we can create synthetic imagery, for training machine learning models.
 categories: [Computer Vision,Blender]
-image: images/2020-10-14-Robotic-Blender/header.png
+image: images/2020-10-23-Synthetic-Training-Data-With-Blender/header.png
 ---
-
-What is Blender?
--------------
-
-[Blender](https://www.blender.org/) is a software application for open source 3D scene creation and rendering. 
-
-Why would we want to automate Blender?
--------------
-Many reasons, but my real focus is on creating synthetic data for training new machine learning algorithms. I'm really interested in trying to do more, with less annotated data, and mixing real data, with synthetic data is a really promising solution. 
-
-Using *Blender*, we can generate arbitrary amounts of synthetic data, where we can precisely control the scene. Because of this, we can generate metadata at the same time, and try to generate data which better covers the available input space. 
-
-A classic example of this, is the [CLEVR](https://github.com/facebookresearch/clevr-dataset-gen) dataset, used for *Visual Reasoning*.
-
-How can we automate Blender?
--------------
-*Blender* has a [comprehensivley documented](https://docs.blender.org/api/current/index.html) API. However, I love using *Blender*'s [scripting mode](https://www.youtube.com/watch?v=5e56gdHZtB0), to experment with.
-
-In short, we can create a python script, which we can then run using *Blender*.
-
-`blender --background --python myscript.py`
 
 Hello World 
 -------------
@@ -129,4 +108,7 @@ The Results
 
 ![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/render.png)
 
+![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/Depth.png)
+
+![_config.yml]({{ site.baseurl }}/images/2020-10-23-Synthetic-Training-Data-With-Blender/Index.png)
 
