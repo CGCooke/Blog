@@ -133,7 +133,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#the-results">The Results</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#image-output">Image output</a></li>
-<li class="toc-entry toc-h3"><a href="#dept-hmap">Dept hmap</a></li>
+<li class="toc-entry toc-h3"><a href="#depth-map">Depth map</a></li>
 <li class="toc-entry toc-h3"><a href="#semantic-map">Semantic map</a></li>
 </ul>
 </li>
@@ -207,8 +207,8 @@ window.onload = wrap_img;
 
 <h3 id="light--camera">
 <a class="anchor" href="#light--camera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Light &amp; Camera</h3>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">data</span><span class="p">.</span><span class="nb">type</span> <span class="o">=</span> <span class="s">'AREA'</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
@@ -222,48 +222,55 @@ window.onload = wrap_img;
 
 <h3 id="renderer">
 <a class="anchor" href="#renderer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Renderer</h3>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_render</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s">'CYCLES'</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/Metadata"</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">image_settings</span><span class="p">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s">'OPEN_EXR'</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">cycles</span><span class="p">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="c1">#Configure renderer to record object index
+        <span class="c1"># Configure renderer to record object index
 </span>        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">view_layers</span><span class="p">[</span><span class="s">"View Layer"</span><span class="p">].</span><span class="n">use_pass_object_index</span> <span class="o">=</span> <span class="bp">True</span>
 
 
-        <span class="c1"># switch on nodes and get reference
+        <span class="c1"># Switch on nodes and get reference
 </span>        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">tree</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">node_tree</span>
         <span class="n">links</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">links</span>
 
-        <span class="c1">## clear default nodes
+        <span class="c1">## Clear default nodes
 </span>        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">:</span>
             <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 
-
-        <span class="n">image_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="c1"># Create a node for outputting the rendered image
+</span>        <span class="n">image_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
         <span class="n">image_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Image_Output"</span>
         <span class="n">image_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Image"</span>
         <span class="n">image_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="mi">0</span>
 
-        <span class="n">depth_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="c1"># Create a node for outputting the depth of each pixel from the camera
+</span>        <span class="n">depth_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
         <span class="n">depth_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Depth_Output"</span>
         <span class="n">depth_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Depth"</span>
         <span class="n">depth_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span>
 
-        <span class="n">index_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="c1"># Create a node for outputting the index of each object
+</span>        <span class="n">index_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
         <span class="n">index_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Index_Output"</span>
         <span class="n">index_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Index"</span>
         <span class="n">index_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="o">-</span><span class="mi">200</span>
 
-        <span class="n">render_layers_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeRLayers"</span><span class="p">)</span>
+        <span class="c1"># Create a node for the output from the renderer
+</span>        <span class="n">render_layers_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeRLayers"</span><span class="p">)</span>
         <span class="n">render_layers_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
 
-        <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Link all the nodes together
+</span>        <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">depth_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">index_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2020-10-23-Synthetic-Training-Data-With-Blender/BlenderInterface.png" alt="_config.yml"></p>
 
 <h3 id="execution">
 <a class="anchor" href="#execution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Execution</h3>
@@ -288,8 +295,8 @@ window.onload = wrap_img;
 
 <p><img src="/Blog/images/2020-10-23-Synthetic-Training-Data-With-Blender/render.png" alt="_config.yml"></p>
 
-<h3 id="dept-hmap">
-<a class="anchor" href="#dept-hmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dept hmap</h3>
+<h3 id="depth-map">
+<a class="anchor" href="#depth-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Depth map</h3>
 <p><img src="/Blog/images/2020-10-23-Synthetic-Training-Data-With-Blender/Depth.png" alt="_config.yml"></p>
 
 <h3 id="semantic-map">
