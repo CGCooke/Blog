@@ -122,11 +122,11 @@ window.onload = wrap_img;
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#hello-world">Hello World</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#materials">Materials</a></li>
 <li class="toc-entry toc-h3"><a href="#objects">Objects</a></li>
-<li class="toc-entry toc-h3"><a href="#material">Material</a></li>
-<li class="toc-entry toc-h3"><a href="#lights">Lights</a></li>
-<li class="toc-entry toc-h3"><a href="#camera">Camera</a></li>
-<li class="toc-entry toc-h3"><a href="#action-renderer">Action! (Renderer)</a></li>
+<li class="toc-entry toc-h3"><a href="#light--camera">Light &amp; Camera</a></li>
+<li class="toc-entry toc-h3"><a href="#renderer">Renderer</a></li>
+<li class="toc-entry toc-h3"><a href="#execution">Execution</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#the-results">The Results</a></li>
@@ -140,83 +140,138 @@ could look like:</p>
 <span class="kn">import</span> <span class="nn">bpy</span>
 </code></pre></div></div>
 
-<h3 id="objects">
-<a class="anchor" href="#objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects</h3>
+<h3 id="materials">
+<a class="anchor" href="#materials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Materials</h3>
 
-<p>When <em>Blender</em> loads, the default scene already contains a cube, called <em>Cube</em>. 
-Let’s adjust it’s position and scale.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cube_scale</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
-<span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Cube"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cube_scale</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>Now we can alos create a ground plane, and add that to the scene.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">primitive_plane_add</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">enter_editmode</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s">'WORLD'</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-</code></pre></div></div>
-
-<p>Our next task is to create materials for the objects we have added into the scene.</p>
-
-<h3 id="material">
-<a class="anchor" href="#material" aria-hidden="true"><span class="octicon octicon-link"></span></a>Material</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_material</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span><span class="n">material_name</span><span class="p">,</span> <span class="n">rgba</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_dragon_material</span><span class="p">(</span><span class="n">material_name</span><span class="p">,</span><span class="n">rgba</span><span class="p">):</span>
         <span class="n">mat</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="n">object_name</span><span class="p">].</span><span class="n">active_material</span> <span class="o">=</span> <span class="n">mat</span>
-        
         <span class="n">mat</span><span class="p">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">mat</span><span class="p">.</span><span class="n">node_tree</span><span class="p">.</span><span class="n">nodes</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.1</span>
 
+        <span class="c1">#Base Color
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
+
+        <span class="c1">#Subsurface
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+        <span class="c1">#Subsurface Color
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
+        
+        <span class="c1">#Clearcoat 
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">12</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">create_floor_material</span><span class="p">(</span><span class="n">material_name</span><span class="p">,</span><span class="n">rgba</span><span class="p">):</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
+        <span class="n">mat</span><span class="p">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">mat</span><span class="p">.</span><span class="n">node_tree</span><span class="p">.</span><span class="n">nodes</span>
+
+        <span class="c1">#Base Color
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">rgba</span>
+
+        <span class="c1">#Clearcoat 
+</span>        <span class="n">nodes</span><span class="p">[</span><span class="s">"Principled BSDF"</span><span class="p">].</span><span class="n">inputs</span><span class="p">[</span><span class="mi">12</span><span class="p">].</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_material</span><span class="p">(</span><span class="s">"Cube"</span><span class="p">,</span><span class="s">"Cube_material"</span><span class="p">,(</span><span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">223</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">create_material</span><span class="p">(</span><span class="s">"Plane"</span><span class="p">,</span><span class="s">"Plane_material"</span><span class="p">,(</span><span class="mi">252</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span> <span class="mi">235</span><span class="o">/</span><span class="mf">255.0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<h3 id="objects">
+<a class="anchor" href="#objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create_dragon</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">rotation</span><span class="p">,</span> <span class="n">rgba</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="c1">#Load the mesh
+</span>        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">import_mesh</span><span class="p">.</span><span class="n">ply</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/dragon_vrip.ply"</span><span class="p">)</span>
+        <span class="n">ob</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">active_object</span> <span class="c1">#Set active object to variable
+</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="n">rotation</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="nb">object</span><span class="p">.</span><span class="n">pass_index</span> <span class="o">=</span> <span class="n">index</span>
+
+        <span class="c1">#Create and add material to the object
+</span>        <span class="n">mat</span> <span class="o">=</span> <span class="n">create_dragon_material</span><span class="p">(</span><span class="s">'Dragon_'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">+</span><span class="s">'_Material'</span><span class="p">,</span><span class="n">rgba</span><span class="o">=</span><span class="n">rgba</span><span class="p">)</span>
+        <span class="n">ob</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_floor</span><span class="p">():</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">primitive_plane_add</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">enter_editmode</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s">'WORLD'</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">create_floor_material</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="s">'Floor'</span><span class="p">,</span> <span class="n">rgba</span> <span class="o">=</span>  <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> 
+        <span class="n">activeObject</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">active_object</span> <span class="c1">#Set active object to variable
+</span>        <span class="n">activeObject</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">materials</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="lights">
-<a class="anchor" href="#lights" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lights</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
+<h3 id="light--camera">
+<a class="anchor" href="#light--camera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Light &amp; Camera</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">configure_light</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">data</span><span class="p">.</span><span class="nb">type</span> <span class="o">=</span> <span class="s">'AREA'</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Light"</span><span class="p">].</span><span class="n">scale</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
 
-<span class="n">configure_light</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">configure_camera</span><span class="p">():</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">4.96579</span><span class="p">,</span><span class="mf">2.45831</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">75</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        
 </code></pre></div></div>
 
-<h3 id="camera">
-<a class="anchor" href="#camera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Camera</h3>
-
-<p>Now let’s configure the camera’s position, and orientation/attitude (Using quaternions).</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_camera</span><span class="p">():</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">rotation_mode</span> <span class="o">=</span> <span class="s">'QUATERNION'</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">"Camera"</span><span class="p">].</span><span class="n">rotation_quaternion</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.892399</span><span class="p">,</span> <span class="mf">0.369644</span><span class="p">,</span> <span class="mf">0.099046</span><span class="p">,</span> <span class="mf">0.239118</span><span class="n">_</span>
-
-<span class="n">configure_camera</span><span class="p">()</span>
-</code></pre></div></div>
-
-<h3 id="action-renderer">
-<a class="anchor" href="#action-renderer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Action! (Renderer)</h3>
-
-<p>Finally, let’s configure the renderer. I’ve chosen to use <em>Cycles</em>, which is a physically based renderer/ray tracer.</p>
-
+<h3 id="renderer">
+<a class="anchor" href="#renderer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Renderer</h3>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">configure_render</span><span class="p">():</span>
         <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s">'CYCLES'</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/render.png"</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">resolution_x</span> <span class="o">=</span> <span class="mi">1920</span>
-        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">resolution_y</span> <span class="o">=</span> <span class="mi">1080</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">"/Metadata"</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">image_settings</span><span class="p">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s">'OPEN_EXR'</span>
+        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">cycles</span><span class="p">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="n">configure_render</span><span class="p">()</span>
+        <span class="c1">#Configure renderer to record object index
+</span>        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">view_layers</span><span class="p">[</span><span class="s">"View Layer"</span><span class="p">].</span><span class="n">use_pass_object_index</span> <span class="o">=</span> <span class="bp">True</span>
+
+
+        <span class="c1"># switch on nodes and get reference
+</span>        <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">bpy</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">node_tree</span>
+        <span class="n">links</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">links</span>
+
+        <span class="c1">## clear default nodes
+</span>        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">:</span>
+            <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+
+        <span class="n">image_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="n">image_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Image_Output"</span>
+        <span class="n">image_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Image"</span>
+        <span class="n">image_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="mi">0</span>
+
+        <span class="n">depth_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="n">depth_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Depth_Output"</span>
+        <span class="n">depth_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Depth"</span>
+        <span class="n">depth_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span>
+
+        <span class="n">index_output_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeOutputFile"</span><span class="p">)</span>
+        <span class="n">index_output_node</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s">"Index_Output"</span>
+        <span class="n">index_output_node</span><span class="p">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="s">"Metadata/Index"</span>
+        <span class="n">index_output_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span><span class="o">-</span><span class="mi">200</span>
+
+        <span class="n">render_layers_node</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">"CompositorNodeRLayers"</span><span class="p">)</span>
+        <span class="n">render_layers_node</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+
+        <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">depth_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">links</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layers_node</span><span class="p">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">index_output_node</span><span class="p">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div></div>
 
-<p>And we can finish by rendering the image, and writing it out as <em>render.png</em>.</p>
+<h3 id="execution">
+<a class="anchor" href="#execution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Execution</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">bpy</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">objects</span><span class="p">[</span><span class="s">'Cube'</span><span class="p">],</span> <span class="n">do_unlink</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">create_floor</span><span class="p">()</span>
+<span class="n">create_dragon</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.78</span><span class="p">,</span><span class="o">-</span><span class="mf">0.56</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">rgba</span><span class="o">=</span><span class="p">(</span><span class="mf">0.799</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.0423</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">create_dragon</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">4.12</span><span class="p">,</span><span class="o">-</span><span class="mf">0.56</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">227</span><span class="p">)),</span> <span class="n">rgba</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0252</span><span class="p">,</span> <span class="mf">0.376</span><span class="p">,</span> <span class="mf">0.799</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">create_dragon</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span><span class="mf">2.7</span><span class="p">,</span><span class="o">-</span><span class="mf">0.56</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">129</span><span class="p">)),</span> <span class="n">rgba</span><span class="o">=</span><span class="p">(</span><span class="mf">0.133</span><span class="p">,</span> <span class="mf">0.539</span><span class="p">,</span> <span class="mf">0.292</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">configure_camera</span><span class="p">()</span>
+<span class="n">configure_light</span><span class="p">()</span>
+<span class="n">configure_render</span><span class="p">()</span>
+<span class="n">bpy</span><span class="p">.</span><span class="n">ops</span><span class="p">.</span><span class="n">render</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="the-results">
