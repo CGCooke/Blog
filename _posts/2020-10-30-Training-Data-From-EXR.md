@@ -1,20 +1,19 @@
 ---
 toc: true
 layout: post
-description: Let's learn how we can create depth and semantic maps, for training machine learning models.
+description: Convert .exr outputs from *Blender* into COCO format training data.
 categories: [Computer Vision,Blender]
-image: images/2020-10-23-Synthetic-Training-Data-With-Blender/header.png
+image: images/2020-10-30-Training-Data-From-EXR/header.png
 ---
 
 Introduction
 -------------
 
-While writingthis post, I found [this](http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/) post by *Tobias Weis* to be really helpful for understanding rendering nodes. 
+While writing this post, I found [this](http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/) post by *Tobias Weis* to be really helpful for understanding rendering nodes. 
 
 
 The Code
 -------------
-
 
 ```python
 import OpenEXR
@@ -25,6 +24,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 ```
+
+
+### Extracting data
 
 ```python
 def exr2numpy(exr):
@@ -45,16 +47,21 @@ def exr2numpy(exr):
     return data
 
 depth_data = exr2numpy("Metadata/Index/Image0001.exr")
+```
 
+```python
 fig = plt.figure()
 plt.imshow(depth_data)
 plt.colorbar()
 plt.show()
 ```
 
+### Creating bounding boxes
+
+![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_1.png)
+
 
 ```python
-
 # Create figure and axes
 fig,ax = plt.subplots(1)
 # Display the image
@@ -63,7 +70,6 @@ ax.imshow(depth_data)
 for i in np.unique(depth_data):
     #index 0 is the background
     if i!=0:
-
     	#Find the location of the object mask
         yi,xi = np.where(depth_data == i)
 
@@ -75,13 +81,12 @@ for i in np.unique(depth_data):
         # Add the patch to the Axes
         ax.add_patch(rect)
 
-
 plt.show()
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_1.png)
-
 ![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_2.png)
+
+
 
 
 
