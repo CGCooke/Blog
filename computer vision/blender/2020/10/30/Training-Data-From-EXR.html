@@ -8,16 +8,16 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Training Data From Exr" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Let’s learn how we can create depth and semantic maps, for training machine learning models." />
-<meta property="og:description" content="Let’s learn how we can create depth and semantic maps, for training machine learning models." />
+<meta name="description" content="Convert .exr outputs from Blender into COCO format training data." />
+<meta property="og:description" content="Convert .exr outputs from Blender into COCO format training data." />
 <link rel="canonical" href="https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html" />
 <meta property="og:url" content="https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html" />
 <meta property="og:site_name" content="Adventures with Numbers" />
-<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-10-23-Synthetic-Training-Data-With-Blender/header.png" />
+<meta property="og:image" content="https://cgcooke.github.io/Blog/images/2020-10-30-Training-Data-From-EXR/header.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-10-30T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html","@type":"BlogPosting","headline":"Training Data From Exr","dateModified":"2020-10-30T00:00:00-05:00","datePublished":"2020-10-30T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-10-23-Synthetic-Training-Data-With-Blender/header.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html"},"description":"Let’s learn how we can create depth and semantic maps, for training machine learning models.","@context":"https://schema.org"}</script>
+{"url":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html","@type":"BlogPosting","headline":"Training Data From Exr","dateModified":"2020-10-30T00:00:00-05:00","datePublished":"2020-10-30T00:00:00-05:00","image":"https://cgcooke.github.io/Blog/images/2020-10-30-Training-Data-From-EXR/header.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://cgcooke.github.io/Blog/computer%20vision/blender/2020/10/30/Training-Data-From-EXR.html"},"description":"Convert .exr outputs from Blender into COCO format training data.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://cgcooke.github.io/Blog/feed.xml" title="Adventures with Numbers" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -94,7 +94,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Training Data From Exr</h1><p class="page-description">Let's learn how we can create depth and semantic maps, for training machine learning models.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-30T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Training Data From Exr</h1><p class="page-description">Convert .exr outputs from *Blender* into COCO format training data.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-30T00:00:00-05:00" itemprop="datePublished">
         Oct 30, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -121,11 +121,16 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#the-code">The Code</a></li>
+<li class="toc-entry toc-h2"><a href="#the-code">The Code</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#extracting-data">Extracting data</a></li>
+<li class="toc-entry toc-h3"><a href="#creating-bounding-boxes">Creating bounding boxes</a></li>
+</ul>
+</li>
 </ul><h2 id="introduction">
 <a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
-<p>While writingthis post, I found <a href="http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/">this</a> post by <em>Tobias Weis</em> to be really helpful for understanding rendering nodes.</p>
+<p>While writing this post, I found <a href="http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/">this</a> post by <em>Tobias Weis</em> to be really helpful for understanding rendering nodes.</p>
 
 <h2 id="the-code">
 <a class="anchor" href="#the-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Code</h2>
@@ -138,6 +143,9 @@ window.onload = wrap_img;
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
 </code></pre></div></div>
+
+<h3 id="extracting-data">
+<a class="anchor" href="#extracting-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extracting data</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">exr2numpy</span><span class="p">(</span><span class="n">exr</span><span class="p">):</span>
     <span class="c1">#http://www.tobias-weis.de/groundtruth-data-for-computer-vision-with-blender/
@@ -157,15 +165,20 @@ window.onload = wrap_img;
     <span class="k">return</span> <span class="n">data</span>
 
 <span class="n">depth_data</span> <span class="o">=</span> <span class="n">exr2numpy</span><span class="p">(</span><span class="s">"Metadata/Index/Image0001.exr"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">depth_data</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="c1"># Create figure and axes
+<h3 id="creating-bounding-boxes">
+<a class="anchor" href="#creating-bounding-boxes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating bounding boxes</h3>
+
+<p><img src="/Blog/images/2020-10-30-Training-Data-From-EXR/Figure_1.png" alt="_config.yml"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create figure and axes
 </span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># Display the image
 </span><span class="n">ax</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">depth_data</span><span class="p">)</span>
@@ -173,7 +186,6 @@ window.onload = wrap_img;
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">unique</span><span class="p">(</span><span class="n">depth_data</span><span class="p">):</span>
     <span class="c1">#index 0 is the background
 </span>    <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-
     	<span class="c1">#Find the location of the object mask
 </span>        <span class="n">yi</span><span class="p">,</span><span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">depth_data</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span>
 
@@ -185,11 +197,8 @@ window.onload = wrap_img;
         <span class="c1"># Add the patch to the Axes
 </span>        <span class="n">ax</span><span class="p">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
 
-
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
-
-<p><img src="/Blog/images/2020-10-30-Training-Data-From-EXR/Figure_1.png" alt="_config.yml"></p>
 
 <p><img src="/Blog/images/2020-10-30-Training-Data-From-EXR/Figure_2.png" alt="_config.yml"></p>
 
