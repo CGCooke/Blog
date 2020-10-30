@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: Convert .exr outputs from Blender into COCO format training data.
+description: Convert .exr outputs from Blender into a format useful for training computer vision models.
 categories: [Computer Vision,Blender]
 image: images/2020-10-30-Training-Data-From-OpenEXR/header.png
 ---
@@ -19,6 +19,7 @@ While writing this post, I found [this](http://www.tobias-weis.de/groundtruth-da
 The Code
 -------------
 
+
 ```python
 import OpenEXR
 import Imath
@@ -33,7 +34,7 @@ from matplotlib.patches import Rectangle
 
 Next, we can use some "boilerplate" code to convert the exr file into a Numpy array.
 
-In this case, we illo load in 
+In this case, we will load in the depth map.
 
 ```python
 def exr2numpy(exr_path):
@@ -56,6 +57,8 @@ def exr2numpy(exr_path):
 depth = exr2numpy("Metadata/Depth/Image0001.exr")
 ```
 
+Now we can visualise the depth of each pixel from the camera, in meters.
+
 ```python
 fig = plt.figure()
 plt.imshow(depth)
@@ -63,28 +66,33 @@ plt.colorbar()
 plt.show()
 ```
 
-### Creating bounding boxes
-
 ![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_1.png)
 
 
+### Creating bounding boxes
+
+Now we can create bounding boxes for each object in the image. Depnding on what we want to do next, we could generate annotations in [COCO](
+https://www.immersivelimit.com/tutorials/create-coco-annotations-from-scratch
+) format.
+
 ```python
+semantic_index = exr2numpy("Metadata/Depth/Image0001.exr")
+
 # Create figure and axes
 fig,ax = plt.subplots(1)
 # Display the image
-ax.imshow(data)
+ax.imshow(semantic_index)
 
-for i in np.unique(data):
+for i in np.unique(semantic_index):
     #index 0 is the background
     if i!=0:
     	#Find the location of the object mask
-        yi,xi = np.where(depth_data == i)
+        yi,xi = np.where(semantic_index == i)
 
-        print(i,np.min(xi),np.max(xi),np.min(yi),np.max(yi))
+        #Print the index of the object, and it's bounding box
+        print(i, np.min(xi), np.max(xi), np.min(yi), np.max(yi))
 
         # Create a Rectangle patch
-
-        #box = 
         rect = Rectangle(np.min(xi), np.min(yi), np.max(xi)-np.min(xi), np.max(yi)-np.min(yi), linewidth=2, edgecolor='r', facecolor='none', alpha=0.8)
 
         # Add the patch to the Axes
@@ -94,6 +102,13 @@ plt.show()
 ```
 
 ![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_2.png)
+
+
+
+Conclusion
+-------------
+
+Our next step, is to generate a number of training examples, and then use this to train a Computer vision model.
 
 
 
