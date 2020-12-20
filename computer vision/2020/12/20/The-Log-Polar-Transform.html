@@ -100,7 +100,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      3 min read
     
 </span></p>
 
@@ -142,11 +142,8 @@ window.onload = wrap_img;
 <h2 id="The-Context">
 <a class="anchor" href="#The-Context" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Context<a class="anchor-link" href="#The-Context"> </a>
 </h2>
-<p>As we saw in the last post, we can use FFT Phase Correlation, to find the x &amp; y translation between two different images/arrays.</p>
-<p>However, what if there is a rotation between two images/arrays instead?</p>
-<p>One solution is the Log-Polar transformation, which transforms the image from x/y space to r/theta space.</p>
-<p>In r/theta space, rotation and scaling between the two images manifest as 2d translations.</p>
-<p>Once we have identified the rotation between the two images, we can correct for it, before finally finding the 2d translation between the two images.</p>
+<p>As we saw in the last post, we can use FFT Phase Correlation, to find the x &amp; y translation between two different images/arrays. However, what if there is a rotation between two images/arrays instead?</p>
+<p>One solution is the Log-Polar transformation, which transforms the image from x,y space to $\rho$,$\theta$ space. In $\rho$,$\theta$ space, rotation and scaling between the two images manifest as 2d translations. Once we have identified the rotation between the two images, we can correct for it, before finally finding the 2d translation.</p>
 <p>While understanding this process, I found this really good <a href="https://sthoduka.github.io/imreg_fmt/docs/overall-pipeline/">explanation</a> by Santosh Thoduka, which helped make things much clearer for me. Scikit-image also has a good <a href="https://scikit-image.org/docs/stable/auto_examples/registration/plot_register_rotation.html#sphx-glr-auto-examples-registration-plot-register-rotation-py">demo</a>, which I learnt a lot from.</p>
 
 </div>
@@ -436,73 +433,6 @@ window.onload = wrap_img;
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-7-78f3a87db317&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>frame <span class="ansi-blue-fg">=</span> skimage<span class="ansi-blue-fg">.</span>io<span class="ansi-blue-fg">.</span>imread<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'data/2020-12-19-FFT-Phase-Correlation/Frame.jpg'</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> image <span class="ansi-blue-fg">=</span> frame<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">30</span><span class="ansi-blue-fg">:</span><span class="ansi-cyan-fg">185</span><span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">35</span><span class="ansi-blue-fg">:</span><span class="ansi-cyan-fg">190</span><span class="ansi-blue-fg">]</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/skimage/io/_io.py</span> in <span class="ansi-cyan-fg">imread</span><span class="ansi-blue-fg">(fname, as_gray, plugin, **plugin_args)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span> 
-<span class="ansi-green-intense-fg ansi-bold">     47</span>     <span class="ansi-green-fg">with</span> file_or_url_context<span class="ansi-blue-fg">(</span>fname<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> fname<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 48</span><span class="ansi-red-fg">         </span>img <span class="ansi-blue-fg">=</span> call_plugin<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'imread'</span><span class="ansi-blue-fg">,</span> fname<span class="ansi-blue-fg">,</span> plugin<span class="ansi-blue-fg">=</span>plugin<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>plugin_args<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> 
-<span class="ansi-green-intense-fg ansi-bold">     50</span>     <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> hasattr<span class="ansi-blue-fg">(</span>img<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'ndim'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/skimage/io/manage_plugins.py</span> in <span class="ansi-cyan-fg">call_plugin</span><span class="ansi-blue-fg">(kind, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    207</span>                                (plugin, kind))
-<span class="ansi-green-intense-fg ansi-bold">    208</span> 
-<span class="ansi-green-fg">--&gt; 209</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> func<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    210</span> 
-<span class="ansi-green-intense-fg ansi-bold">    211</span> 
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/skimage/io/_plugins/imageio_plugin.py</span> in <span class="ansi-cyan-fg">imread</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span> <span class="ansi-blue-fg">@</span>wraps<span class="ansi-blue-fg">(</span>imageio_imread<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-green-fg">def</span> imread<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 10</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> np<span class="ansi-blue-fg">.</span>asarray<span class="ansi-blue-fg">(</span>imageio_imread<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/imageio/core/functions.py</span> in <span class="ansi-cyan-fg">imread</span><span class="ansi-blue-fg">(uri, format, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    263</span> 
-<span class="ansi-green-intense-fg ansi-bold">    264</span>     <span class="ansi-red-fg"># Get reader and read first</span>
-<span class="ansi-green-fg">--&gt; 265</span><span class="ansi-red-fg">     </span>reader <span class="ansi-blue-fg">=</span> read<span class="ansi-blue-fg">(</span>uri<span class="ansi-blue-fg">,</span> format<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"i"</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    266</span>     <span class="ansi-green-fg">with</span> reader<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    267</span>         <span class="ansi-green-fg">return</span> reader<span class="ansi-blue-fg">.</span>get_data<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/imageio/core/functions.py</span> in <span class="ansi-cyan-fg">get_reader</span><span class="ansi-blue-fg">(uri, format, mode, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    170</span> 
-<span class="ansi-green-intense-fg ansi-bold">    171</span>     <span class="ansi-red-fg"># Create request object</span>
-<span class="ansi-green-fg">--&gt; 172</span><span class="ansi-red-fg">     </span>request <span class="ansi-blue-fg">=</span> Request<span class="ansi-blue-fg">(</span>uri<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"r"</span> <span class="ansi-blue-fg">+</span> mode<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    173</span> 
-<span class="ansi-green-intense-fg ansi-bold">    174</span>     <span class="ansi-red-fg"># Get format</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/imageio/core/request.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, uri, mode, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    122</span> 
-<span class="ansi-green-intense-fg ansi-bold">    123</span>         <span class="ansi-red-fg"># Parse what was given</span>
-<span class="ansi-green-fg">--&gt; 124</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_parse_uri<span class="ansi-blue-fg">(</span>uri<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    125</span> 
-<span class="ansi-green-intense-fg ansi-bold">    126</span>         <span class="ansi-red-fg"># Set extension</span>
-
-<span class="ansi-green-fg">/opt/anaconda3/envs/OpenCV/lib/python3.8/site-packages/imageio/core/request.py</span> in <span class="ansi-cyan-fg">_parse_uri</span><span class="ansi-blue-fg">(self, uri)</span>
-<span class="ansi-green-intense-fg ansi-bold">    258</span>                 <span class="ansi-red-fg"># Reading: check that the file exists (but is allowed a dir)</span>
-<span class="ansi-green-intense-fg ansi-bold">    259</span>                 <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>exists<span class="ansi-blue-fg">(</span>fn<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 260</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">raise</span> FileNotFoundError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"No such file: '%s'"</span> <span class="ansi-blue-fg">%</span> fn<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    261</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    262</span>                 <span class="ansi-red-fg"># Writing: check that the directory to write to does exist</span>
-
-<span class="ansi-red-fg">FileNotFoundError</span>: No such file: '/Users/cooke_c/Documents/GitHub/Blog/_notebooks/data/2020-12-19-FFT-Phase-Correlation/Frame.jpg'</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     
 
@@ -543,6 +473,26 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-9-7775b8300111&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> angle <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">30</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>img2 <span class="ansi-blue-fg">=</span> rotate<span class="ansi-blue-fg">(</span>result<span class="ansi-blue-fg">,</span> angle<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'rotate' is not defined</pre>
+</div>
+</div>
+
 </div>
 </div>
 
