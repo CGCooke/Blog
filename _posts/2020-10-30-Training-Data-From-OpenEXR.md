@@ -101,7 +101,7 @@ for i in np.unique(semantic_index):
 plt.show()
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_2.png)
+![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-OpenEXR/Figure_2.png)
 
 
 
