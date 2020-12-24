@@ -427,7 +427,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cross_power_spectrum</span> <span class="o">=</span> <span class="p">(</span><span class="n">img1_fs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">img2_fs</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">img1_fs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">img2_fs</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cross_power_spectrum</span> <span class="o">=</span> <span class="p">(</span><span class="n">img1_fs</span> <span class="o">*</span> <span class="n">img2_fs</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">img1_fs</span> <span class="o">*</span> <span class="n">img2_fs</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
 </pre></div>
 
     </div>
