@@ -125,27 +125,9 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#The-Context">The Context </a></li>
-<li class="toc-entry toc-h2"><a href="#The-Pipeline">The Pipeline </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Cross-Correlation-Function">Cross Correlation Function </a></li>
-<li class="toc-entry toc-h3"><a href="#Creating-a-synthetic-example">Creating a synthetic example </a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#Finding-the-Rotation">Finding the Rotation </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Preprocess-Images">Preprocess Images </a></li>
-<li class="toc-entry toc-h3"><a href="#Compute-Fourrier-Transform-of-Images">Compute Fourrier Transform of Images </a></li>
-<li class="toc-entry toc-h3"><a href="#Compute-Log-Polar-Transform-of-the-Fourrier-Transformed-Images">Compute Log Polar Transform of the Fourrier Transformed Images </a></li>
-<li class="toc-entry toc-h3"><a href="#Find-Translation-in-Log-Polar-Domain">Find Translation in Log Polar Domain </a></li>
-<li class="toc-entry toc-h3"><a href="#Compute-Rotation-from-Log-Polar-Domain-Translation">Compute Rotation from Log Polar Domain Translation </a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#Finding-the-Translation">Finding the Translation </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Rotate-one-of-the-images">Rotate one of the images </a></li>
-<li class="toc-entry toc-h3"><a href="#Find-the-Translation">Find the Translation </a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#The-Pipeline">The Pipeline </a></li>
+<li class="toc-entry toc-h2"><a href="#Finding-the-Rotation">Finding the Rotation </a></li>
+<li class="toc-entry toc-h2"><a href="#Finding-the-Translation">Finding the Translation </a></li>
 <li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
 </ul><!--
 #################################################
@@ -170,34 +152,51 @@ window.onload = wrap_img;
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The goal of this post, is to develop a pipeline in Python, to recover the rotation and translation, between two images that have undergone a rigid euclidian transformation.</p>
 <p><img src="https://cgcooke.github.io/Blog//images/2020-12-22-The-Log-Polar-Transform-In-Practice/homographies.png" alt=""></p>
-<p>While writing this post, I borrowed heavily from this <a href="https://scikit-image.org/docs/stable/auto_examples/registration/plot_register_rotation.html#sphx-glr-auto-examples-registration-plot-register-rotation-py">example</a>, as well as this fantastic series of <a href="https://sthoduka.github.io/imreg_fmt/docs/overall-pipeline/">posts</a>. Both are well worth a read, and go into significantly more detail. Finaly, the original <a href="https://pdfs.semanticscholar.org/6dfe/0a0173f8b2087bc052108184f65299f1b605.pdf">paper</a> which first described the method is also worht a read.</p>
+<p>While writing this post, I borrowed heavily from this <a href="https://scikit-image.org/docs/stable/auto_examples/registration/plot_register_rotation.html#sphx-glr-auto-examples-registration-plot-register-rotation-py">example</a>, as well as this fantastic series of <a href="https://sthoduka.github.io/imreg_fmt/docs/overall-pipeline/">posts</a>. Both are well worth a read, and go into significantly more detail. Finaly, the original <a href="https://pdfs.semanticscholar.org/6dfe/0a0173f8b2087bc052108184f65299f1b605.pdf">paper</a> which first described the method is also worth a read.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-Pipeline">
 <a class="anchor" href="#The-Pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Pipeline<a class="anchor-link" href="#The-Pipeline"> </a>
 </h2>
 <p>At a high level, our pipeline is as follows:</p>
-<ol>
-<li>Find the Rotation:<ul>
+<p>First we find the rotation:</p>
+<ul>
 <li>Preprocess Images:<ul>
-<li>Use Difference of Guassians Filter (DOG)</li>
+<li>Apply Difference of Guassians Filter (DOG)</li>
 <li>Window Function (WINDOW)</li>
 </ul>
 </li>
-<li>Compute Fourrier Transform of Images (FT)</li>
-<li>Compute the Log Polar Transform of Fourrier Transformed Images (LPT)</li>
-<li>Find Translation in Log Polar Domain using Cross Correlation (XCOR)</li>
-<li>Compute the Rotation from Log Polar Domain Translation </li>
+<li>Compute Fourrier Transform of images (FT)</li>
+<li>Compute the Log Polar Transform of Fourrier Transformed images (LPT)</li>
+<li>Find translation in Log Polar Domain using Cross Correlation (XCOR) </li>
 </ul>
-</li>
-</ol>
 <p><img src="https://cgcooke.github.io/Blog//images/2020-12-22-The-Log-Polar-Transform-In-Practice/Rotation_Pipeline.png" alt=""></p>
-<ol>
-<li>Find the Translation<ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once we have found the rotation, we can then find the translation:</p>
+<ul>
 <li>Rotate one of the images (ROTATE)</li>
 <li>Find Translation using Cross Correlation (XCOR)</li>
 </ul>
-</li>
-</ol>
 <p><img src="https://cgcooke.github.io/Blog//images/2020-12-22-The-Log-Polar-Transform-In-Practice/Translation_Pipeline.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's go into the details of the implementation</p>
 <p>Let's start by importing the libraries we will need.</p>
 
 </div>
@@ -232,9 +231,6 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Cross-Correlation-Function">
-<a class="anchor" href="#Cross-Correlation-Function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross Correlation Function<a class="anchor-link" href="#Cross-Correlation-Function"> </a>
-</h3>
 <p>In summary, this function compares two images/arrays, and checks how well they match for any x/y shift.</p>
 <p>It's a simplified version of a function from skimage (<em>skimage.registration.phase_cross_correlation</em>), and you can see the source code <a href="https://github.com/scikit-image/scikit-image/blob/master/skimage/registration/_phase_cross_correlation.py#L109-L276">here</a>.</p>
 <p>In a previous <a href="https://cgcooke.github.io/Blog/computer%20vision/2020/12/19/FFT-Phase-Correlation.html">post</a> I explained about how it works in more detail.</p>
@@ -306,9 +302,6 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Creating-a-synthetic-example">
-<a class="anchor" href="#Creating-a-synthetic-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a synthetic example<a class="anchor-link" href="#Creating-a-synthetic-example"> </a>
-</h3>
 <p>We can now create a synthetic example, by first translating, then rotating the image we loaded.</p>
 
 </div>
@@ -368,9 +361,6 @@ window.onload = wrap_img;
 <h2 id="Finding-the-Rotation">
 <a class="anchor" href="#Finding-the-Rotation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding the Rotation<a class="anchor-link" href="#Finding-the-Rotation"> </a>
 </h2>
-<h3 id="Preprocess-Images">
-<a class="anchor" href="#Preprocess-Images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocess Images<a class="anchor-link" href="#Preprocess-Images"> </a>
-</h3>
 </div>
 </div>
 </div>
@@ -420,15 +410,6 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Compute-Fourrier-Transform-of-Images">
-<a class="anchor" href="#Compute-Fourrier-Transform-of-Images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compute Fourrier Transform of Images<a class="anchor-link" href="#Compute-Fourrier-Transform-of-Images"> </a>
-</h3>
-</div>
-</div>
-</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -474,9 +455,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Compute-Log-Polar-Transform-of-the-Fourrier-Transformed-Images">
-<a class="anchor" href="#Compute-Log-Polar-Transform-of-the-Fourrier-Transformed-Images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compute Log Polar Transform of the Fourrier Transformed Images<a class="anchor-link" href="#Compute-Log-Polar-Transform-of-the-Fourrier-Transformed-Images"> </a>
-</h3>
+<p>Compute Log Polar Transform of the Fourrier Transformed Images</p>
+
 </div>
 </div>
 </div>
@@ -532,9 +512,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Find-Translation-in-Log-Polar-Domain">
-<a class="anchor" href="#Find-Translation-in-Log-Polar-Domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Find Translation in Log Polar Domain<a class="anchor-link" href="#Find-Translation-in-Log-Polar-Domain"> </a>
-</h3>
+<p>Find Translation in Log Polar Domain</p>
+
 </div>
 </div>
 </div>
@@ -588,9 +567,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Compute-Rotation-from-Log-Polar-Domain-Translation">
-<a class="anchor" href="#Compute-Rotation-from-Log-Polar-Domain-Translation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compute Rotation from Log Polar Domain Translation<a class="anchor-link" href="#Compute-Rotation-from-Log-Polar-Domain-Translation"> </a>
-</h3>
+<p>Compute Rotation from Log Polar Domain Translation</p>
+
 </div>
 </div>
 </div>
@@ -657,9 +635,8 @@ Recovered value for cc rotation: 31.304347826086957
 <h2 id="Finding-the-Translation">
 <a class="anchor" href="#Finding-the-Translation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding the Translation<a class="anchor-link" href="#Finding-the-Translation"> </a>
 </h2>
-<h3 id="Rotate-one-of-the-images">
-<a class="anchor" href="#Rotate-one-of-the-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rotate one of the images<a class="anchor-link" href="#Rotate-one-of-the-images"> </a>
-</h3>
+<p>Rotate one of the images</p>
+
 </div>
 </div>
 </div>
@@ -709,9 +686,8 @@ Recovered value for cc rotation: 31.304347826086957
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Find-the-Translation">
-<a class="anchor" href="#Find-the-Translation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Find the Translation<a class="anchor-link" href="#Find-the-Translation"> </a>
-</h3>
+<p>Find the Translation</p>
+
 </div>
 </div>
 </div>
