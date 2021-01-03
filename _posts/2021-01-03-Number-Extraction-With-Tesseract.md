@@ -1,13 +1,16 @@
 ---
 toc: true
 layout: post
-description: Convert .exr outputs from Blender into a format useful for training computer vision models.
+description: We use Tesseract to capture numbers from an image.
 categories: [Computer Vision, Tesseract]
 image: images/2021-01-03-Number-Extraction-With-Tesseract/header.png
 ---
 
 Introduction
 -------------
+
+
+[Tesseract](https://github.com/tesseract-ocr/tesseract)
 
 
 ```python
@@ -22,7 +25,6 @@ import re
 plt.rcParams['figure.figsize'] = [10, 10]
 ```
 
-### Extracting 
 
 ```python
 def load_frame(frame_number):
@@ -35,7 +37,10 @@ def preprocess_frame(img):
     img = cv2.resize(img,(600,400))
     img = 255 - cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return(img)
+```
 
+
+```python
 def extract_angle_confidence(result_dict):
     angle = np.NaN
     confidence = np.NaN
@@ -59,24 +64,33 @@ plt.colorbar()
 plt.show()
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Frame.png)
-
-![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Number.png)
-
 ![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png)
 
 ![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png)
 
-### Creating bounding boxes
 
 
 ```python
 cap = cv2.VideoCapture('../HighRes.mp4')
+
 img = load_frame(0,cap)
+plt.imshow(img[:,:,::-1])
+plt.show()
+```
+![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Frame.png)
+
+```python
 img = preprocess_frame(img)
+plt.imshow(img,cmap='gray')
+plt.show()
 ```
 
+![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Number.png)
 
+
+
+Processing
+-------------
 
 ```python
 angles = []
@@ -101,6 +115,8 @@ np.save('angles.npy',angles)
 np.save('confidences.npy',confidences)
 ```
 
+Data Aanalysis
+-------------
 
 ```python
 ax = sns.histplot(confidences,bins = np.arange(0,100,10))
