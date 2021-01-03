@@ -26,11 +26,24 @@ plt.rcParams['figure.figsize'] = [10, 10]
 ```
 
 
+Let's load the image the frame,
+
 ```python
 def load_frame(frame_number):
     cap.set(1, frame_number-1)
     res, frame = cap.read()
     return(frame)
+```
+
+Now let's preprocess the frame, by 
+
+1. Cropping the image down so that it only contain the number.
+2. Resizing the image so that it's larger.
+3. Converting the image to grayscale, and then inverting.
+
+Each of these steps helps improve the accuracy of *Tesseract*.
+
+```python
 
 def preprocess_frame(img):
     img = img[10:50,610:670,::-1]
@@ -40,6 +53,7 @@ def preprocess_frame(img):
 ```
 
 
+Once Tesseract has processed the iamge, we want to extract both the angle, and how confident *Tesseract* was from the nmetadata.
 ```python
 def extract_angle_confidence(result_dict):
     angle = np.NaN
@@ -52,7 +66,7 @@ def extract_angle_confidence(result_dict):
             if len(text)>0:
                 angle = int(text)
                 
-    return(angle,confidence)            
+    return(angle, confidence)            
 ```
 
 
