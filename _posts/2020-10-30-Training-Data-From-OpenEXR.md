@@ -66,7 +66,7 @@ plt.colorbar()
 plt.show()
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-EXR/Figure_1.png)
+![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-OpenEXR/Figure_1.png)
 
 
 ### Creating bounding boxes
