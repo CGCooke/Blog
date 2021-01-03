@@ -10,7 +10,6 @@ Introduction
 -------------
 
 
-
 ```python
 import cv2
 import numpy as np
@@ -107,9 +106,6 @@ np.save('confidences.npy',confidences)
 ax = sns.histplot(confidences,bins = np.arange(0,100,10))
 ax.set_xlabel('Confidence (%)')
 ```
-![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-OpenEXR/Histogram.png)
-
-
 
 ```python
 plt.plot(angles,alpha=0.5)
@@ -118,9 +114,6 @@ plt.xlabel('Sample Number')
 plt.ylabel('Angle (Degrees)')
 plt.show()
 ```
-
-![_config.yml]({{ site.baseurl }}/images/2020-10-30-Training-Data-From-OpenEXR/LinePlot.png)
-
 
 ```python
 np.count_nonzero(~np.isnan(angles))
