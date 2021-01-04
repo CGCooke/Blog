@@ -9,7 +9,6 @@ image: images/2021-01-03-Number-Extraction-With-Tesseract/header.png
 Introduction
 -------------
 
-
 [Tesseract](https://github.com/tesseract-ocr/tesseract)
 
 
@@ -25,7 +24,8 @@ import re
 plt.rcParams['figure.figsize'] = [10, 10]
 ```
 
-
+Preprocessing
+-------------
 Let's load the image the frame,
 
 ```python
@@ -78,10 +78,6 @@ plt.colorbar()
 plt.show()
 ```
 
-![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png)
-
-![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png)
-
 
 
 ```python
@@ -129,13 +125,18 @@ np.save('angles.npy',angles)
 np.save('confidences.npy',confidences)
 ```
 
-Data Aanalysis
+Results Analysis
 -------------
 
 ```python
 ax = sns.histplot(confidences,bins = np.arange(0,100,10))
 ax.set_xlabel('Confidence (%)')
 ```
+
+
+![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png)
+
+
 
 ```python
 plt.plot(angles,alpha=0.5)
@@ -144,6 +145,10 @@ plt.xlabel('Sample Number')
 plt.ylabel('Angle (Degrees)')
 plt.show()
 ```
+
+![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png)
+
+
 
 ```python
 np.count_nonzero(~np.isnan(angles))
