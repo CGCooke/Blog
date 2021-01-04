@@ -12,8 +12,12 @@ One interesting source of data is video games, and I've settled on the fast, fra
 
 If our end goal is to recognise where we are in the world, based on what we can see, then our starting point, is having some ground truth data (where we actually are). Capturing this ground truth data, is in itself, an interesting challenge, which I'm going to slowly build up over the next couple of posts.
 
+One strategy, is to infer the players position from both the mini map, as well as the on screen compass. By combining different measurements over time, we should be able to understand where the player is in the world. 
+
+
 
 ![_config.yml]({{ site.baseurl }}/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg)
+
 
 
 
