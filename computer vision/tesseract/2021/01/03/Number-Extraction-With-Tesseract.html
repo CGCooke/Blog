@@ -121,8 +121,9 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#preprocessing">Preprocessing</a></li>
 <li class="toc-entry toc-h2"><a href="#processing">Processing</a></li>
-<li class="toc-entry toc-h2"><a href="#data-aanalysis">Data Aanalysis</a></li>
+<li class="toc-entry toc-h2"><a href="#results-analysis">Results Analysis</a></li>
 <li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
 </ul><h2 id="introduction">
 <a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
@@ -140,6 +141,8 @@ window.onload = wrap_img;
 <span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 </code></pre></div></div>
 
+<h2 id="preprocessing">
+<a class="anchor" href="#preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing</h2>
 <p>Let’s load the image the frame,</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">load_frame</span><span class="p">(</span><span class="n">frame_number</span><span class="p">):</span>
@@ -187,10 +190,6 @@ window.onload = wrap_img;
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png" alt="_config.yml"></p>
-
-<p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png" alt="_config.yml"></p>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="s">'../HighRes.mp4'</span><span class="p">)</span>
 
 <span class="n">img</span> <span class="o">=</span> <span class="n">load_frame</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">cap</span><span class="p">)</span>
@@ -231,12 +230,14 @@ window.onload = wrap_img;
 <span class="n">np</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'confidences.npy'</span><span class="p">,</span><span class="n">confidences</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="data-aanalysis">
-<a class="anchor" href="#data-aanalysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Aanalysis</h2>
+<h2 id="results-analysis">
+<a class="anchor" href="#results-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results Analysis</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">confidences</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Confidence (%)'</span><span class="p">)</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">360</span><span class="p">)</span>
@@ -244,6 +245,8 @@ window.onload = wrap_img;
 <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Angle (Degrees)'</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
+
+<p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png" alt="_config.yml"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="p">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">angles</span><span class="p">))</span>
 </code></pre></div></div>
