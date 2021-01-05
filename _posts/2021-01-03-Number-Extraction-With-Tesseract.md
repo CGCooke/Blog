@@ -9,7 +9,13 @@ image: images/2021-01-03-Number-Extraction-With-Tesseract/header.png
 Introduction
 -------------
 
-[Tesseract](https://github.com/tesseract-ocr/tesseract)
+While comparing two different mini-maps can tell us the change in angle/heading ($\omega) between them, we can determine the heading of the player ($\omega), via the compass. This can be seen at the top center of the screen (107 degrees).
+
+![_config.yml]({{ site.baseurl }}/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg)
+
+
+
+By using Optical Character Recognition (OCR), we can read this heading, allowing us to digitise the players current heading on a frame by frame basis. I've choses to use[Tesseract](https://github.com/tesseract-ocr/tesseract), a powerful opensource library of OCR. 
 
 
 ```python
