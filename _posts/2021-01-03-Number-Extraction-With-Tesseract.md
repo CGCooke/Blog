@@ -177,12 +177,11 @@ Using:
 ```python
 np.count_nonzero(~np.isnan(angles))
 ```
-We find that there were 4,049 numbers digitised out of 5,000 frames.
-
+We find that Tesseract managed to extract numbers in 4,049 out of 5,000 frames.
 
 Conclusion
 -------------
-Our next step is to take this data, and integrate it with other sources of data, in order to form a more coherent view of the players position and heading, on a frame by frame basis. 
+Our next step is to take this heading data, and integrate it with other sources of data, in order to form a more coherent view of the players position and heading. We can already see that our method will need to be robust to both missing and erroneous data. 
 
 
 
