@@ -127,7 +127,7 @@ window.onload = wrap_img;
 </ul><h2 id="introduction">
 <a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
-<p>While comparing two different mini-maps can tell us the change in angle/heading ($\omega) between them, we can determine the heading of the player ($\omega), via the compass. This can be seen at the top center of the screen (107 degrees).</p>
+<p>While comparing two different mini-maps can tell us the change in angle/heading ($\omega$) between them, we can determine the heading of the player ($\theta$), via the compass. This can be seen at the top center of the screen (107 degrees).</p>
 
 <p><img src="/Blog/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg" alt="_config.yml"></p>
 
@@ -174,7 +174,7 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Once Tesseract has processed the image, we want to extract both the angle, and how confident <em>Tesseract</em> was in it’s detection from the metadata.</p>
+<p>Once Tesseract has processed the image, we want to extract both the angle, and how confident <em>Tesseract</em> was in it’s detection from the metadata. Often when Tesseract digitises a number, it will include other characters, which we need to strip out using “re.sub(“[^0-9^]”, ““,text)”.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_angle_confidence</span><span class="p">(</span><span class="n">result_dict</span><span class="p">):</span>
     <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">NaN</span>
@@ -235,7 +235,7 @@ window.onload = wrap_img;
     <span class="n">confidences</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">confidence</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Finally, we can save both the angles, and Tesseract’s level of confidence.</p>
+<p>We can save both the angles, and Tesseract’s level of confidence.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
 <span class="n">confidences</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">confidences</span><span class="p">)</span>
@@ -248,11 +248,17 @@ window.onload = wrap_img;
 
 <hr>
 
+<p>Finally, let’s do some quick analysis of the data extracted.</p>
+
+<p>By examining the histogram, we find that Tesseract was often uncertain about the results it was generating.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">confidences</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Confidence (%)'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png" alt="_config.yml"></p>
+
+<p>We can also chart the angles on a frame by frame basis, note that the limits of the chart are set to the range of 0-360 (degrees).</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">360</span><span class="p">)</span>
@@ -263,11 +269,14 @@ window.onload = wrap_img;
 
 <p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/LinePlot.png" alt="_config.yml"></p>
 
+<p>Using:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="p">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">angles</span><span class="p">))</span>
 </code></pre></div></div>
+<p>We find that there were 4,049 numbers digitised out of 5,000 frames.</p>
 
 <h2 id="conclusion">
 <a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<p>Our next step is to take this data, and integrate it with other sources of data, in order to form a more coherent view of the players position and heading, on a frame by frame basis. </p>
 
 
   </div><a class="u-url" href="/Blog/computer%20vision/tesseract/2021/01/03/Number-Extraction-With-Tesseract.html" hidden></a>
