@@ -2,7 +2,7 @@
 toc: true
 layout: post
 description: We use Tesseract to capture numbers from an image.
-categories: [Computer Vision, Tesseract]
+categories: [Computer Vision, Tesseract, Nuketown84]
 image: images/2021-01-03-Number-Extraction-With-Tesseract/header.png
 ---
 
