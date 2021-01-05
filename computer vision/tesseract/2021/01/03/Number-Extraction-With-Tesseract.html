@@ -100,7 +100,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -123,7 +123,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
 <li class="toc-entry toc-h2"><a href="#preprocessing">Preprocessing</a></li>
 <li class="toc-entry toc-h2"><a href="#processing">Processing</a></li>
-<li class="toc-entry toc-h2"><a href="#results-analysis">Results Analysis</a></li>
 <li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
 </ul><h2 id="introduction">
 <a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
@@ -132,7 +131,9 @@ window.onload = wrap_img;
 
 <p><img src="/Blog/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg" alt="_config.yml"></p>
 
-<p>By using Optical Character Recognition (OCR), we can read this heading, allowing us to digitise the players current heading on a frame by frame basis. I’ve choses to use<a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a>, a powerful opensource library of OCR.</p>
+<p>By using Optical Character Recognition (OCR), we can read this heading, allowing us to digitise the players current heading on a frame by frame basis. I’ve choses to use <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a>, a powerful open source library for OCR. In Python, we can use <a href="https://pypi.org/project/pytesseract/">Pytesseract</a>, which is a wrapper around <em>Tesseract</em>.</p>
+
+<p>You can find the video I’m digitising <a href="https://www.youtube.com/watch?v=dozMeWeraFk">here</a>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -147,7 +148,7 @@ window.onload = wrap_img;
 
 <h2 id="preprocessing">
 <a class="anchor" href="#preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing</h2>
-<p>Let’s load the image the frame,</p>
+<p>Let’s load the first frame:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">load_frame</span><span class="p">(</span><span class="n">frame_number</span><span class="p">):</span>
     <span class="n">cap</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frame_number</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -155,10 +156,10 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Now let’s preprocess the frame, by</p>
+<p>Now let’s preprocess the frame, by:</p>
 
 <ol>
-  <li>Cropping the image down so that it only contain the number.</li>
+  <li>Cropping the image down so that it only contains the number.</li>
   <li>Resizing the image so that it’s larger.</li>
   <li>Converting the image to grayscale, and then inverting.</li>
 </ol>
@@ -173,7 +174,8 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Once Tesseract has processed the iamge, we want to extract both the angle, and how confident <em>Tesseract</em> was from the nmetadata.</p>
+<p>Once Tesseract has processed the image, we want to extract both the angle, and how confident <em>Tesseract</em> was in it’s detection from the metadata.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_angle_confidence</span><span class="p">(</span><span class="n">result_dict</span><span class="p">):</span>
     <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">NaN</span>
     <span class="n">confidence</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">NaN</span>
@@ -188,20 +190,16 @@ window.onload = wrap_img;
     <span class="k">return</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">confidence</span><span class="p">)</span>            
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">colorbar</span><span class="p">()</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+<p>Let’s now extract a single frame:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="s">'../HighRes.mp4'</span><span class="p">)</span>
-
 <span class="n">img</span> <span class="o">=</span> <span class="n">load_frame</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">cap</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <p><img src="/Blog/images/2021-01-03-Number-Extraction-With-Tesseract/Frame.png" alt="_config.yml"></p>
 
+<p>And after preprocessing:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="n">preprocess_frame</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">)</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
@@ -212,30 +210,43 @@ window.onload = wrap_img;
 <h2 id="processing">
 <a class="anchor" href="#processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h2>
 
+<p>Now that we have pre-processed our images, it’s time to use Tesseract to digitise the text.</p>
+
+<p>We have the opportunity to configure Tesseract, you can read more about the options available <a href="https://ai-facets.org/tesseract-ocr-best-practices/">here</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tesseract_config</span> <span class="o">=</span> <span class="s">r'--oem 3 --psm 13'</span>
+<span class="n">result_dict</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">image_to_data</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">tesseract_config</span><span class="p">,</span> <span class="n">output_type</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">Output</span><span class="p">.</span><span class="n">DICT</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Let’s now process the first 5,000 frames from the video:</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angles</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">confidences</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5_000</span><span class="p">):</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">load_frame</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">cap</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">preprocess_frame</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 
-    <span class="n">custom_config</span> <span class="o">=</span> <span class="s">r'--oem 3 --psm 13'</span>
-    <span class="n">result_dict</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">image_to_data</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">,</span> <span class="n">output_type</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">Output</span><span class="p">.</span><span class="n">DICT</span><span class="p">)</span>
+    <span class="n">tesseract_config</span> <span class="o">=</span> <span class="s">r'--oem 3 --psm 13'</span>
+    <span class="n">result_dict</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">image_to_data</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">tesseract_config</span><span class="p">,</span> <span class="n">output_type</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="p">.</span><span class="n">Output</span><span class="p">.</span><span class="n">DICT</span><span class="p">)</span>
     
     <span class="n">angle</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="n">extract_angle_confidence</span><span class="p">(</span><span class="n">result_dict</span><span class="p">)</span>
     
     <span class="n">angles</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
     <span class="n">confidences</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">confidence</span><span class="p">)</span>
+</code></pre></div></div>
 
+<p>Finally, we can save both the angles, and Tesseract’s level of confidence.</p>
 
-<span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
 <span class="n">confidences</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">confidences</span><span class="p">)</span>
 
 <span class="n">np</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'angles.npy'</span><span class="p">,</span><span class="n">angles</span><span class="p">)</span>
 <span class="n">np</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'confidences.npy'</span><span class="p">,</span><span class="n">confidences</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="results-analysis">
-<a class="anchor" href="#results-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results Analysis</h2>
+<p>Results Analysis</p>
+
+<hr>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">confidences</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Confidence (%)'</span><span class="p">)</span>
