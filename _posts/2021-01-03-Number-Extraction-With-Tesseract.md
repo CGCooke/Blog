@@ -14,8 +14,9 @@ While comparing two different mini-maps can tell us the change in angle/heading 
 ![_config.yml]({{ site.baseurl }}/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg)
 
 
+By using Optical Character Recognition (OCR), we can read this heading, allowing us to digitise the players current heading on a frame by frame basis. I've choses to use [Tesseract](https://github.com/tesseract-ocr/tesseract), a powerful open source library for OCR. In Python, we can use [Pytesseract](https://pypi.org/project/pytesseract/), which is a wrapper around *Tesseract*. 
 
-By using Optical Character Recognition (OCR), we can read this heading, allowing us to digitise the players current heading on a frame by frame basis. I've choses to use[Tesseract](https://github.com/tesseract-ocr/tesseract), a powerful opensource library of OCR. 
+You can find the video I'm digitising [here](https://www.youtube.com/watch?v=dozMeWeraFk).
 
 
 ```python
@@ -32,7 +33,7 @@ plt.rcParams['figure.figsize'] = [10, 10]
 
 Preprocessing
 -------------
-Let's load the image the frame,
+Let's load the first frame:
 
 ```python
 def load_frame(frame_number):
@@ -41,9 +42,9 @@ def load_frame(frame_number):
     return(frame)
 ```
 
-Now let's preprocess the frame, by 
+Now let's preprocess the frame, by: 
 
-1. Cropping the image down so that it only contain the number.
+1. Cropping the image down so that it only contains the number.
 2. Resizing the image so that it's larger.
 3. Converting the image to grayscale, and then inverting.
 
@@ -58,8 +59,8 @@ def preprocess_frame(img):
     return(img)
 ```
 
+Once Tesseract has processed the image, we want to extract both the angle, and how confident *Tesseract* was in it's detection from the metadata.
 
-Once Tesseract has processed the iamge, we want to extract both the angle, and how confident *Tesseract* was from the nmetadata.
 ```python
 def extract_angle_confidence(result_dict):
     angle = np.NaN
@@ -75,26 +76,18 @@ def extract_angle_confidence(result_dict):
     return(angle, confidence)            
 ```
 
-
-
-```python
-fig = plt.figure()
-plt.imshow(depth)
-plt.colorbar()
-plt.show()
-```
-
-
+Let's now extract a single frame:
 
 ```python
 cap = cv2.VideoCapture('../HighRes.mp4')
-
 img = load_frame(0,cap)
 plt.imshow(img[:,:,::-1])
 plt.show()
 ```
 ![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Frame.png)
 
+
+And after preprocessing:
 ```python
 img = preprocess_frame(img)
 plt.imshow(img,cmap='gray')
@@ -104,9 +97,22 @@ plt.show()
 ![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Number.png)
 
 
-
 Processing
 -------------
+
+
+Now that we have pre-processed our images, it's time to use Tesseract to digitise the text.
+
+
+We have the opportunity to configure Tesseract, you can read more about the options available [here](https://ai-facets.org/tesseract-ocr-best-practices/).
+
+```python
+tesseract_config = r'--oem 3 --psm 13'
+result_dict = pytesseract.image_to_data(img, config = tesseract_config, output_type = pytesseract.Output.DICT)
+``` 
+
+Let's now process the first 5,000 frames from the video: 
+
 
 ```python
 angles = []
@@ -115,15 +121,18 @@ for i in range(0,5_000):
     img = load_frame(i,cap)
     img = preprocess_frame(img)
 
-    custom_config = r'--oem 3 --psm 13'
-    result_dict = pytesseract.image_to_data(img, config = custom_config, output_type = pytesseract.Output.DICT)
+    tesseract_config = r'--oem 3 --psm 13'
+    result_dict = pytesseract.image_to_data(img, config = tesseract_config, output_type = pytesseract.Output.DICT)
     
     angle, confidence = extract_angle_confidence(result_dict)
     
     angles.append(angle)
     confidences.append(confidence)
+```
 
+Finally, we can save both the angles, and Tesseract's level of confidence.
 
+```python
 angles = np.array(angles)
 confidences = np.array(confidences)
 
@@ -132,6 +141,7 @@ np.save('confidences.npy',confidences)
 ```
 
 Results Analysis
+
 -------------
 
 ```python
