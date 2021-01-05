@@ -9,7 +9,7 @@ image: images/2021-01-03-Number-Extraction-With-Tesseract/header.png
 Introduction
 -------------
 
-While comparing two different mini-maps can tell us the change in angle/heading ($\omega) between them, we can determine the heading of the player ($\omega), via the compass. This can be seen at the top center of the screen (107 degrees).
+While comparing two different mini-maps can tell us the change in angle/heading ($\omega$) between them, we can determine the heading of the player ($\theta$), via the compass. This can be seen at the top center of the screen (107 degrees).
 
 ![_config.yml]({{ site.baseurl }}/images/2020-12-18-A-Playground-In-Nuketown/Nuketown-84-1.jpg)
 
@@ -59,7 +59,8 @@ def preprocess_frame(img):
     return(img)
 ```
 
-Once Tesseract has processed the image, we want to extract both the angle, and how confident *Tesseract* was in it's detection from the metadata.
+Once Tesseract has processed the image, we want to extract both the angle, and how confident *Tesseract* was in it's detection from the metadata. Often when Tesseract digitises a number, it will include other characters, which we need to strip out using "re.sub("[^0-9^]", "",text)".
+
 
 ```python
 def extract_angle_confidence(result_dict):
@@ -130,7 +131,7 @@ for i in range(0,5_000):
     confidences.append(confidence)
 ```
 
-Finally, we can save both the angles, and Tesseract's level of confidence.
+We can save both the angles, and Tesseract's level of confidence.
 
 ```python
 angles = np.array(angles)
@@ -144,15 +145,21 @@ Results Analysis
 
 -------------
 
+Finally, let's do some quick analysis of the data extracted.
+
+
+By examining the histogram, we find that Tesseract was often uncertain about the results it was generating.
+
 ```python
 ax = sns.histplot(confidences,bins = np.arange(0,100,10))
 ax.set_xlabel('Confidence (%)')
 ```
 
-
 ![_config.yml]({{ site.baseurl }}/images/2021-01-03-Number-Extraction-With-Tesseract/Histogram.png)
 
 
+
+We can also chart the angles on a frame by frame basis, note that the limits of the chart are set to the range of 0-360 (degrees).
 
 ```python
 plt.plot(angles,alpha=0.5)
@@ -166,15 +173,16 @@ plt.show()
 
 
 
+Using:
 ```python
 np.count_nonzero(~np.isnan(angles))
 ```
-
+We find that there were 4,049 numbers digitised out of 5,000 frames.
 
 
 Conclusion
 -------------
-
+Our next step is to take this data, and integrate it with other sources of data, in order to form a more coherent view of the players position and heading, on a frame by frame basis. 
 
 
 
